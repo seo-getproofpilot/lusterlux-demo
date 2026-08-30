@@ -36,6 +36,128 @@
    "d": "Wear it."
   }
  ],
+ "groups": [
+  {
+   "k": "exterior",
+   "t": "Exterior",
+   "d": "Everything that touches the outside of the vehicle, in the order you use it.",
+   "subs": [
+    "wash-waterless",
+    "wheels-tires",
+    "ceramic"
+   ]
+  },
+  {
+   "k": "interior",
+   "t": "Interior",
+   "d": "Dash, trim, glass and cabin air. Clean finishes, no gloss, no greasy film.",
+   "subs": [
+    "interior-cleaners",
+    "trim-dressings",
+    "scents"
+   ]
+  },
+  {
+   "k": "tools",
+   "t": "Tools &amp; Towels",
+   "d": "The microfiber, brushes, cannons and sprayers the chemistry was built around.",
+   "subs": [
+    "microfiber",
+    "brushes",
+    "cannons"
+   ]
+  },
+  {
+   "k": "kits-systems",
+   "t": "Kits &amp; Systems",
+   "d": "Start with one bottle or take the whole bay. Every system beats the parts.",
+   "subs": []
+  },
+  {
+   "k": "beyond-the-car",
+   "t": "Beyond the Car",
+   "d": "Golf carts, boats and anything that comes home covered in trail dust.",
+   "subs": [
+    "golf-cart",
+    "marine",
+    "off-road"
+   ]
+  }
+ ],
+ "subs": [
+  {
+   "k": "wash-waterless",
+   "t": "Wash &amp; Waterless",
+   "d": "Foam it, wash it, or skip the hose entirely.",
+   "g": "exterior"
+  },
+  {
+   "k": "wheels-tires",
+   "t": "Wheels &amp; Tires",
+   "d": "Brake dust off, sidewalls back to black, nothing slung down your paint.",
+   "g": "exterior"
+  },
+  {
+   "k": "ceramic",
+   "t": "Ceramic &amp; Protection",
+   "d": "The layer that goes on last and makes every wash after it easier.",
+   "g": "exterior"
+  },
+  {
+   "k": "interior-cleaners",
+   "t": "Cleaners",
+   "d": "Dash, console and door cards back to a factory matte.",
+   "g": "interior"
+  },
+  {
+   "k": "trim-dressings",
+   "t": "Trim &amp; Dressings",
+   "d": "Rubber, vinyl and plastic brought back and held there.",
+   "g": "interior"
+  },
+  {
+   "k": "scents",
+   "t": "Scents",
+   "d": "Odour neutralised at the source, not perfumed over.",
+   "g": "interior"
+  },
+  {
+   "k": "microfiber",
+   "t": "Microfiber Towels",
+   "d": "A weight for every surface and every step.",
+   "g": "tools"
+  },
+  {
+   "k": "brushes",
+   "t": "Brushes &amp; Applicators",
+   "d": "For the places a towel physically cannot reach.",
+   "g": "tools"
+  },
+  {
+   "k": "cannons",
+   "t": "Cannons &amp; Sprayers",
+   "d": "Foam cannons, pressure guns, sprayers and buckets.",
+   "g": "tools"
+  },
+  {
+   "k": "golf-cart",
+   "t": "Golf Cart",
+   "d": "Cart paint, plastic panels and vinyl bench seats.",
+   "g": "beyond-the-car"
+  },
+  {
+   "k": "marine",
+   "t": "Marine",
+   "d": "Gelcoat, vinyl seating and trim that live in sun and salt.",
+   "g": "beyond-the-car"
+  },
+  {
+   "k": "off-road",
+   "t": "Off-Road &amp; UTV",
+   "d": "Mud, trail dust and baked-on film.",
+   "g": "beyond-the-car"
+  }
+ ],
  "worlds": [
   {
    "k": "car-truck",
@@ -113,9 +235,48 @@
    "inuse": "use-luxpro",
    "showBody": "Most quick detailers move dirt around. LuxPro wraps it. Nano-polymers encapsulate each particle of dust, pollen and road film so it lifts clear of the panel rather than being dragged across it, while a high-lubricity carrier keeps the towel gliding on liquid instead of on your clear coat.",
    "showWhy": "That matters because a swirl is not a scratch from something sharp — it is a grain of grit held against the paint by a towel and pulled twelve inches. Take the grit off the panel first and the swirl never happens. One 16 oz bottle does 15 to 30 vehicles.",
+   "features": [
+    [
+     "NanoFusion encapsulation",
+     "Nano-polymers wrap each particle of dust and road film so it lifts clear of the paint instead of being dragged across it."
+    ],
+    [
+     "High-lubricity carrier",
+     "The towel rides on liquid, not on your clear coat. This is what separates a maintenance wipe from a panel full of swirls."
+    ],
+    [
+     "Leaves protection behind",
+     "An ultra-thin hydrophobic layer that adds gloss, tightens water beading and slows how fast dust bonds back on."
+    ],
+    [
+     "No hose, no bucket, no runoff",
+     "Works in an apartment car park, a garage, or on a show field."
+    ],
+    [
+     "Safe across the whole exterior",
+     "Paint, clear coat, glass, chrome, plastic trim, wheels, PPF, vinyl wrap and existing ceramic coatings."
+    ],
+    [
+     "15 to 30 vehicles a bottle",
+     "One 16 oz bottle covers most daily drivers for the better part of a year."
+    ]
+   ],
+   "caution": [
+    "Not for a genuinely dirty car",
+    "Waterless is for light dust, pollen, fingerprints and road film. If you can feel grit on the panel, rinse or foam it off first."
+   ],
+   "tips": [
+    "Work one panel at a time, out of direct sun.",
+    "Spray more than feels reasonable. Under-spraying is what causes scratches.",
+    "Straight-line wipes, front to back. Never circles.",
+    "Rotate to a fresh towel face every panel or two.",
+    "Use Edgeless Lux towels &mdash; the formula was built around them."
+   ],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxpro-waterless-wash-detail-spray",
    "url": "/products/luxpro-waterless-wash-detail-spray/",
+   "sub": "wash-waterless",
+   "group": "exterior",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -169,9 +330,47 @@
    "inuse": "use-ceramicx",
    "showBody": "CeramicX bonds to the surface and leaves a hydrophobic layer that repels water, road grime and UV. Gloss goes up, dirt has less to grab, and the next wash takes half as long. It layers on top of a coating you already have rather than replacing it.",
    "showWhy": "Up to eight months from one application, and 10 to 20 vehicles from a bottle. In hard-water country that layer is the difference between water beading off and water sitting on the panel long enough to leave minerals behind.",
+   "features": [
+    [
+     "Bonds in minutes",
+     "A durable ceramic layer laid down in the time it takes to wipe a panel."
+    ],
+    [
+     "Up to 8 months",
+     "With proper application and maintenance, one application holds through a season and then some."
+    ],
+    [
+     "Extreme hydrophobics",
+     "Water beads tight and sheets off fast, which is what stops mineral spotting from setting in."
+    ],
+    [
+     "Layers over what you already have",
+     "Tops up an existing coating rather than replacing it."
+    ],
+    [
+     "Real gloss depth",
+     "Enhances colour depth rather than just adding surface shine."
+    ],
+    [
+     "10 to 20 vehicles a bottle",
+     "Two to three sprays a panel is all it takes."
+    ]
+   ],
+   "caution": [
+    "Needs a clean, cool, dry surface",
+    "Sealing dirt under a coating locks it in. Wash or waterless first, always."
+   ],
+   "tips": [
+    "Two to three sprays per panel, no more.",
+    "Spread with one towel, buff off with a second dry one.",
+    "Give it an hour before it sees rain.",
+    "Use it after LuxPro or a foam wash, never instead of one."
+   ],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/ceramicx-ceramic-detail-spray",
    "url": "/products/ceramicx-ceramic-detail-spray/",
+   "sub": "ceramic",
+   "group": "exterior",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -227,9 +426,48 @@
    "inuse": "use-luxfoam",
    "showBody": "LuxFoam throws thick foam that clings long enough to actually break down road film instead of sliding off. High lubricity means the mitt glides rather than grabs, and dirt stays encapsulated in the suds where it cannot cut into the finish.",
    "showWhy": "Every minute the foam dwells is a minute of cleaning happening with nothing touching your paint. It rinses clean with no residue and will not strip the wax, sealant or coating already on the car. 8 to 16 washes a bottle.",
+   "features": [
+    [
+     "Thick, clinging foam",
+     "Stays on the panel long enough to break down road film instead of sliding straight off."
+    ],
+    [
+     "High lubricity",
+     "The mitt glides rather than grabs &mdash; the single biggest thing standing between a wash and a swirl."
+    ],
+    [
+     "Encapsulating",
+     "Dirt stays suspended in the suds where it cannot cut into the clear coat."
+    ],
+    [
+     "Coating and wax safe",
+     "Rinses clean with no residue and will not strip what is already on the car."
+    ],
+    [
+     "Cannon or two-bucket",
+     "Works either way, though the cannon is where the dwell time comes from."
+    ],
+    [
+     "8 to 16 washes a bottle",
+     "Highly concentrated, so start leaner than you think."
+    ]
+   ],
+   "caution": [
+    "Never foam a dry, dusty panel",
+    "Rinse the loose grit off with water first, or you are just gluing it in place."
+   ],
+   "tips": [
+    "Foam bottom to top so the dirtiest panels never sit uncovered.",
+    "Let it dwell two to five minutes, in shade.",
+    "Rinse top to bottom before it dries.",
+    "Dial thickness from the cannon before you add more soap.",
+    "Watch the runoff &mdash; brown means it is working."
+   ],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxfoam-foam-cannon-soap",
    "url": "/products/luxfoam-foam-cannon-soap/",
+   "sub": "wash-waterless",
+   "group": "exterior",
    "worlds": [
     "car-truck",
     "marine",
@@ -283,9 +521,43 @@
    "inuse": "use-wheelassassin",
    "showBody": "Brake dust is not dirt. It is hot metal fused into your finish, and scrubbing it is how wheels get ruined. LuxWheelAssassin breaks it down chemically so it releases with minimal agitation, then rinses away clean.",
    "showWhy": "Safe on clear-coated, painted, chrome, alloy and factory wheels, which covers virtually everything short of bare polished aluminium. 12 to 20 vehicles a bottle. Always test an inconspicuous area first.",
+   "features": [
+    [
+     "Breaks brake dust down chemically",
+     "Releases bonded metal so you are not scrubbing a finish you cannot replace."
+    ],
+    [
+     "Minimal agitation",
+     "Most of the work happens while it dwells, not while you scrub."
+    ],
+    [
+     "Safe across wheel finishes",
+     "Clear-coated, painted, chrome, alloy and factory wheels."
+    ],
+    [
+     "Cuts grease and road film",
+     "Not just the surface dust that rinses off anyway."
+    ],
+    [
+     "12 to 20 vehicles a bottle",
+     "Enough for a season of weekly washes."
+    ]
+   ],
+   "caution": [
+    "Test an inconspicuous area first",
+    "And never let it dry on the wheel. Work cool wheels, out of direct sun."
+   ],
+   "tips": [
+    "Spray the barrel, not just the face. That is where the dust lives.",
+    "Agitate with a wheel brush where buildup is heavy.",
+    "Wheels come first in a wash, before any paint.",
+    "Rinse thoroughly and dry before you dress the tires."
+   ],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxwheelassassin-wheel-cleaner",
    "url": "/products/luxwheelassassin-wheel-cleaner/",
+   "sub": "wheels-tires",
+   "group": "exterior",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -337,9 +609,43 @@
    "inuse": "use-tirevenom",
    "showBody": "Most tire shine is silicone that never really dries, which is why it ends up in a stripe along your rocker panel. TireVenom dries to the touch and stays where you put it, restoring faded rubber to a deep, even finish.",
    "showWhy": "It shields against UV, cracking and browning without the greasy film that pulls dust the moment you park. Up to three months an application, and 30 to 50 tires from a bottle.",
+   "features": [
+    [
+     "No-sling, dries to the touch",
+     "Stays on the sidewall instead of striping down your rocker panel on the first pull-out."
+    ],
+    [
+     "Deep, even black",
+     "Restores faded rubber without the wet-look gloss that reads cheap."
+    ],
+    [
+     "UV, cracking and browning defence",
+     "Up to three months from a single application."
+    ],
+    [
+     "Never greasy",
+     "It does not stay tacky, so it does not collect dust the moment you park."
+    ],
+    [
+     "30 to 50 tires a bottle",
+     "A 16 oz bottle lasts most people a year."
+    ]
+   ],
+   "caution": [
+    "Scrub the sidewall clean first",
+    "Dressing over old dressing is exactly what causes browning. This step is not optional."
+   ],
+   "tips": [
+    "Apply with an XPad rather than spraying directly.",
+    "Level out any heavy spots before it sets.",
+    "Let it set before you drive.",
+    "Dress tires last, after the car is washed and dry."
+   ],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/tirevenom-tire-dressing",
    "url": "/products/tirevenom-tire-dressing/",
+   "sub": "wheels-tires",
+   "group": "exterior",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -392,9 +698,40 @@
    "inuse": "use-interiorx",
    "showBody": "Interior cleaner is the easiest place to make a car look worse. Anything that leaves shine puts glare in your windshield and turns a steering wheel slippery. InteriorX pulls dirt, fingerprints and spills off the surface and dries to a factory matte.",
    "showWhy": "Safe on dashboards, door panels, consoles, steering wheels, vinyl, plastic and rubber, and it goes 15 to 25 vehicles a bottle. The cabin reads clean rather than coated.",
+   "features": [
+    [
+     "Dries to a factory matte",
+     "No gloss, so nothing reflects back at you off the dash in low sun."
+    ],
+    [
+     "No greasy residue",
+     "A steering wheel stays a steering wheel."
+    ],
+    [
+     "Lifts real interior soil",
+     "Fingerprints, spills, dust and everyday grime, not just surface dust."
+    ],
+    [
+     "Safe across the cabin",
+     "Dashboards, door panels, consoles, steering wheels, vinyl, plastic and rubber."
+    ],
+    [
+     "15 to 25 vehicles a bottle",
+     "Enough for routine upkeep and the occasional deep clean."
+    ]
+   ],
+   "caution": [],
+   "tips": [
+    "Spray onto the towel, not the panel.",
+    "Work one section at a time and follow with a dry towel face.",
+    "Use a LuxBrush for vents, seams and switchgear.",
+    "Do the interior before the exterior so overspray lands on unwashed paint."
+   ],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/interiorx-interior-cleaner",
    "url": "/products/interiorx-interior-cleaner/",
+   "sub": "interior-cleaners",
+   "group": "interior",
    "worlds": [
     "car-truck",
     "off-road"
@@ -425,9 +762,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/fairway-finish-system",
    "url": "/products/fairway-finish-system/",
+   "sub": "golf-cart",
+   "group": "beyond-the-car",
    "worlds": [
     "golf-cart"
    ]
@@ -475,9 +817,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/birdielux-golf-cart-exterior-cleaner",
    "url": "/products/birdielux-golf-cart-exterior-cleaner/",
+   "sub": "golf-cart",
+   "group": "beyond-the-car",
    "worlds": [
     "golf-cart"
    ]
@@ -524,9 +871,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/xfresh-golf-cart-interior-cleaner",
    "url": "/products/xfresh-golf-cart-interior-cleaner/",
+   "sub": "golf-cart",
+   "group": "beyond-the-car",
    "worlds": [
     "golf-cart",
     "marine"
@@ -557,9 +909,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": true,
    "storeUrl": "https://lusterluxauto.com/products/trail-foam-coming-soon",
    "url": "/products/trail-foam-coming-soon/",
+   "sub": "off-road",
+   "group": "beyond-the-car",
    "worlds": [
     "off-road"
    ]
@@ -589,9 +946,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-brush-interior-brush",
    "url": "/products/lux-brush-interior-brush/",
+   "sub": "interior-cleaners",
+   "group": "interior",
    "worlds": [
     "car-truck",
     "golf-cart"
@@ -644,9 +1006,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/restorx-rvp-plastic-dressing",
    "url": "/products/restorx-rvp-plastic-dressing/",
+   "sub": "trim-dressings",
+   "group": "interior",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -694,9 +1061,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/newcarember-air-freshener",
    "url": "/products/newcarember-air-freshener/",
+   "sub": "scents",
+   "group": "interior",
    "worlds": [
     "car-truck"
    ]
@@ -741,9 +1113,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/vanillaember-air-freshener",
    "url": "/products/vanillaember-air-freshener/",
+   "sub": "scents",
+   "group": "interior",
    "worlds": [
     "car-truck"
    ]
@@ -773,9 +1150,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/the-platinum-system",
    "url": "/products/the-platinum-system/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -805,9 +1187,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/ultimate-wash-system-1",
    "url": "/products/ultimate-wash-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -837,9 +1224,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/rim-and-tire-system-kit-1",
    "url": "/products/rim-and-tire-system-kit-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck",
     "off-road"
@@ -870,9 +1262,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/foam-wash-system-1",
    "url": "/products/foam-wash-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck",
     "off-road"
@@ -903,9 +1300,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/complete-interior-system-1",
    "url": "/products/complete-interior-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -935,9 +1337,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/paint-care-system-1",
    "url": "/products/paint-care-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -967,9 +1374,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/complete-detail-system-1",
    "url": "/products/complete-detail-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -999,9 +1411,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/interior-restoration-system-1",
    "url": "/products/interior-restoration-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -1031,9 +1448,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/tire-care-system-1",
    "url": "/products/tire-care-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -1063,9 +1485,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/waterless-wash-system-1",
    "url": "/products/waterless-wash-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -1095,9 +1522,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/dual-scent-system-1",
    "url": "/products/dual-scent-system-1/",
+   "sub": "",
+   "group": "kits-systems",
    "worlds": [
     "car-truck"
    ]
@@ -1127,9 +1559,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/the-luxcap-limited-supply",
    "url": "/products/the-luxcap-limited-supply/",
+   "sub": "",
+   "group": "merch",
    "worlds": []
   },
   {
@@ -1157,9 +1594,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-t",
    "url": "/products/lux-t/",
+   "sub": "",
+   "group": "merch",
    "worlds": []
   },
   {
@@ -1187,9 +1629,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/towel-tantrum-kit-every-surface-every-step-every-finish",
    "url": "/products/towel-tantrum-kit-every-surface-every-step-every-finish/",
+   "sub": "microfiber",
+   "group": "tools",
    "worlds": [
     "car-truck"
    ]
@@ -1225,9 +1672,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxcannon-foam-cannon",
    "url": "/products/luxcannon-foam-cannon/",
+   "sub": "cannons",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "off-road"
@@ -1263,9 +1715,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxgun-pressure-washer-gun",
    "url": "/products/luxgun-pressure-washer-gun/",
+   "sub": "cannons",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "off-road"
@@ -1296,9 +1753,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxtowel-drying-towel",
    "url": "/products/luxtowel-drying-towel/",
+   "sub": "microfiber",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "marine",
@@ -1330,9 +1792,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/foamx-sprayer-electric-sprayer",
    "url": "/products/foamx-sprayer-electric-sprayer/",
+   "sub": "cannons",
+   "group": "tools",
    "worlds": [
     "car-truck"
    ]
@@ -1362,9 +1829,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-sprayer-pump-sprayer",
    "url": "/products/lux-sprayer-pump-sprayer/",
+   "sub": "cannons",
+   "group": "tools",
    "worlds": [
     "car-truck"
    ]
@@ -1394,9 +1866,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxmit-wash-mit",
    "url": "/products/luxmit-wash-mit/",
+   "sub": "brushes",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "marine",
@@ -1435,9 +1912,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/3-pack-edgeless-lux-edgeless-microfiber-towels",
    "url": "/products/3-pack-edgeless-lux-edgeless-microfiber-towels/",
+   "sub": "microfiber",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -1476,9 +1958,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/5-pack-microlux-microfiber-towels",
    "url": "/products/5-pack-microlux-microfiber-towels/",
+   "sub": "microfiber",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -1511,9 +1998,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/2-pack-xpad-applicator-pad",
    "url": "/products/2-pack-xpad-applicator-pad/",
+   "sub": "brushes",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -1550,9 +2042,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-bucket-car-washing-bucket",
    "url": "/products/lux-bucket-car-washing-bucket/",
+   "sub": "cannons",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "off-road"
@@ -1583,9 +2080,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/2-pack-luxwindow-waffle-window-towel",
    "url": "/products/2-pack-luxwindow-waffle-window-towel/",
+   "sub": "microfiber",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "marine"
@@ -1616,9 +2118,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxbug-bug-and-tar-remover-sponge",
    "url": "/products/luxbug-bug-and-tar-remover-sponge/",
+   "sub": "brushes",
+   "group": "tools",
    "worlds": [
     "car-truck",
     "off-road"
@@ -1670,9 +2177,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxquick-detail-spray",
    "url": "/products/luxquick-detail-spray/",
+   "sub": "wash-waterless",
+   "group": "exterior",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -1704,9 +2216,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-tire-brush",
    "url": "/products/lux-tire-brush/",
+   "sub": "wheels-tires",
+   "group": "exterior",
    "worlds": [
     "car-truck",
     "golf-cart",
@@ -1738,9 +2255,14 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
+   "features": [],
+   "caution": [],
+   "tips": [],
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-wheel-brush",
    "url": "/products/lux-wheel-brush/",
+   "sub": "wheels-tires",
+   "group": "exterior",
    "worlds": [
     "car-truck",
     "off-road"

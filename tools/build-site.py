@@ -15,7 +15,10 @@ DATA = json.load(open(os.path.join(ROOT, "data", "catalog.json")))
 P    = DATA["products"]
 CATS = DATA["cats"]
 WORLDS = DATA["worlds"]
-V    = "43"                                   # cache-bust, bump on every build
+GROUPS = DATA["groups"]
+SUBS   = DATA["subs"]
+WORLD_KEYS = {w["k"] for w in WORLDS}
+V    = "47"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -40,6 +43,28 @@ def in_cat(k):
     return [p for p in P if p["cat"] == k or k in p.get("also", [])]
 def in_world(k):
     return [p for p in P if k in p.get("worlds", [])]
+def prod_sub(p):
+    """The subcategory a product lives in, falling back to its group."""
+    return p.get("sub") or p.get("group") or "kits-systems"
+def prod_sub_name(p):
+    k = prod_sub(p)
+    m = sub_meta(k)
+    return m["t"] if m["t"] != k else group_meta(k)["t"]
+def sub_meta(k):
+    for s in SUBS:
+        if s["k"] == k: return s
+    return {"k": k, "t": k, "d": ""}
+def in_sub(k):
+    """Beyond-the-Car subs are the vehicle worlds, which are cross-listed."""
+    if k in WORLD_KEYS: return in_world(k)
+    return [p for p in P if p.get("sub") == k]
+def in_group(k):
+    if k == "kits-systems": return [p for p in P if p["cat"] == "kits-systems"]
+    return [p for p in P if p.get("group") == k]
+def group_meta(k):
+    for g in GROUPS:
+        if g["k"] == k: return g
+    return {"k": k, "t": k, "d": "", "subs": []}
 def world_name(k):
     for w in WORLDS:
         if w["k"] == k: return w["t"]
@@ -65,12 +90,23 @@ def world_tiles(current=""):
       f'<i>{len(in_world(w["k"]))} products</i></span></a>' for w in WORLDS)
 
 
+GROUP_TILE = {"exterior":"wash-waterless","interior":"interior","tools":"towels-tools",
+              "kits-systems":"kits-systems","beyond-the-car":"beyond-the-car"}
+GROUP_ACC  = {"exterior":"#6a4cf0","interior":"#d4a53c","tools":"#9aa4ae",
+              "kits-systems":"#84D019","beyond-the-car":"#8a76e8"}
+
 def cat_tiles():
-    return "".join(
-      f'<a class="ctile" href="/collections/{c["k"]}/" style="--acc:{CAT_ACC[c["k"]]}">'
-      f'<img src="/assets/tiles/{c["k"]}.webp?v={V}" alt="" loading="lazy" decoding="async" />'
-      f'<span class="ctile-body"><b>{c["t"]}</b><i>{len(in_cat(c["k"]))} products</i></span></a>'
-      for c in SHOP_CATS)
+    out = ""
+    for g in GROUPS:
+        subs = "".join(f'<a href="/collections/{sk}/">{sub_meta(sk)["t"]}</a>' for sk in g["subs"])
+        out += (f'<div class="ctile" style="--acc:{GROUP_ACC[g["k"]]}">'
+                f'<a class="ctile-hit" href="/collections/{g["k"]}/" aria-label="{plain(g["t"])}">'
+                f'<img src="/assets/tiles/{GROUP_TILE[g["k"]]}.webp?v={V}" alt="" loading="lazy" decoding="async" /></a>'
+                f'<div class="ctile-body"><a class="ctile-name" href="/collections/{g["k"]}/">{g["t"]}</a>'
+                f'<i>{len(in_group(g["k"]))} products</i>'
+                + (f'<nav class="ctile-subs">{subs}</nav>' if subs else '')
+                + '</div></div>')
+    return out
 
 
 def stars_svg(n=5):
@@ -148,25 +184,32 @@ def nav(active=""):
     for href, label, key in items:
         cur = ' aria-current="page"' if active == key else ""
         if key == "shop":
-            mega = "".join(
-                f'<a class="mtile" href="/collections/{c["k"]}/" style="--acc:{CAT_ACC[c["k"]]}">'
-                f'<img src="/assets/tiles/{c["k"]}.webp?v={V}" alt="" loading="lazy" decoding="async" />'
-                f'<i></i><span class="mtile-body"><b>{c["t"]}</b>'
-                f'<span>{len(in_cat(c["k"]))} products</span></span></a>' for c in SHOP_CATS)
+            cols = ""
+            for g in GROUPS:
+                subs = "".join(
+                  f'<a href="/collections/{sk}/">{sub_meta(sk)["t"]}<b>{len(in_sub(sk))}</b></a>'
+                  for sk in g["subs"])
+                cols += (f'<div class="mcol"><a class="mcol-head" href="/collections/{g["k"]}/">'
+                         f'{g["t"]}<span>{len(in_group(g["k"]))}</span></a>'
+                         f'<div class="mcol-subs">{subs}</div></div>')
             links += (f'<li class="has-mega"><a href="{href}"{cur}>{label}'
                       '<svg class="car" viewBox="0 0 24 24" fill="none" stroke-linecap="round" '
                       'stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>'
-                      f'<div class="mega"><div class="mega-tiles">{mega}</div>'
-                      f'<div class="mega-worlds"><span>Shop what you drive</span>{worlds_links()}</div>'
-                      '<div class="mega-foot"><p>Not sure what you need? '
-                      '<a class="lime" href="/pages/find-your-product/">Answer two questions.</a></p>'
+                      f'<div class="mega"><div class="mega-cols">{cols}</div>'
+                      '<div class="mega-foot"><p>New to this? '
+                      '<a class="lime" href="/pages/find-your-product/">Answer two questions</a> '
+                      'and we will name the bottle.</p>'
                       '<a class="btn btn-primary btn-sm" href="/collections/">Shop all'
                       '<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>'
                       '</div></div></li>')
         else:
-            links += f'<li><a href="{href}"{cur}>{label}</a></li>' 
-    mob = "".join(f'<a href="/collections/{c["k"]}/">{c["t"]}<span>{len(in_cat(c["k"]))}</span></a>'
-                  for c in SHOP_CATS)
+            links += f'<li><a href="{href}"{cur}>{label}</a></li>'
+    mob = ""
+    for g in GROUPS:
+        mob += f'<a href="/collections/{g["k"]}/">{g["t"]}<span>{len(in_group(g["k"]))}</span></a>'
+        for sk in g["subs"]:
+            mob += (f'<a class="msub" href="/collections/{sk}/">{sub_meta(sk)["t"]}'
+                    f'<span>{len(in_sub(sk))}</span></a>')
     return f"""<header class="nav" id="nav">
   <div class="nav-in">
     <a class="brand" href="/" aria-label="LusterLux home">
@@ -219,7 +262,7 @@ def drawer():
 </div>"""
 
 def footer():
-    shop = "".join(f'<li><a href="/collections/{c["k"]}/">{c["t"]}</a></li>' for c in SHOP_CATS)
+    shop = "".join(f'<li><a href="/collections/{g["k"]}/">{g["t"]}</a></li>' for g in GROUPS)
     return f"""<footer class="foot">
   <div class="wrap">
     <div class="foot-grid five">
@@ -315,7 +358,7 @@ def card(p, small=True):
   <a class="card-fig" href="{p['url']}" tabindex="-1" aria-hidden="true">
     <img src="{img}" alt="" loading="lazy" decoding="async" /></a>
   <div class="card-body">
-    <p class="card-cat">{cat_name(p['cat'])}</p>
+    <p class="card-cat">{prod_sub_name(p)}</p>
     <h3><a href="{p['url']}">{esc(p['n'])}<span>{p['fn']}</span></a></h3>
     <p class="card-blurb">{p['short']}</p>
     <div class="card-foot">{price}{btn}</div>
@@ -395,6 +438,7 @@ def before_after():
 def showcase(p, i, total):
     """One product, full width. Big bottle, what it is, what it does, buy it."""
     specs = "".join(f"<li>{s}</li>" for s in p["specs"])
+    feat4 = "".join(f'<li><b>{lead}</b> {body}</li>' for lead, body in (p.get("features") or [])[:4])
     return f"""<section class="show{' alt' if i % 2 else ''}" id="p-{p['img']}" style="--acc:{p['acc']}">
   <div class="wrap show-in">
     <div class="show-media">
@@ -409,13 +453,12 @@ def showcase(p, i, total):
       </div>
     </div>
     <div class="show-info fade">
-      <p class="show-idx"><b>{i+1:02d}</b> &frasl; {total:02d} &middot; <a href="/collections/{p['cat']}/">{cat_name(p['cat'])}</a></p>
+      <p class="show-idx"><b>{i+1:02d}</b> &frasl; {total:02d} &middot; <a href="/collections/{prod_sub(p)}/">{prod_sub_name(p)}</a></p>
       <p class="show-sub">{p['fn']}</p>
       <h3 class="show-name">{esc(p['n'])}</h3>
       {f'<p class="show-line">{p["line"]}</p>' if p['line'] else ''}
       <p class="show-copy">{p.get('showBody') or p['short']}</p>
-      {f'<p class="show-why">{p["showWhy"]}</p>' if p.get('showWhy') else ''}
-      {f'<ul class="show-specs">{specs}</ul>' if specs else ''}
+      {f'<ul class="feat show-feat">{feat4}</ul>' if feat4 else f'<ul class="show-specs">{specs}</ul>'}
       <div class="show-buy">
         <span class="show-price">{money(p['price'])}<small>{p['size']}</small></span>
         <button class="btn btn-primary add" type="button" data-add="{p['h']}">Add to cart
@@ -541,7 +584,7 @@ def build_home():
     <div class="sec-head">
       <p class="kick slide">Shop by Category</p>
       <h2 class="fade" data-d="1">Know what you need? <em>Start here.</em></h2>
-      <p class="lead fade" data-d="2">Nine categories, every product in one of them. Not sure which?
+      <p class="lead fade" data-d="2">Five aisles, twelve shelves, every product on one of them. Not sure which?
         <a class="lime" href="/pages/find-your-product/">Answer two questions</a> and we will name the bottle.</p>
     </div>
     <div class="ctiles fade" data-d="2">{cat_tiles()}</div>
@@ -580,45 +623,36 @@ def build_home():
   </div>
 </section>
 
-<section class="sec bone hive" id="story">
-  <div class="wrap hive-in">
-    <div class="hive-copy">
+<section class="sec bone" id="story">
+  <div class="wrap story-grid">
+    <div class="story-copy">
       <p class="kick slide">Why We Started</p>
-      <h2 class="fade" data-d="1">We are <em>LusterLux.</em></h2>
+      <h2 class="fade" data-d="1">Chase <em>&amp;</em> Brandon.</h2>
       <p class="fade" data-d="2">We didn&rsquo;t start this because the world needed another detailing brand.
         We started it because the products we depended on every day weren&rsquo;t doing what they promised.</p>
       <p class="fade" data-d="2">Running a rental car business meant cleaning and detailing vehicle after
         vehicle. Streaky finishes. Greasy interior dressings. Tire shine that lasted a weekend. So we spent
         a long time testing and reformulating until we had products that solved the problems we were
-        actually having.</p>
-      <p class="fade" data-d="3">We&rsquo;re Chase and Brandon. When we&rsquo;re not detailing you&rsquo;ll find us
-        at the Glamis dunes, riding up north in Heber, or out on the dirt trails &mdash; which is exactly why
-        this line has to work on more than a garage queen.</p>
-      <p class="sign fade" data-d="3"><b>Chase &amp; Brandon</b> &middot; Founders</p>
+        actually having &mdash; and we still test every formula against real vehicles in Arizona sun before
+        it goes in a bottle.</p>
+      <p class="sign fade" data-d="3"><b>Chase &amp; Brandon</b> &middot; Founders, Arizona</p>
       <p class="fade" data-d="3" style="margin-top:26px">
         <a class="btn btn-primary" href="/pages/about/">Read the full story
           <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
     </div>
-    <div class="hive fade" data-d="2" aria-hidden="true">
-      <span class="hive-word w1">Fleet.</span>
-      <span class="hive-word w2">Dunes.</span>
-      <span class="hive-word w3">Trails.</span>
-      {honeycomb()}
-    </div>
+    <figure class="story-fig fade" data-d="2">
+      <img src="/assets/scene/founders.webp?v={V}" alt="Chase and Brandon, the founders of LusterLux, with their trucks in the Arizona desert" loading="lazy" decoding="async" />
+    </figure>
   </div>
 </section>
 
-<section class="sec system" id="system">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kick slide">The System</p>
-      <h2 class="fade" data-d="1">Five stages. <em>In this order.</em></h2>
-      <p class="lead fade" data-d="2">Sequence matters more than product count. Do it in this order and every stage makes the next one easier.</p>
-    </div>
-    <ol class="sys flow-rail">{steps}</ol>
-    <div class="sys-cta fade" data-d="3">
-      <p>All five stages, one box.</p>
-      <a class="btn btn-primary" href="/products/complete-detail-system-1/">Complete Detail System &middot; {money(by_handle['complete-detail-system-1']['price'])}<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+<section class="hive-band" id="hive" aria-label="LusterLux at work">
+  <div class="wrap hive-wrap">
+    <div class="hive fade" data-d="1">
+      <span class="hive-word w1">Foam.</span>
+      <span class="hive-word w2">Wheels.</span>
+      <span class="hive-word w3">Finish.</span>
+      {honeycomb()}
     </div>
   </div>
 </section>
@@ -631,19 +665,6 @@ def build_home():
       <p class="lead fade" data-d="2">A 720S, blanketed in LuxFoam and rinsed. Same car, same camera, four minutes apart.</p>
     </div>
     {before_after()}
-  </div>
-</section>
-
-<section class="sec bone" id="worlds">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kick slide">Shop What You Drive</p>
-      <h2 class="fade" data-d="1">Built for <em>all of it.</em></h2>
-      <p class="lead fade" data-d="2">Chase and Brandon didn&rsquo;t build this line for one clean car in a
-        garage. Between the rental fleet, the Glamis dunes and the Heber trails, it had to hold up on
-        whatever came home dirty. Pick yours and we will only show you what applies.</p>
-    </div>
-    <div class="wtiles fade" data-d="2">{world_tiles()}</div>
   </div>
 </section>
 
@@ -886,15 +907,17 @@ def nano_steps():
 
 
 # ============================================================== COLLECTIONS ==
-def collection_page(key, title, desc, items, url, intro="", world=False):
+def collection_page(key, title, desc, items, url, intro="", world=False, subnav="", parent=""):
     cards = "".join(card(p) for p in items) or '<p class="empty">Nothing here yet.</p>'
     chips = "".join(
-      f'<a class="chip{" on" if c["k"]==key else ""}" href="/collections/{c["k"]}/">{c["t"]}'
-      f'<b>{len(in_cat(c["k"]))}</b></a>' for c in SHOP_CATS)
+      f'<a class="chip{" on" if g["k"]==key else ""}" href="/collections/{g["k"]}/">{g["t"]}'
+      f'<b>{len(in_group(g["k"]))}</b></a>' for g in GROUPS)
     wchips = "".join(
       f'<a class="chip w{" on" if w["k"]==key else ""}" href="/collections/{w["k"]}/">{w["t"]}'
       f'<b>{len(in_world(w["k"]))}</b></a>' for w in WORLDS)
-    trail = [("Home","/"),("Shop","/collections/")] + ([(title, url)] if key else [])
+    trail = [("Home","/"),("Shop","/collections/")]
+    if parent: trail.append((plain(group_meta(parent)["t"]), f'/collections/{parent}/'))
+    if key: trail.append((title, url))
     sch = [crumbs(trail),
       {"@context":"https://schema.org","@type":"CollectionPage","name":title,"url":SITE+url,
        "description":desc,
@@ -913,6 +936,7 @@ def collection_page(key, title, desc, items, url, intro="", world=False):
       {crumb_nav(trail)}
       <h1>{title}</h1>
       <p class="lead">{intro or desc}</p>
+      {f'<nav class="subnav">{subnav}</nav>' if subnav else ''}
     </div>
   </section>
   <div class="catbar"><div class="wrap catbar-in">
@@ -942,24 +966,37 @@ def collection_page(key, title, desc, items, url, intro="", world=False):
 
 
 def build_collections():
+    # five group pages, each listing its subcategories
+    for g in GROUPS:
+        items = in_group(g["k"])
+        subnav = "".join(
+          f'<a class="subchip" href="/collections/{sk}/">{sub_meta(sk)["t"]}'
+          f'<b>{len(in_sub(sk))}</b></a>' for sk in g["subs"])
+        collection_page(g["k"], plain(g["t"]),
+          meta_desc(g["d"], f'{len(items)} LusterLux products in {plain(g["t"]).lower()}.',
+                    f'Made in the USA. Free shipping over {money(FREE)}.'),
+          items, f'/collections/{g["k"]}/', g["d"], subnav=subnav)
+    # subcategory pages (the three Beyond-the-Car subs are the world pages, built below)
+    for s in SUBS:
+        if s["k"] in WORLD_KEYS: continue
+        items = in_sub(s["k"])
+        collection_page(s["k"], plain(s["t"]),
+          meta_desc(s["d"], f'{len(items)} products in {plain(s["t"]).lower()} from LusterLux.',
+                    f'Made in the USA. Free shipping over {money(FREE)}.'),
+          items, f'/collections/{s["k"]}/', s["d"], parent=s["g"])
+
     collection_page("", "Shop all",
       meta_desc(f"Every LusterLux product in one place — all {len(P)} of them, across wash and waterless, wheels and tires, interior, towels and tools, kits, and beyond-the-car care.",
                 f"Free shipping over {money(FREE)}."),
       P, "/collections/",
       "The whole catalog, grouped by what you are actually cleaning. Filter it, sort it, or search it.")
-    for c in SHOP_CATS:
-        items = in_cat(c["k"])
-        collection_page(c["k"], c["t"].replace("&amp;", "&"),
-          meta_desc(c["d"],
-                    f'{len(items)} products in {plain(c["t"])} from LusterLux.',
-                    f'Made in the USA. Free shipping over {money(FREE)}.'),
-          items, f'/collections/{c["k"]}/', c["d"])
     for w in WORLDS:
         items = in_world(w["k"])
         collection_page(w["k"], w["t"].replace("&amp;", "&"),
           meta_desc(w["d"], f'{len(items)} LusterLux products that apply to {plain(w["t"]).lower()}.',
                     f'Made in the USA. Free shipping over {money(FREE)}.'),
-          items, f'/collections/{w["k"]}/', w["d"], world=True)
+          items, f'/collections/{w["k"]}/', w["d"], world=True,
+          parent="beyond-the-car" if w["k"] in ("golf-cart","marine","off-road") else "")
     m = [p for p in P if p["cat"] == "merch"]
     collection_page("merch", "Merch",
       meta_desc("LusterLux tees and caps for the people who spend their weekends in the driveway rather than out of it.",
@@ -979,7 +1016,20 @@ def build_products():
         best = "".join(f"<li>{b}</li>" for b in p["bestFor"])
         how  = "".join(f"<li>{s}</li>" for s in p["how"])
         specs = "".join(f"<li>{s}</li>" for s in p["specs"])
-        trail = [("Home","/"),("Shop","/collections/"),(cat_name(p["cat"]).replace("&amp;","&"),f'/collections/{p["cat"]}/'),(p["n"],p["url"])]
+        gk = p.get("group") or "kits-systems"
+        sk = prod_sub(p)
+        trail = [("Home","/"),("Shop","/collections/"),
+                 (plain(group_meta(gk)["t"]), f'/collections/{gk}/')]
+        if sk != gk: trail.append((plain(prod_sub_name(p)), f'/collections/{sk}/'))
+        trail.append((p["n"], p["url"]))
+        feats = ("" if not p.get("features") else
+          '<h2 class="pdp-h">What it does</h2><ul class="feat">' +
+          "".join(f'<li><b>{lead}</b> {body}</li>' for lead, body in p["features"]) + '</ul>')
+        caution = ("" if not p.get("caution") else
+          f'<div class="caution"><b>{p["caution"][0]}</b><span>{p["caution"][1]}</span></div>')
+        tips = ("" if not p.get("tips") else
+          '<h2 class="pdp-h">Detailer tips</h2><ul class="tips">' +
+          "".join(f'<li>{x}</li>' for x in p["tips"]) + '</ul>')
 
         buy = ('<p class="pdp-soon">Coming soon &mdash; not yet available to order.</p>' if p["soon"] else
                f"""<div class="pdp-buy">
@@ -1033,7 +1083,7 @@ def build_products():
         </div>
       </div>
       <div class="pdp-info">
-        <p class="pdp-cat"><a href="/collections/{p['cat']}/">{cat_name(p['cat'])}</a></p>
+        <p class="pdp-cat"><a href="/collections/{sk}/">{prod_sub_name(p)}</a></p>
         <h1>{esc(p['n'])} <em>&mdash; {p['fn']}</em></h1>
         {f'<p class="pdp-line">{p["line"]}</p>' if p['line'] else ''}
         <p class="pdp-desc">{p['desc']}</p>
@@ -1045,10 +1095,18 @@ def build_products():
   </section>
 
   <section class="sec alt">
-    <div class="wrap pdp-cols">
-      {f'<div class="pdp-col"><h2>Best for</h2><ul class="tick">{best}</ul></div>' if best else ''}
-      {f'<div class="pdp-col"><h2>How to use</h2><ol class="steps-num">{how}</ol></div>' if how else ''}
-      <div class="pdp-col"><h2>Good to know</h2><div class="faq-list">{faq_html}</div></div>
+    <div class="wrap pdp-detail">
+      <div class="pdp-main">
+        {feats}
+        {caution}
+        {f'<h2 class="pdp-h">How to use</h2><ol class="steps-num">{how}</ol>' if how else ''}
+        {tips}
+      </div>
+      <aside class="pdp-aside">
+        {f'<h2 class="pdp-h">Best for</h2><ul class="tick">{best}</ul>' if best else ''}
+        <h2 class="pdp-h">Good to know</h2>
+        <div class="faq-list">{faq_html}</div>
+      </aside>
     </div>
   </section>
 
@@ -1057,7 +1115,7 @@ def build_products():
       <div class="sec-head"><p class="kick slide">Pairs with</p>
         <h2 class="fade" data-d="1">Works with {esc(p['n'])}.</h2></div>
       <div class="grid four fade" data-d="2">{pairs}</div>
-      <p class="fade" data-d="3" style="margin-top:30px"><a class="tlink" href="/collections/{p['cat']}/">All {cat_name(p['cat'])}<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+      <p class="fade" data-d="3" style="margin-top:30px"><a class="tlink" href="/collections/{sk}/">All {prod_sub_name(p)}<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
     </div>
   </section>
 </main>
@@ -1373,7 +1431,9 @@ def build_redirects():
 def build_meta_files():
     urls = ["/", "/collections/", "/cart/", "/pages/find-your-product/",
             "/pages/nanofusion/", "/pages/about/"]
-    urls += [f'/collections/{c["k"]}/' for c in SHOP_CATS] + ["/collections/merch/"]
+    urls += [f'/collections/{g["k"]}/' for g in GROUPS]
+    urls += [f'/collections/{s["k"]}/' for s in SUBS]
+    urls += ["/collections/merch/"]
     urls += [f'/collections/{w["k"]}/' for w in WORLDS]
     urls += [p["url"] for p in P]
     urls += [f"/pages/find-your-product/{s}-{j}/" for s, _, _ in SURFACES for j, _ in JOBS]

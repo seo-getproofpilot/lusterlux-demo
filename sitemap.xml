@@ -6,17 +6,25 @@
   <url><loc>https://lusterluxauto.com/pages/find-your-product/</loc><priority>0.6</priority></url>
   <url><loc>https://lusterluxauto.com/pages/nanofusion/</loc><priority>0.6</priority></url>
   <url><loc>https://lusterluxauto.com/pages/about/</loc><priority>0.6</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/exterior/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/interior/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/tools/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/kits-systems/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/beyond-the-car/</loc><priority>0.8</priority></url>
   <url><loc>https://lusterluxauto.com/collections/wash-waterless/</loc><priority>0.8</priority></url>
   <url><loc>https://lusterluxauto.com/collections/wheels-tires/</loc><priority>0.8</priority></url>
-  <url><loc>https://lusterluxauto.com/collections/interior/</loc><priority>0.8</priority></url>
-  <url><loc>https://lusterluxauto.com/collections/towels-tools/</loc><priority>0.8</priority></url>
-  <url><loc>https://lusterluxauto.com/collections/beyond-the-car/</loc><priority>0.8</priority></url>
-  <url><loc>https://lusterluxauto.com/collections/kits-systems/</loc><priority>0.8</priority></url>
-  <url><loc>https://lusterluxauto.com/collections/merch/</loc><priority>0.8</priority></url>
-  <url><loc>https://lusterluxauto.com/collections/car-truck/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/ceramic/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/interior-cleaners/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/trim-dressings/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/scents/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/microfiber/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/brushes/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/cannons/</loc><priority>0.8</priority></url>
   <url><loc>https://lusterluxauto.com/collections/golf-cart/</loc><priority>0.8</priority></url>
   <url><loc>https://lusterluxauto.com/collections/marine/</loc><priority>0.8</priority></url>
   <url><loc>https://lusterluxauto.com/collections/off-road/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/merch/</loc><priority>0.8</priority></url>
+  <url><loc>https://lusterluxauto.com/collections/car-truck/</loc><priority>0.8</priority></url>
   <url><loc>https://lusterluxauto.com/products/luxpro-waterless-wash-detail-spray/</loc><priority>0.8</priority></url>
   <url><loc>https://lusterluxauto.com/products/ceramicx-ceramic-detail-spray/</loc><priority>0.8</priority></url>
   <url><loc>https://lusterluxauto.com/products/luxfoam-foam-cannon-soap/</loc><priority>0.8</priority></url>

@@ -77,13 +77,15 @@ SCENES = {
   "use-wheelassassin": "IMG_6876.jpg",
   "use-tirevenom":     "IMG_6881.jpg",
   "use-interiorx":     "IMG_0813.jpg",
+  "founders":    "Why_LusterLux_Pic_2_4d044122-f8d8-46f7-b4fd-4280dfae3f9a.jpg",
+  "founders-2":  "IMG_8358.jpg",
   "ba-before":   "IMG_4677.jpg",
   "ba-after":    "IMG_4704.jpg",
 }
 
 # plates that are ever shown full-bleed, so they keep a large variant too
 SCENE_FULL = {"hero-foam", "hero-wheel", "hero-hood", "nano-hood", "wheel-caliper",
-              "ba-before", "ba-after", "interior", "cart", "towels", "kitshot", "marine", "ceramic"}
+              "ba-before", "ba-after", "interior", "cart", "towels", "kitshot", "marine", "ceramic", "founders", "founders-2"}
 
 # --- everything else in the catalog, so the shop grid is one cohesive dark set.
 # Photoroom_* files already ship with an alpha channel; the pipeline detects that

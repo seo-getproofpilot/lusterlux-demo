@@ -293,6 +293,61 @@ SHOWCASE = {'luxpro-waterless-wash-detail-spray': ('Skip the hose. Keep the shin
 IN_USE = {'luxpro-waterless-wash-detail-spray': 'use-luxpro', 'ceramicx-ceramic-detail-spray': 'use-ceramicx', 'luxfoam-foam-cannon-soap': 'use-luxfoam', 'luxwheelassassin-wheel-cleaner': 'use-wheelassassin', 'tirevenom-tire-dressing': 'use-tirevenom', 'interiorx-interior-cleaner': 'use-interiorx'}
 
 
+
+# ---- top-level groups with real subcategories -----------------------------
+# A flat list of six buckets told a new buyer nothing. This is the Adam's shape:
+# five things you can hold in your head, each opening into what is actually in it.
+GROUPS = [
+ ("exterior", "Exterior", "Everything that touches the outside of the vehicle, in the order you use it.",
+  ["wash-waterless", "wheels-tires", "ceramic"]),
+ ("interior", "Interior", "Dash, trim, glass and cabin air. Clean finishes, no gloss, no greasy film.",
+  ["interior-cleaners", "trim-dressings", "scents"]),
+ ("tools", "Tools &amp; Towels", "The microfiber, brushes, cannons and sprayers the chemistry was built around.",
+  ["microfiber", "brushes", "cannons"]),
+ ("kits-systems", "Kits &amp; Systems", "Start with one bottle or take the whole bay. Every system beats the parts.",
+  []),
+ ("beyond-the-car", "Beyond the Car", "Golf carts, boats and anything that comes home covered in trail dust.",
+  ["golf-cart", "marine", "off-road"]),
+]
+SUBS = [
+ ("wash-waterless",   "Wash &amp; Waterless", "Foam it, wash it, or skip the hose entirely."),
+ ("wheels-tires",     "Wheels &amp; Tires",   "Brake dust off, sidewalls back to black, nothing slung down your paint."),
+ ("ceramic",          "Ceramic &amp; Protection", "The layer that goes on last and makes every wash after it easier."),
+ ("interior-cleaners","Cleaners",           "Dash, console and door cards back to a factory matte."),
+ ("trim-dressings",   "Trim &amp; Dressings", "Rubber, vinyl and plastic brought back and held there."),
+ ("scents",           "Scents",             "Odour neutralised at the source, not perfumed over."),
+ ("microfiber",       "Microfiber Towels",  "A weight for every surface and every step."),
+ ("brushes",          "Brushes &amp; Applicators", "For the places a towel physically cannot reach."),
+ ("cannons",          "Cannons &amp; Sprayers", "Foam cannons, pressure guns, sprayers and buckets."),
+ ("golf-cart",        "Golf Cart",          "Cart paint, plastic panels and vinyl bench seats."),
+ ("marine",           "Marine",             "Gelcoat, vinyl seating and trim that live in sun and salt."),
+ ("off-road",         "Off-Road &amp; UTV", "Mud, trail dust and baked-on film."),
+]
+# product handle -> subcategory
+SUB_OF = {
+ "luxpro-waterless-wash-detail-spray":"wash-waterless","luxfoam-foam-cannon-soap":"wash-waterless",
+ "luxquick-detail-spray":"wash-waterless","ceramicx-ceramic-detail-spray":"ceramic",
+ "luxwheelassassin-wheel-cleaner":"wheels-tires","tirevenom-tire-dressing":"wheels-tires",
+ "lux-tire-brush":"wheels-tires","lux-wheel-brush":"wheels-tires",
+ "interiorx-interior-cleaner":"interior-cleaners","lux-brush-interior-brush":"interior-cleaners",
+ "restorx-rvp-plastic-dressing":"trim-dressings",
+ "newcarember-air-freshener":"scents","vanillaember-air-freshener":"scents",
+ "3-pack-edgeless-lux-edgeless-microfiber-towels":"microfiber","5-pack-microlux-microfiber-towels":"microfiber",
+ "luxtowel-drying-towel":"microfiber","2-pack-luxwindow-waffle-window-towel":"microfiber",
+ "towel-tantrum-kit-every-surface-every-step-every-finish":"microfiber",
+ "luxmit-wash-mit":"brushes","luxbug-bug-and-tar-remover-sponge":"brushes",
+ "2-pack-xpad-applicator-pad":"brushes",
+ "luxcannon-foam-cannon":"cannons","luxgun-pressure-washer-gun":"cannons",
+ "lux-bucket-car-washing-bucket":"cannons","foamx-sprayer-electric-sprayer":"cannons",
+ "lux-sprayer-pump-sprayer":"cannons",
+ "birdielux-golf-cart-exterior-cleaner":"golf-cart","xfresh-golf-cart-interior-cleaner":"golf-cart",
+ "fairway-finish-system":"golf-cart","trail-foam-coming-soon":"off-road",
+}
+SUB_GROUP = {s: g for g, _, _, subs in GROUPS for s in subs}
+
+DETAIL = {'luxpro-waterless-wash-detail-spray': {'features': [('NanoFusion encapsulation', 'Nano-polymers wrap each particle of dust and road film so it lifts clear of the paint instead of being dragged across it.'), ('High-lubricity carrier', 'The towel rides on liquid, not on your clear coat. This is what separates a maintenance wipe from a panel full of swirls.'), ('Leaves protection behind', 'An ultra-thin hydrophobic layer that adds gloss, tightens water beading and slows how fast dust bonds back on.'), ('No hose, no bucket, no runoff', 'Works in an apartment car park, a garage, or on a show field.'), ('Safe across the whole exterior', 'Paint, clear coat, glass, chrome, plastic trim, wheels, PPF, vinyl wrap and existing ceramic coatings.'), ('15 to 30 vehicles a bottle', 'One 16 oz bottle covers most daily drivers for the better part of a year.')], 'caution': ('Not for a genuinely dirty car', 'Waterless is for light dust, pollen, fingerprints and road film. If you can feel grit on the panel, rinse or foam it off first.'), 'tips': ['Work one panel at a time, out of direct sun.', 'Spray more than feels reasonable. Under-spraying is what causes scratches.', 'Straight-line wipes, front to back. Never circles.', 'Rotate to a fresh towel face every panel or two.', 'Use Edgeless Lux towels &mdash; the formula was built around them.']}, 'ceramicx-ceramic-detail-spray': {'features': [('Bonds in minutes', 'A durable ceramic layer laid down in the time it takes to wipe a panel.'), ('Up to 8 months', 'With proper application and maintenance, one application holds through a season and then some.'), ('Extreme hydrophobics', 'Water beads tight and sheets off fast, which is what stops mineral spotting from setting in.'), ('Layers over what you already have', 'Tops up an existing coating rather than replacing it.'), ('Real gloss depth', 'Enhances colour depth rather than just adding surface shine.'), ('10 to 20 vehicles a bottle', 'Two to three sprays a panel is all it takes.')], 'caution': ('Needs a clean, cool, dry surface', 'Sealing dirt under a coating locks it in. Wash or waterless first, always.'), 'tips': ['Two to three sprays per panel, no more.', 'Spread with one towel, buff off with a second dry one.', 'Give it an hour before it sees rain.', 'Use it after LuxPro or a foam wash, never instead of one.']}, 'luxfoam-foam-cannon-soap': {'features': [('Thick, clinging foam', 'Stays on the panel long enough to break down road film instead of sliding straight off.'), ('High lubricity', 'The mitt glides rather than grabs &mdash; the single biggest thing standing between a wash and a swirl.'), ('Encapsulating', 'Dirt stays suspended in the suds where it cannot cut into the clear coat.'), ('Coating and wax safe', 'Rinses clean with no residue and will not strip what is already on the car.'), ('Cannon or two-bucket', 'Works either way, though the cannon is where the dwell time comes from.'), ('8 to 16 washes a bottle', 'Highly concentrated, so start leaner than you think.')], 'caution': ('Never foam a dry, dusty panel', 'Rinse the loose grit off with water first, or you are just gluing it in place.'), 'tips': ['Foam bottom to top so the dirtiest panels never sit uncovered.', 'Let it dwell two to five minutes, in shade.', 'Rinse top to bottom before it dries.', 'Dial thickness from the cannon before you add more soap.', 'Watch the runoff &mdash; brown means it is working.']}, 'luxwheelassassin-wheel-cleaner': {'features': [('Breaks brake dust down chemically', 'Releases bonded metal so you are not scrubbing a finish you cannot replace.'), ('Minimal agitation', 'Most of the work happens while it dwells, not while you scrub.'), ('Safe across wheel finishes', 'Clear-coated, painted, chrome, alloy and factory wheels.'), ('Cuts grease and road film', 'Not just the surface dust that rinses off anyway.'), ('12 to 20 vehicles a bottle', 'Enough for a season of weekly washes.')], 'caution': ('Test an inconspicuous area first', 'And never let it dry on the wheel. Work cool wheels, out of direct sun.'), 'tips': ['Spray the barrel, not just the face. That is where the dust lives.', 'Agitate with a wheel brush where buildup is heavy.', 'Wheels come first in a wash, before any paint.', 'Rinse thoroughly and dry before you dress the tires.']}, 'tirevenom-tire-dressing': {'features': [('No-sling, dries to the touch', 'Stays on the sidewall instead of striping down your rocker panel on the first pull-out.'), ('Deep, even black', 'Restores faded rubber without the wet-look gloss that reads cheap.'), ('UV, cracking and browning defence', 'Up to three months from a single application.'), ('Never greasy', 'It does not stay tacky, so it does not collect dust the moment you park.'), ('30 to 50 tires a bottle', 'A 16 oz bottle lasts most people a year.')], 'caution': ('Scrub the sidewall clean first', 'Dressing over old dressing is exactly what causes browning. This step is not optional.'), 'tips': ['Apply with an XPad rather than spraying directly.', 'Level out any heavy spots before it sets.', 'Let it set before you drive.', 'Dress tires last, after the car is washed and dry.']}, 'interiorx-interior-cleaner': {'features': [('Dries to a factory matte', 'No gloss, so nothing reflects back at you off the dash in low sun.'), ('No greasy residue', 'A steering wheel stays a steering wheel.'), ('Lifts real interior soil', 'Fingerprints, spills, dust and everyday grime, not just surface dust.'), ('Safe across the cabin', 'Dashboards, door panels, consoles, steering wheels, vinyl, plastic and rubber.'), ('15 to 25 vehicles a bottle', 'Enough for routine upkeep and the occasional deep clean.')], 'caution': None, 'tips': ['Spray onto the towel, not the panel.', 'Work one section at a time and follow with a dry towel face.', 'Use a LuxBrush for vents, seams and switchgear.', 'Do the interior before the exterior so overspray lands on unwashed paint.']}}
+
+
 def main():
     src = json.load(open(RAW))["products"]
     items, seen, problems = [], set(), []
@@ -336,6 +391,9 @@ def main():
             "inuse": IN_USE.get(h, ""),
             "showBody": SHOWCASE.get(h, (None, None, None))[1] or "",
             "showWhy": SHOWCASE.get(h, (None, None, None))[2] or "",
+            "features": (DETAIL.get(h) or {}).get("features", []),
+            "caution": (DETAIL.get(h) or {}).get("caution") or [],
+            "tips": (DETAIL.get(h) or {}).get("tips", []),
             "soon": price == 0,
             "storeUrl": f"{STORE}/products/{h}",
             "url": f"/products/{h}/",
@@ -354,6 +412,12 @@ def main():
 
     items.sort(key=lambda i: (i["hero"] == 0, i["hero"], i["cat"], -i["price"]))
     for i in items:
+        sub = SUB_OF.get(i["h"], "")
+        if not sub and i["cat"] == "kits-systems": sub = ""
+        i["sub"] = sub
+        i["group"] = SUB_GROUP.get(sub, "kits-systems" if i["cat"] == "kits-systems"
+                                   else ("beyond-the-car" if i["cat"] == "beyond-the-car" else ""))
+        if i["cat"] == "merch": i["group"] = "merch"
         w = []
         if i["h"] not in NOT_CAR and i["cat"] != "merch":
             w.append("car-truck")
@@ -363,7 +427,9 @@ def main():
         i["worlds"] = w
     cats = [{"k": k, "t": t, "d": d} for k, t, d in CATS] + [{"k": MERCH[0], "t": MERCH[1], "d": MERCH[2]}]
     worlds = [{"k": k, "t": t, "d": d, "img": im} for k, t, d, im in WORLDS]
-    payload = {"cats": cats, "worlds": worlds, "products": items,
+    groups = [{"k": k, "t": t, "d": d, "subs": subs} for k, t, d, subs in GROUPS]
+    subs = [{"k": k, "t": t, "d": d, "g": SUB_GROUP.get(k, "")} for k, t, d in SUBS]
+    payload = {"cats": cats, "groups": groups, "subs": subs, "worlds": worlds, "products": items,
                "meta": {"source": f"{STORE}/products.json", "fetched": "2026-08-29",
                         "freeShipping": 45.0}}
 
@@ -380,6 +446,14 @@ def main():
         n = sum(1 for i in items if i["cat"] == c["k"])
         x = sum(1 for i in items if c["k"] in i["also"])
         print(f"  {c['k']:<16} {n}" + (f"  (+{x} cross-listed)" if x else ""))
+    print("  --- groups ---")
+    for g in groups:
+        n = sum(1 for i in items if i["group"] == g["k"])
+        print(f"  {g['k']:<16} {n}")
+        for sk in g["subs"]:
+            print(f"     {sk:<20} {sum(1 for i in items if i['sub']==sk)}")
+    unassigned=[i["h"] for i in items if not i["group"]]
+    if unassigned: print("  UNGROUPED:", unassigned)
     print("  --- worlds ---")
     for w in worlds:
         print(f"  {w['k']:<16} {sum(1 for i in items if w['k'] in i['worlds'])}")
