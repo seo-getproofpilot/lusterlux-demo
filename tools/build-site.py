@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "47"                                   # cache-bust, bump on every build
+V    = "49"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -646,25 +646,20 @@ def build_home():
   </div>
 </section>
 
-<section class="hive-band" id="hive" aria-label="LusterLux at work">
-  <div class="wrap hive-wrap">
-    <div class="hive fade" data-d="1">
+<section class="sec bone" id="the-work">
+  <div class="wrap">
+    <div class="sec-head c">
+      <p class="kick c slide">Foam. Rinse. Shine.</p>
+      <h2 class="fade" data-d="1">One wash. <em>Drag it.</em></h2>
+      <p class="lead fade" data-d="2">A 720S blanketed in LuxFoam and rinsed. Same car, same camera, four minutes apart.</p>
+    </div>
+    {before_after()}
+    <div class="hive fade" data-d="2" aria-label="LusterLux at work">
       <span class="hive-word w1">Foam.</span>
       <span class="hive-word w2">Wheels.</span>
       <span class="hive-word w3">Finish.</span>
       {honeycomb()}
     </div>
-  </div>
-</section>
-
-<section class="sec alt ba-band" id="before-after">
-  <div class="wrap">
-    <div class="sec-head c">
-      <p class="kick c slide">Foam. Rinse. Shine.</p>
-      <h2 class="fade" data-d="1">One wash. <em>Drag it.</em></h2>
-      <p class="lead fade" data-d="2">A 720S, blanketed in LuxFoam and rinsed. Same car, same camera, four minutes apart.</p>
-    </div>
-    {before_after()}
   </div>
 </section>
 
@@ -1022,6 +1017,11 @@ def build_products():
                  (plain(group_meta(gk)["t"]), f'/collections/{gk}/')]
         if sk != gk: trail.append((plain(prod_sub_name(p)), f'/collections/{sk}/'))
         trail.append((p["n"], p["url"]))
+        inc = ("" if not p.get("includes") else
+          '<h2 class="pdp-h">In the box</h2><ul class="includes">' +
+          "".join(f'<li>{x}</li>' for x in p["includes"]) + '</ul>')
+        who = ("" if not p.get("who") else
+          f'<div class="whofor"><b>Who it is for</b><span>{p["who"]}</span></div>')
         feats = ("" if not p.get("features") else
           '<h2 class="pdp-h">What it does</h2><ul class="feat">' +
           "".join(f'<li><b>{lead}</b> {body}</li>' for lead, body in p["features"]) + '</ul>')
@@ -1097,7 +1097,9 @@ def build_products():
   <section class="sec alt">
     <div class="wrap pdp-detail">
       <div class="pdp-main">
+        {inc}
         {feats}
+        {who}
         {caution}
         {f'<h2 class="pdp-h">How to use</h2><ol class="steps-num">{how}</ol>' if how else ''}
         {tips}

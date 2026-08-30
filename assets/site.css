@@ -528,6 +528,12 @@ select.sort{padding:0 12px}
 /* ---------- story, verticals, reviews ---------- */
 .story-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(34px,6vw,78px);align-items:center}
 .story-copy p{margin-top:20px;color:#c3c8cd;font-size:16.5px;line-height:1.8;max-width:56ch}
+/* light sections need their own text colours — inheriting the dark ones washed
+   the founder copy out to near-invisible grey on bone */
+.bone .story-copy p{color:#3c4249}
+.bone .sign{color:#5d646c}
+.bone .sign b{color:var(--ink)}
+.bone .lead,.bone .hive-copy p{color:#3c4249}
 .story-copy h2{margin-top:18px}
 .sign{margin-top:28px;font-family:var(--face);font-size:10px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted)}
@@ -730,6 +736,8 @@ a.contact:hover b{color:var(--brand)}
   background:var(--brand);border-radius:50%;box-shadow:0 8px 24px rgba(0,0,0,.55)}
 .ba-cap{margin-top:18px;text-align:center;font-family:var(--face);font-size:9.5px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--muted)}
+.bone .ba-cap{color:#5d646c}
+.bone .ba-cap a{color:var(--brand-2)}
 .ba-cap a{color:var(--brand)}
 
 /* ---------- footer ---------- */
@@ -960,7 +968,8 @@ a.contact:hover b{color:var(--brand)}
 .hive-copy h2{margin-top:18px}
 .hive-copy .sign{color:#5d646c}
 .hive-copy .sign b{color:var(--ink)}
-.hive{position:relative;display:flex;justify-content:center;align-items:flex-start;padding:0}
+.hive{position:relative;display:flex;justify-content:center;align-items:flex-start;
+  padding:0;margin-top:clamp(48px,6vw,84px)}
 .hex-col{display:flex;flex-direction:column;gap:7px;margin-left:-8.4%;flex:1 1 0;min-width:0}
 .hex-col:first-child{margin-left:0}
 .hex-col.off{margin-top:15.5%}
@@ -1045,6 +1054,19 @@ a.contact:hover b{color:var(--brand)}
 :not(.bone) .feat li{color:var(--muted)}
 :not(.bone) .feat li b{color:#fff}
 :not(.bone) .feat li::before{background:var(--acc,var(--brand))}
+
+.includes{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.includes li{padding:12px 15px;clip-path:var(--clip-billet-xs);font-size:13.5px;color:#3c4249;
+  background:rgba(10,12,16,.05)}
+:not(.bone) .includes li{color:#dfe4e8;background:rgba(255,255,255,.05)}
+.whofor{margin-top:22px;padding:18px 20px;clip-path:var(--clip-billet-sm);
+  background:rgba(132,208,25,.12);display:grid;gap:6px}
+.whofor b{font-family:var(--face);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--brand-2);font-weight:400}
+.whofor span{font-size:15.5px;line-height:1.62;color:#3c4249}
+:not(.bone) .whofor b{color:var(--brand)}
+:not(.bone) .whofor span{color:#dfe4e8}
+@media(max-width:600px){.includes{grid-template-columns:1fr}}
 
 .tips{margin-top:20px;display:grid;gap:12px}
 .tips li{position:relative;padding-left:26px;font-size:15px;line-height:1.65;color:#4a5057}

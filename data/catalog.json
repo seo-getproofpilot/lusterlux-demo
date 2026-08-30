@@ -272,6 +272,8 @@
     "Rotate to a fresh towel face every panel or two.",
     "Use Edgeless Lux towels &mdash; the formula was built around them."
    ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxpro-waterless-wash-detail-spray",
    "url": "/products/luxpro-waterless-wash-detail-spray/",
@@ -366,6 +368,8 @@
     "Give it an hour before it sees rain.",
     "Use it after LuxPro or a foam wash, never instead of one."
    ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/ceramicx-ceramic-detail-spray",
    "url": "/products/ceramicx-ceramic-detail-spray/",
@@ -463,6 +467,8 @@
     "Dial thickness from the cannon before you add more soap.",
     "Watch the runoff &mdash; brown means it is working."
    ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxfoam-foam-cannon-soap",
    "url": "/products/luxfoam-foam-cannon-soap/",
@@ -553,6 +559,8 @@
     "Wheels come first in a wash, before any paint.",
     "Rinse thoroughly and dry before you dress the tires."
    ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxwheelassassin-wheel-cleaner",
    "url": "/products/luxwheelassassin-wheel-cleaner/",
@@ -641,6 +649,8 @@
     "Let it set before you drive.",
     "Dress tires last, after the car is washed and dry."
    ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/tirevenom-tire-dressing",
    "url": "/products/tirevenom-tire-dressing/",
@@ -727,6 +737,8 @@
     "Use a LuxBrush for vents, seams and switchgear.",
     "Do the interior before the exterior so overspray lands on unwashed paint."
    ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/interiorx-interior-cleaner",
    "url": "/products/interiorx-interior-cleaner/",
@@ -762,9 +774,34 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Every surface on a cart",
+     "Painted panels, plastic bodywork, vinyl seats, dash and trim."
+    ],
+    [
+     "Waterless throughout",
+     "Carts rarely live near a hose. This works where the cart is parked."
+    ],
+    [
+     "Both towel weights",
+     "Exterior for panels, interior for seats and dash."
+    ],
+    [
+     "Brush for textured vinyl",
+     "Where a towel just skates across the top."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× BirdieLux Golf Cart Exterior Cleaner",
+    "1× XFresh Cart Interior Cleaner",
+    "5× MicroLux Interior Towels",
+    "3× Edgeless Lux Exterior Towels",
+    "1× Lux Detail Brush"
+   ],
+   "who": "Anyone with a cart worth as much as a used car, cleaned like garden furniture.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/fairway-finish-system",
    "url": "/products/fairway-finish-system/",
@@ -817,9 +854,36 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
-   "tips": [],
+   "features": [
+    [
+     "Built for cart surfaces",
+     "Painted panels, moulded plastic bodywork and trim, which behave nothing like automotive clear coat."
+    ],
+    [
+     "Waterless",
+     "Cleans where the cart sits. Most carts never get near a hose."
+    ],
+    [
+     "Streak-free",
+     "Cart plastic shows every smear. This does not leave one."
+    ],
+    [
+     "Handles cart-path film",
+     "Dust, pollen, grass and the grime that comes off a path in the wet."
+    ]
+   ],
+   "caution": [
+    "Grit needs rinsing first",
+    "Same rule as any waterless product. If you can feel it, do not wipe it."
+   ],
+   "tips": [
+    "One panel at a time, with a clean Edgeless Lux towel.",
+    "Never dry-wipe an acrylic windshield &mdash; flood it first.",
+    "Blow or brush loose sand off before anything wet touches the cart.",
+    "Keep the bottle with the cart, not in a garage across town."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/birdielux-golf-cart-exterior-cleaner",
    "url": "/products/birdielux-golf-cart-exterior-cleaner/",
@@ -871,9 +935,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Dries clean on vinyl",
+     "No slick film, which matters a lot on a bench seat with no belts."
+    ],
+    [
+     "Made for cart interiors",
+     "Seats, dash, trim and the textured vinyl carts are covered in."
+    ],
+    [
+     "Handles a season outdoors",
+     "Sunscreen, sweat, grass and rain, which is what cart seats actually take."
+    ],
+    [
+     "No greasy residue",
+     "Nothing transfers onto clothes."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Spray onto the towel, not the seat.",
+    "Work one section and follow with a dry towel face.",
+    "A LuxBrush gets into textured vinyl a towel skates over.",
+    "Do the seats before the bodywork so overspray lands on unwashed panels."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/xfresh-golf-cart-interior-cleaner",
    "url": "/products/xfresh-golf-cart-interior-cleaner/",
@@ -909,9 +997,23 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
+   "features": [
+    [
+     "Built for mud, not dust",
+     "A foam that clings long enough to soften dried trail film before anything touches the paint."
+    ],
+    [
+     "In development",
+     "Being tested against real trail vehicles before it ships."
+    ]
+   ],
+   "caution": [
+    "Not available yet",
+    "Trail Foam is still in development. Everything else in Off-Road is shipping today."
+   ],
    "tips": [],
+   "includes": [],
+   "who": "",
    "soon": true,
    "storeUrl": "https://lusterluxauto.com/products/trail-foam-coming-soon",
    "url": "/products/trail-foam-coming-soon/",
@@ -946,9 +1048,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Curved head",
+     "Follows vents, seams and the shape of a dash."
+    ],
+    [
+     "Soft enough for piano black",
+     "Where a stiff brush leaves visible marks."
+    ],
+    [
+     "Gets into switchgear",
+     "Around buttons, stalks and the base of the shifter."
+    ],
+    [
+     "Pairs with InteriorX",
+     "Agitates textured vinyl a towel just skates over."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Spray the product onto the brush, not into the vent.",
+    "Light pressure on gloss trim.",
+    "Follow immediately with a MicroLux towel before it dries.",
+    "Great on textured door cards where most of the grime hides."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-brush-interior-brush",
    "url": "/products/lux-brush-interior-brush/",
@@ -1006,9 +1132,41 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
-   "tips": [],
+   "features": [
+    [
+     "Brings faded trim back",
+     "Rubber, vinyl and plastic restored to an even, factory-looking finish."
+    ],
+    [
+     "Up to 8 months inside, 6 outside",
+     "Real UV protection, not a shine that washes off in the first rain."
+    ],
+    [
+     "Never oily",
+     "Levels into the surface rather than sitting on it, so it does not stay tacky or pull dust."
+    ],
+    [
+     "Works everywhere plastic does",
+     "Exterior trim, dashboards, door panels, engine bay components, tires and rubber seals."
+    ],
+    [
+     "20 to 40 vehicles a bottle",
+     "A little goes further than you expect &mdash; porous trim drinks the first coat."
+    ]
+   ],
+   "caution": [
+    "Clean and dry first",
+    "Dressing over dirt seals it in and the trim comes out blotchy. This is the step people skip."
+   ],
+   "tips": [
+    "Apply with an XPad, not by spraying directly.",
+    "Let it level for a minute, then wipe back anything that has not absorbed.",
+    "On badly chalked trim, expect to need a second thin coat.",
+    "Test somewhere hidden first &mdash; some trim is satin-painted, not plastic.",
+    "Do the engine bay while you have the pad in your hand. It transforms how it reads."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/restorx-rvp-plastic-dressing",
    "url": "/products/restorx-rvp-plastic-dressing/",
@@ -1061,9 +1219,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Neutralises, then scents",
+     "Kills the odour at the source instead of layering perfume over it."
+    ],
+    [
+     "Clean new-car note",
+     "Crisp rather than sweet, and it does not turn cloying by day three."
+    ],
+    [
+     "Long-lasting",
+     "Holds through a week of daily driving."
+    ],
+    [
+     "Safe on carpet and fabric mats",
+     "Spray the footwells, not the dash."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Air the cabin out before you spray anything.",
+    "Two or three sprays into the footwells is plenty.",
+    "One short burst into the vents with the fan running spreads it evenly.",
+    "Pair with VanillaEmber and alternate &mdash; nose blindness is real."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/newcarember-air-freshener",
    "url": "/products/newcarember-air-freshener/",
@@ -1113,9 +1295,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Warm vanilla, not candy",
+     "Smooth and low rather than the sweet hit most vanilla fresheners land on."
+    ],
+    [
+     "Same neutralising base",
+     "Handles the odour first, then scents."
+    ],
+    [
+     "Long-lasting",
+     "A week of daily driving from a few sprays."
+    ],
+    [
+     "Safe on carpet and fabric mats",
+     "Footwells and mats, not hard surfaces."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Air the cabin out first.",
+    "Two or three sprays into the footwells.",
+    "One burst into the vents with the fan on.",
+    "The Dual Scent System pairs it with NewCarEmber if you want to rotate."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/vanillaember-air-freshener",
    "url": "/products/vanillaember-air-freshener/",
@@ -1150,9 +1356,49 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Over $700 of product for $500",
+     "Every chemical, every tool, every towel weight LusterLux makes."
+    ],
+    [
+     "Multiples of the things you run out of",
+     "Four foam soaps, three waterless, three wheel cleaners, three interior cleaners."
+    ],
+    [
+     "Nothing left to buy",
+     "Foam through dry, wheels through interior, scent at the end."
+    ],
+    [
+     "Built for volume",
+     "Enough product to run a season of weekly details, or a small shop."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "4× LuxFoam Foam Soap",
+    "3× LuxPro Waterless Wash",
+    "2× LuxQuick Detail Spray",
+    "3× LuxWheelAssassin Wheel Cleaner",
+    "1× TireVenom Tire Dressing",
+    "3× InteriorX Interior Cleaner",
+    "1× RestorX RVP Dressing",
+    "1× LuxCannon Foam Cannon",
+    "1× Lux Bucket",
+    "1× LuxMitt Wash Mitt",
+    "1× LuxTowel Drying Towel",
+    "1× LuxWheel Brush",
+    "1× Lux Tire Brush",
+    "1× Lux Brush",
+    "1× LuxBug Bug &amp; Tar Sponge",
+    "2× 3-Pack Edgeless Lux Towels",
+    "5-Pack MicroLux Towels",
+    "2× 2-Pack XPad Applicators",
+    "1× NewCarEmber",
+    "1× VanillaEmber"
+   ],
+   "who": "The person whose garage is the hobby, and shops that are tired of reordering piecemeal.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/the-platinum-system",
    "url": "/products/the-platinum-system/",
@@ -1187,9 +1433,34 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "The whole wash bay",
+     "Gun, cannon, soap and drying towel. Foam through dry, nothing else needed."
+    ],
+    [
+     "Quick-connect throughout",
+     "Swap between gun and cannon in one click, no tools."
+    ],
+    [
+     "Full nozzle set",
+     "0°, 15°, 25°, 40° and soap, so one gun covers every job."
+    ],
+    [
+     "1300 GSM drying towel",
+     "Takes a full vehicle down in one pass, which is what prevents water spotting."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× LuxGun Pressure Washer Gun",
+    "1× LuxCannon Foam Cannon",
+    "1× LuxFoam Foam Soap",
+    "1× LuxTowel Drying Towel",
+    "1× Quick-Connect Coupler"
+   ],
+   "who": "Someone building a wash setup from scratch, or replacing a hardware-store one.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/ultimate-wash-system-1",
    "url": "/products/ultimate-wash-system-1/",
@@ -1224,9 +1495,34 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Wheels and tires as one job",
+     "Because they are. Clean the wheel, scrub the sidewall, dress it last."
+    ],
+    [
+     "Both brushes, and they are different",
+     "A soft barrel brush for wheel faces, a stiff one for sidewalls. Using the wrong one is how wheels get marked."
+    ],
+    [
+     "Chemical brake-dust removal",
+     "So you are not scrubbing a finish you cannot replace."
+    ],
+    [
+     "Everything in the right order",
+     "Nothing missing from the corner of the car people look at first."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× LuxWheelAssassin Wheel Cleaner",
+    "1× TireVenom Tire Dressing",
+    "1× Lux Wheel Brush",
+    "1× Lux Tire Brush",
+    "2× XPad Applicator Pads"
+   ],
+   "who": "Anyone whose wheels are the worst-looking part of an otherwise clean vehicle.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/rim-and-tire-system-kit-1",
    "url": "/products/rim-and-tire-system-kit-1/",
@@ -1262,9 +1558,31 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "A proper foam wash from nothing",
+     "Cannon plus two bottles of soap. Add a pressure washer and you are set."
+    ],
+    [
+     "Dwell time is the safety",
+     "Every minute foam sits on the panel is cleaning happening with nothing touching the paint."
+    ],
+    [
+     "Adjustable cannon",
+     "Dial thickness from the cannon rather than burning through concentrate."
+    ],
+    [
+     "Two bottles",
+     "8 to 16 washes each, so this lasts a season or more."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× LuxCannon Foam Cannon",
+    "2× LuxFoam Foam Soap, 16 oz"
+   ],
+   "who": "Anyone who owns a pressure washer and is still washing with a bucket and a sponge.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/foam-wash-system-1",
    "url": "/products/foam-wash-system-1/",
@@ -1300,9 +1618,35 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "A full cabin reset",
+     "Cleaner, brush, towels and both scents. Everything the inside of a car needs."
+    ],
+    [
+     "Dries to a factory matte",
+     "No gloss, so nothing reflects back off the dash."
+    ],
+    [
+     "Brush for the places a towel cannot reach",
+     "Vents, seams, switchgear and textured door cards."
+    ],
+    [
+     "Five interior towels",
+     "Because an interior burns through them faster than you expect."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× InteriorX Interior Cleaner",
+    "1× Lux Brush Curved Detailing Brush",
+    "1× Lux Brush Holder",
+    "5× MicroLux Interior Towels",
+    "1× NewCarEmber Air Freshener",
+    "1× VanillaEmber Air Freshener"
+   ],
+   "who": "Daily drivers, family cars, and anything that has been lived in.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/complete-interior-system-1",
    "url": "/products/complete-interior-system-1/",
@@ -1337,9 +1681,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Paint only, done properly",
+     "Clean, maintain and protect, in the order you actually use them."
+    ],
+    [
+     "Covers the full maintenance cycle",
+     "LuxPro for the wash, LuxQuick between washes, CeramicX for protection."
+    ],
+    [
+     "Up to 8 months of ceramic protection",
+     "From the CeramicX in the box."
+    ],
+    [
+     "Edgeless towels throughout",
+     "No stitched seam dragged across your clear coat."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× LuxPro Waterless Wash",
+    "1× LuxQuick Detail Spray",
+    "1× CeramicX Ceramic Spray",
+    "3× Edgeless Lux Exterior Towels"
+   ],
+   "who": "Someone who cares about the paint and lets a detailer handle the rest.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/paint-care-system-1",
    "url": "/products/paint-care-system-1/",
@@ -1374,9 +1742,35 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Exterior and interior in one box",
+     "Paint, trim and cabin covered without picking nine bottles yourself."
+    ],
+    [
+     "The three chemicals that do the most",
+     "Waterless wash, trim restorer and interior cleaner cover the majority of a detail."
+    ],
+    [
+     "Both towel weights included",
+     "Exterior and interior, kept separate as they should be."
+    ],
+    [
+     "Applicator for the dressing",
+     "So RestorX goes on evenly instead of in streaks."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× LuxPro Waterless Wash",
+    "1× RestorX RVP Dressing",
+    "1× InteriorX Interior Cleaner",
+    "3× Edgeless Lux Exterior Towels",
+    "5× MicroLux Interior Towels",
+    "1× XPad Applicator"
+   ],
+   "who": "The default starting point. If you are buying one thing, buy this.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/complete-detail-system-1",
    "url": "/products/complete-detail-system-1/",
@@ -1411,9 +1805,32 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "For a cabin that has been let go",
+     "Clean first, then bring the faded plastics back and hold them there."
+    ],
+    [
+     "Up to 8 months of interior protection",
+     "From the RestorX, which is what stops it fading again."
+    ],
+    [
+     "Clean then restore, in that order",
+     "Dressing over dirt seals it in and comes out blotchy."
+    ],
+    [
+     "No greasy residue from either",
+     "Nothing tacky, nothing pulling dust."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× InteriorX Interior Cleaner",
+    "1× RestorX RVP Dressing",
+    "5× MicroLux Interior Towels"
+   ],
+   "who": "Older vehicles, sun-baked dashes, and anything with grey chalky trim.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/interior-restoration-system-1",
    "url": "/products/interior-restoration-system-1/",
@@ -1448,9 +1865,31 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Dressing and the pads to apply it",
+     "Spraying dressing directly is what puts it on your paint."
+    ],
+    [
+     "No-sling, dries to the touch",
+     "Stays on the sidewall through the first pull-out."
+    ],
+    [
+     "Up to 3 months an application",
+     "30 to 50 tires from the bottle."
+    ],
+    [
+     "Reusable pads",
+     "Rinse them out and they come back."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× TireVenom Tire Dressing",
+    "2× XPad Applicator Pads"
+   ],
+   "who": "Cheapest upgrade to how a clean car looks. Tires are the first thing people notice.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/tire-care-system-1",
    "url": "/products/tire-care-system-1/",
@@ -1485,9 +1924,31 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "The entry point into NanoFusion",
+     "The bottle and the towels it was formulated to be used with, nothing else to buy."
+    ],
+    [
+     "No hose, bucket or running water",
+     "Works in an apartment car park, a garage, or on a show field."
+    ],
+    [
+     "Cleans, glosses and protects in one pass",
+     "One step instead of wash, dry, then protect."
+    ],
+    [
+     "Cheapest way to find out if it works",
+     "If NanoFusion does not do what we say, you are out the price of a bottle."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× LuxPro Waterless Wash, 16 oz",
+    "3× Edgeless Lux Exterior Microfiber Towels"
+   ],
+   "who": "Anyone curious about waterless washing, or living somewhere a hose is not an option.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/waterless-wash-system-1",
    "url": "/products/waterless-wash-system-1/",
@@ -1522,9 +1983,31 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Both Ember scents",
+     "Clean new-car and warm vanilla."
+    ],
+    [
+     "Neutralises rather than masks",
+     "Handles the odour at the source first."
+    ],
+    [
+     "Rotate them",
+     "Nose blindness is real. Alternating keeps either one noticeable."
+    ],
+    [
+     "Safe on carpet and fabric mats",
+     "Spray the footwells, not the dash."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× NewCarEmber Air Freshener",
+    "1× VanillaEmber Air Freshener"
+   ],
+   "who": "Anyone whose cabin smells like the dog, the gym bag or last week's drive-through.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/dual-scent-system-1",
    "url": "/products/dual-scent-system-1/",
@@ -1559,9 +2042,20 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Leather patch",
+     "Structured front, LusterLux patch."
+    ],
+    [
+     "Limited run",
+     "When this batch is gone it is gone."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/the-luxcap-limited-supply",
    "url": "/products/the-luxcap-limited-supply/",
@@ -1594,9 +2088,20 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Soft cotton",
+     "The one you actually end up wearing in the driveway."
+    ],
+    [
+     "Printed mark",
+     "LusterLux on the chest, nothing shouting."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-t",
    "url": "/products/lux-t/",
@@ -1629,9 +2134,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "A weight for every step",
+     "Drying, exterior, interior and glass are four different jobs and four different weaves."
+    ],
+    [
+     "Eleven towels",
+     "Enough to do a full vehicle without reusing a dirty face."
+    ],
+    [
+     "Keeps the piles separate",
+     "Which is the actual point &mdash; an interior towel on paint is how swirls start."
+    ],
+    [
+     "Waffle weave for glass",
+     "The only structure that leaves an inside windshield without haze."
+    ]
+   ],
    "caution": [],
    "tips": [],
+   "includes": [
+    "1× LuxTowel Drying Towel",
+    "3× Edgeless Lux Exterior Towels",
+    "5× MicroLux Interior Towels",
+    "2× LuxWindow Waffle Weave Window Towels"
+   ],
+   "who": "Anyone still doing a whole car with two towels and hoping.",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/towel-tantrum-kit-every-surface-every-step-every-finish",
    "url": "/products/towel-tantrum-kit-every-surface-every-step-every-finish/",
@@ -1672,9 +2201,36 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
-   "tips": [],
+   "features": [
+    [
+     "Where the dwell time comes from",
+     "Without a cannon, foam soap is just soap. The clinging blanket is the whole point."
+    ],
+    [
+     "Adjustable mix and fan",
+     "Dial thickness from the cannon before you add more soap to the bottle."
+    ],
+    [
+     "Standard pressure-washer fitting",
+     "Swaps with the LuxGun in one click."
+    ],
+    [
+     "Wide fan for full coverage",
+     "Blankets a vehicle bottom to top in under a minute."
+    ]
+   ],
+   "caution": [
+    "Needs a pressure washer",
+    "This is not a hose attachment. Output depends on your unit's flow rate."
+   ],
+   "tips": [
+    "Rinse the vehicle before you foam. Never foam a dry, dusty panel.",
+    "Foam bottom to top, rinse top to bottom.",
+    "Adjust the dial before adding concentrate &mdash; it is cheaper.",
+    "Hard water suppresses foam. If yours is thin, that is usually why."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxcannon-foam-cannon",
    "url": "/products/luxcannon-foam-cannon/",
@@ -1715,9 +2271,36 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
-   "tips": [],
+   "features": [
+    [
+     "Short body",
+     "You are not fighting a two-foot wand around a wheel arch."
+    ],
+    [
+     "Full quick-connect nozzle set",
+     "0°, 15°, 25°, 40° and soap, so one gun covers every job."
+    ],
+    [
+     "One-click swap to the cannon",
+     "Foam and rinse without changing setup."
+    ],
+    [
+     "Built to last",
+     "Metal fittings rather than moulded plastic."
+    ]
+   ],
+   "caution": [
+    "Never use the 0° nozzle on paint",
+    "It is for concrete and wheel wells. On a panel it will damage the finish."
+   ],
+   "tips": [
+    "40° for rinsing paint, 25° for wheel wells, 15° for stubborn ground-in dirt.",
+    "Keep a foot of distance from any panel.",
+    "Rinse top to bottom, always.",
+    "Drain it after use if it lives somewhere that freezes."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxgun-pressure-washer-gun",
    "url": "/products/luxgun-pressure-washer-gun/",
@@ -1753,9 +2336,36 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
-   "tips": [],
+   "features": [
+    [
+     "1300 GSM, 2 ft × 3 ft",
+     "Enough capacity to take a full vehicle down in one pass."
+    ],
+    [
+     "Ultra-plush pile",
+     "Glides rather than drags, which is what prevents drying-stage swirls."
+    ],
+    [
+     "Reduces water spotting",
+     "Getting the water off fast is the whole game in hard-water regions."
+    ],
+    [
+     "Big enough to lay flat",
+     "Drape and drag rather than scrub."
+    ]
+   ],
+   "caution": [
+    "Drying towel, not a wash towel",
+    "The deep pile traps grit where you cannot see it. Do not use it for waterless work."
+   ],
+   "tips": [
+    "Lay it flat and drag, or blot. Never scrub.",
+    "Get into panel gaps and mirror housings or water runs out later.",
+    "Wring it out mid-car rather than pushing through.",
+    "Wash it on its own &mdash; it holds more than you think."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxtowel-drying-towel",
    "url": "/products/luxtowel-drying-towel/",
@@ -1792,9 +2402,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "No pumping",
+     "Even, continuous output for the whole job."
+    ],
+    [
+     "Consistent coverage",
+     "Matters most on waterless and dressing work, where uneven product means streaks."
+    ],
+    [
+     "Rechargeable",
+     "Enough runtime for several vehicles."
+    ],
+    [
+     "Adjustable output",
+     "Mist for waterless, heavier for pre-soak."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Great for pre-soaking wheels and arches before you touch them.",
+    "Rinse it through with clean water after any dressing.",
+    "Dial the output down for waterless &mdash; you want a mist, not a stream.",
+    "Charge it the night before a full detail."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/foamx-sprayer-electric-sprayer",
    "url": "/products/foamx-sprayer-electric-sprayer/",
@@ -1829,9 +2463,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "No power needed",
+     "Pumps up and holds pressure for the whole panel."
+    ],
+    [
+     "For pre-soak and dilution",
+     "Where you want volume rather than a fine mist."
+    ],
+    [
+     "Chemical resistant",
+     "Handles diluted wheel cleaner and soap."
+    ],
+    [
+     "Simple to service",
+     "Nothing to charge, nothing to break."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Label it. A sprayer that has held wheel cleaner should not later hold detail spray.",
+    "Rinse through after every use.",
+    "Release the pressure before storing it.",
+    "Pairs well with LuxFoam for a bucket-free pre-soak."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-sprayer-pump-sprayer",
    "url": "/products/lux-sprayer-pump-sprayer/",
@@ -1866,9 +2524,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Deep pile",
+     "Carries a lot of lubricant, which is what keeps the mitt gliding."
+    ],
+    [
+     "Traps grit away from paint",
+     "Dirt lifts up into the nap instead of sitting under your hand."
+    ],
+    [
+     "Fits the two-bucket method",
+     "Rinse it out between panels and the grit leaves the mitt."
+    ],
+    [
+     "Covers a full vehicle",
+     "One mitt, top-down, rinsing often."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Two buckets. The rinse bucket is the one doing the safety work.",
+    "Top panels first, rockers and bumpers last.",
+    "Drop it once and it is a wheel-well mitt from then on.",
+    "Rinse and hang to dry rather than balling it up wet."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxmit-wash-mit",
    "url": "/products/luxmit-wash-mit/",
@@ -1912,9 +2594,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "No stitched edge",
+     "A sewn border is a hard seam being dragged across your clear coat. These have none."
+    ],
+    [
+     "Exterior weight",
+     "High pile, so grit lifts up into the nap instead of staying pinned against the paint."
+    ],
+    [
+     "What the formulas were built around",
+     "Every waterless and ceramic instruction on this site says to use these."
+    ],
+    [
+     "Three to a pack",
+     "A full vehicle takes four to six towel faces. Fold in quarters and you get eight per towel."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Keep exterior and interior towels in separate piles.",
+    "Wash warm, no fabric softener &mdash; it coats the fibres and kills absorbency.",
+    "The moment one touches the ground it becomes a wheel towel for life.",
+    "If a towel comes out slick rather than grabby, it is contaminated."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/3-pack-edgeless-lux-edgeless-microfiber-towels",
    "url": "/products/3-pack-edgeless-lux-edgeless-microfiber-towels/",
@@ -1958,9 +2664,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Interior weight",
+     "Lighter pile that does not push cleaner around on a hard panel."
+    ],
+    [
+     "Five to a pack",
+     "An interior burns through towels &mdash; cleaner, dry, glass, jambs."
+    ],
+    [
+     "Lint-free on dark plastic",
+     "Where most towels leave a visible haze."
+    ],
+    [
+     "Safe on screens",
+     "Fine enough for navigation glass when barely damp."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Spray product onto the towel, never onto the panel.",
+    "Keep one dedicated to glass and nothing else.",
+    "Wash separately from exterior towels.",
+    "No fabric softener, ever."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/5-pack-microlux-microfiber-towels",
    "url": "/products/5-pack-microlux-microfiber-towels/",
@@ -1998,9 +2728,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Even dressing application",
+     "Spraying TireVenom or RestorX directly puts it on your paint and in the lettering. A pad does not."
+    ],
+    [
+     "Contoured for sidewalls",
+     "Holds a line around the curve of a tire."
+    ],
+    [
+     "Washable and reusable",
+     "Rinse out and they come back."
+    ],
+    [
+     "Two to a pack",
+     "One for tires, one for trim. Never share them."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Keep tire and trim pads separate &mdash; tire dressing contaminates a trim pad.",
+    "Load lightly. More product means sling, not shine.",
+    "Level the surface with the pad after applying.",
+    "Rinse them out before the dressing sets."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/2-pack-xpad-applicator-pad",
    "url": "/products/2-pack-xpad-applicator-pad/",
@@ -2042,9 +2796,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Half of a two-bucket wash",
+     "One soap, one rinse. The oldest swirl-prevention method there is, and still the best."
+    ],
+    [
+     "Grit-guard sized",
+     "Takes a standard guard so dirt stays on the bottom."
+    ],
+    [
+     "Holds a full wash",
+     "Enough volume that the soap does not go grey halfway round."
+    ],
+    [
+     "Stackable",
+     "Two of these store as one."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Buy two. One bucket is not the two-bucket method.",
+    "Rinse the mitt in the rinse bucket between every panel.",
+    "Dump and refill if the rinse water goes properly dirty.",
+    "Keep a separate bucket for wheels and never cross them over."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-bucket-car-washing-bucket",
    "url": "/products/lux-bucket-car-washing-bucket/",
@@ -2080,9 +2858,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Waffle weave",
+     "The only structure that leaves the inside of a windshield without haze."
+    ],
+    [
+     "Two to a pack",
+     "One damp, one dry &mdash; the two-towel glass method."
+    ],
+    [
+     "Lint-free",
+     "No fibres left in the corners."
+    ],
+    [
+     "Works on cart and boat acrylic",
+     "Where a standard towel marks the surface."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Damp towel first, dry towel second. Always two.",
+    "Wipe the inside horizontally and the outside vertically &mdash; then you know which side a streak is on.",
+    "Never use ammonia glass cleaner on acrylic; it crazes it.",
+    "Keep these away from wax and dressing residue."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/2-pack-luxwindow-waffle-window-towel",
    "url": "/products/2-pack-luxwindow-waffle-window-towel/",
@@ -2118,9 +2920,36 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
-   "tips": [],
+   "features": [
+    [
+     "For the front end",
+     "Bumper, mirror caps and the leading edge of the hood, where bugs bake on."
+    ],
+    [
+     "Safe on clear coat",
+     "Lifts bug residue without the scouring that ruins a bumper."
+    ],
+    [
+     "Works wet, with soap",
+     "Use it during the wash, not dry."
+    ],
+    [
+     "Rinses out clean",
+     "Does not hold residue between uses."
+    ]
+   ],
+   "caution": [
+    "Always use it wet and lubricated",
+    "Dry, this will mar the finish. Soap and water first, every time."
+   ],
+   "tips": [
+    "Soak the front end and let the bugs soften before you touch them.",
+    "Light pressure. Let the sponge structure do the work.",
+    "Rinse it out constantly while you work.",
+    "Follow with LuxQuick or CeramicX &mdash; bug acid strips protection."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxbug-bug-and-tar-remover-sponge",
    "url": "/products/luxbug-bug-and-tar-remover-sponge/",
@@ -2177,9 +3006,40 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
-   "tips": [],
+   "features": [
+    [
+     "The between-washes reset",
+     "Pulls light dust, fingerprints, smudges and fresh water spots without touching a hose."
+    ],
+    [
+     "Instant gloss",
+     "Boosts depth and slickness so the panel looks like it was just finished."
+    ],
+    [
+     "Leaves a slick layer",
+     "Dust has less to grab, so the car stays cleaner between real washes."
+    ],
+    [
+     "Safe on almost everything outside",
+     "Paint, clear coat, glass, chrome, plastic trim, PPF, vinyl wrap and ceramic coatings."
+    ],
+    [
+     "15 to 25 vehicles a bottle",
+     "Small enough to live in the trunk on show day."
+    ]
+   ],
+   "caution": [
+    "Light soil only",
+    "If the panel is properly dirty this is the wrong tool. Foam and rinse first, then reach for LuxQuick."
+   ],
+   "tips": [
+    "Keep one in the car for shows and post-drive touch-ups.",
+    "Mist one panel at a time and buff with a dry towel face.",
+    "Works on fresh water spots &mdash; baked-on mineral needs polishing.",
+    "Great on glass, where most detail sprays streak."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxquick-detail-spray",
    "url": "/products/luxquick-detail-spray/",
@@ -2216,9 +3076,36 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
-   "caution": [],
-   "tips": [],
+   "features": [
+    [
+     "Stiff bristles",
+     "Soft brushes do not shift antiozonant bloom, and bloom is what makes tires go brown."
+    ],
+    [
+     "Sized for sidewalls",
+     "Covers the face of a tire in a few passes."
+    ],
+    [
+     "Handles heavy buildup",
+     "Old dressing, road film and brake dust off the rubber."
+    ],
+    [
+     "Rinses clean",
+     "Does not hold product between wheels."
+    ]
+   ],
+   "caution": [
+    "Tires only",
+    "This is too stiff for a wheel face. Use the Lux Wheel Brush there."
+   ],
+   "tips": [
+    "Scrub until the suds run clear, not until it looks better.",
+    "On a neglected tire, expect two or three passes.",
+    "Rinse and let the tire dry fully before dressing.",
+    "This step is the difference between a detail that holds and one that browns."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-tire-brush",
    "url": "/products/lux-tire-brush/",
@@ -2255,9 +3142,33 @@
    "inuse": "",
    "showBody": "",
    "showWhy": "",
-   "features": [],
+   "features": [
+    [
+     "Soft barrel brush",
+     "Reaches behind the spokes, which is where most of the brake dust actually lives."
+    ],
+    [
+     "Will not mark the finish",
+     "Safe on clear-coated, painted and polished wheels."
+    ],
+    [
+     "Long enough for deep barrels",
+     "Gets to the back of a modern concave wheel."
+    ],
+    [
+     "Flexible shaft",
+     "Follows the curve instead of fighting it."
+    ]
+   ],
    "caution": [],
-   "tips": [],
+   "tips": [
+    "Let LuxWheelAssassin dwell first. The brush is for agitation, not scrubbing.",
+    "Do the barrel before the face.",
+    "Keep it away from tires &mdash; use the tire brush for those.",
+    "Rinse it out before the cleaner dries in the bristles."
+   ],
+   "includes": [],
+   "who": "",
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-wheel-brush",
    "url": "/products/lux-wheel-brush/",
