@@ -11,7 +11,7 @@ GUIDES = [
 {
  "slug": "waterless-wash-without-scratching",
  "cat": "Wash",
- "title": "How to use a waterless wash without scratching your paint",
+ "title": "Waterless wash without scratching your paint",
  "dek": "Waterless washing is safe or it is sandpaper, and the difference is entirely in how you use it. Here is the line.",
  "read": 6,
  "img": "nano-hood",
@@ -105,7 +105,7 @@ For a daily driver that gets a waterless wash every week or so, that is most of 
 {
  "slug": "foam-cannon-dilution-ratios",
  "cat": "Wash",
- "title": "Foam cannon soap: dilution ratios and what actually matters",
+ "title": "Foam cannon dilution ratios: what actually matters",
  "dek": "Thick foam looks great on video. What it does for your paint depends on dwell time and lubricity, not on how much of the car you can hide.",
  "read": 7,
  "img": "hero-foam",
@@ -308,7 +308,7 @@ Some tires are done. If the sidewall is cracked, crazed or has gone hard and gre
 {
  "slug": "restoring-faded-plastic-trim",
  "cat": "Exterior",
- "title": "Restoring faded plastic trim: what works and what doesn't",
+ "title": "Restoring faded plastic trim: what works",
  "dek": "Grey, chalky trim is what makes a clean car still look tired. Most of the fixes people try are temporary, and one of them is genuinely bad advice.",
  "read": 6,
  "img": "interior",

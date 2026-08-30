@@ -539,7 +539,7 @@ select.sort{padding:0 12px}
   text-transform:uppercase;color:var(--muted)}
 .sign b{color:#fff;font-weight:400}
 .story-fig{border-radius:0;clip-path:var(--clip-billet);overflow:hidden;background:#000}
-.story-fig img{width:100%;height:auto;aspect-ratio:4/3.1;object-fit:cover;object-position:50% 42%}
+.story-fig img{width:100%;height:auto;aspect-ratio:4/4.1;object-fit:cover;object-position:50% 62%}
 .vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(40px,5vw,62px)}
 .vcard{position:relative;display:block;overflow:hidden;border-radius:0;clip-path:var(--clip-billet);
   min-height:520px;background:#000;transition:filter .45s}
@@ -970,6 +970,9 @@ a.contact:hover b{color:var(--brand)}
 .hive-copy .sign b{color:var(--ink)}
 .hive{position:relative;display:flex;justify-content:center;align-items:flex-start;
   padding:0;margin-top:clamp(48px,6vw,84px)}
+/* the mosaic was eating a full screen of vertical space for decoration */
+.hive.small{max-width:1000px;margin:clamp(40px,5vw,64px) auto 0}
+.hive.small .hive-word{font-size:clamp(14px,1.3vw,20px)}
 .hex-col{display:flex;flex-direction:column;gap:7px;margin-left:-8.4%;flex:1 1 0;min-width:0}
 .hex-col:first-child{margin-left:0}
 .hex-col.off{margin-top:15.5%}
@@ -984,6 +987,7 @@ a.contact:hover b{color:var(--brand)}
 /* the labels live on the bone ground and only clip the grid edge, as in the
    reference — a rotated word sitting on top of a photo is unreadable */
 .hive-word{text-shadow:0 0 14px var(--bone),0 0 26px var(--bone)}
+:not(.bone) .hive-word{color:#fff;text-shadow:0 0 14px var(--bg),0 0 28px var(--bg)}
 .hive-word.w1{top:-2%;left:1%;transform:rotate(-31deg)}
 .hive-word.w2{top:42%;left:-3%;transform:rotate(-31deg)}
 .hive-word.w3{bottom:-1%;right:2%;left:auto;transform:rotate(-31deg)}
@@ -997,7 +1001,7 @@ a.contact:hover b{color:var(--brand)}
   text-transform:uppercase;color:#5d646c}
 .bone .stars svg{fill:var(--brand-2)}
 .rev-lead blockquote{margin-top:22px;font-family:var(--display);font-weight:800;font-stretch:90%;
-  text-transform:uppercase;font-size:clamp(21px,2.5vw,36px);line-height:1.14;letter-spacing:-.025em;
+  text-transform:uppercase;font-size:clamp(18px,1.9vw,26px);line-height:1.2;letter-spacing:-.02em;
   color:var(--ink)}
 .rev-lead cite{display:block;margin-top:18px;font-style:normal;font-family:var(--face);font-size:9.5px;
   letter-spacing:.18em;text-transform:uppercase;color:#5d646c}
@@ -1131,15 +1135,16 @@ a.contact:hover b{color:var(--brand)}
   background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,.03));transition:background .3s,color .3s}
 .subchip:hover{color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,.07))}
 .subchip b{font-weight:inherit;opacity:.5;font-variant-numeric:tabular-nums}
-.mega-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:0;padding:30px 0}
-.mcol{padding:0 26px;border-left:1px solid rgba(255,255,255,.07)}
-.mcol:first-child{border-left:0}
-.mcol-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
-  font-family:var(--display)!important;font-weight:800;font-stretch:90%;text-transform:uppercase;
-  font-size:15px!important;letter-spacing:-.01em!important;color:#fff;padding:0 0 14px!important}
-.mcol-head::after{display:none!important}
-.mcol-head span{font-family:var(--face);font-size:9px;color:var(--soft);letter-spacing:.1em}
-.mcol-head:hover{color:var(--brand)}
+/* Mega menu: a photo per top-level category with its subcategories beneath.
+   Plain text columns read as a sitemap and left Kits & Systems an empty hole. */
+.mega-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.mcell{display:flex;flex-direction:column;
+  border-left:1px solid rgba(255,255,255,.07);padding-bottom:20px}
+.mcell:first-child{border-left:0}
+.mcell .mtile{aspect-ratio:4/3;max-height:none}
+.mcell .mtile-body{padding:16px 16px 18px}
+.mcell .mcol-subs{margin:0 22px;padding-top:11px}
+.mcell:not(:has(.mcol-subs)) .mtile{flex:1;aspect-ratio:auto}
 .mcol-subs{display:grid;gap:2px;border-top:1px solid rgba(255,255,255,.07);padding-top:12px}
 .mcol-subs a{display:flex;align-items:baseline;justify-content:space-between;gap:10px;
   padding:9px 0!important;font-family:var(--body)!important;font-size:13.5px!important;

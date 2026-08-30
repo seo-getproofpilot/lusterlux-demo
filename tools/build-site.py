@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "49"                                   # cache-bust, bump on every build
+V    = "54"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -85,7 +85,7 @@ def worlds_links():
 def world_tiles(current=""):
     return "".join(
       f'<a class="wtile{" on" if w["k"]==current else ""}" href="/collections/{w["k"]}/">'
-      f'<img src="/assets/tiles/world-{w["k"]}.webp?v={V}" alt="" loading="lazy" decoding="async" />'
+      f'<img src="/assets/tiles/world-{w["k"]}.webp?v={V}" alt="LusterLux detailing products for {plain(w["t"]).lower()}" loading="lazy" decoding="async" />'
       f'<span class="wtile-body"><b>{w["t"]}</b><em>{w["d"]}</em>'
       f'<i>{len(in_world(w["k"]))} products</i></span></a>' for w in WORLDS)
 
@@ -101,7 +101,7 @@ def cat_tiles():
         subs = "".join(f'<a href="/collections/{sk}/">{sub_meta(sk)["t"]}</a>' for sk in g["subs"])
         out += (f'<div class="ctile" style="--acc:{GROUP_ACC[g["k"]]}">'
                 f'<a class="ctile-hit" href="/collections/{g["k"]}/" aria-label="{plain(g["t"])}">'
-                f'<img src="/assets/tiles/{GROUP_TILE[g["k"]]}.webp?v={V}" alt="" loading="lazy" decoding="async" /></a>'
+                f'<img src="/assets/tiles/{GROUP_TILE[g["k"]]}.webp?v={V}" alt="LusterLux {plain(g["t"]).lower()} products" loading="lazy" decoding="async" /></a>'
                 f'<div class="ctile-body"><a class="ctile-name" href="/collections/{g["k"]}/">{g["t"]}</a>'
                 f'<i>{len(in_group(g["k"]))} products</i>'
                 + (f'<nav class="ctile-subs">{subs}</nav>' if subs else '')
@@ -115,10 +115,11 @@ def stars_svg(n=5):
     return star * n
 
 
-def honeycomb():
-    """Photo mosaic for the founder section. Pointy-top hexes in offset columns;
-       falls back to a plain staggered grid below 900px (see .hex-* in site.css)."""
-    cols = [[1, 2, 3], [4, 5, 6, 7], [8, 9, 10]]
+def honeycomb(cols=None):
+    """Photo mosaic. Flat-top hexes in vertically-offset columns; falls back to a
+       plain grid below 1100px (see .hex-* in site.css). Wide-and-short by default —
+       three tall columns ate a full screen of vertical space for decoration."""
+    cols = cols or [[1, 2], [3, 4, 5], [6, 7], [8, 9, 10]]
     alts = ["A car mid foam wash", "A performance wheel and LusterLux wheel cleaner",
             "LuxPro on a pearl hood", "A McLaren blanketed in LuxFoam",
             "A carbon steering wheel being detailed", "A golf cart cleaned with BirdieLux",
@@ -184,18 +185,24 @@ def nav(active=""):
     for href, label, key in items:
         cur = ' aria-current="page"' if active == key else ""
         if key == "shop":
-            cols = ""
+            cells = ""
             for g in GROUPS:
                 subs = "".join(
                   f'<a href="/collections/{sk}/">{sub_meta(sk)["t"]}<b>{len(in_sub(sk))}</b></a>'
                   for sk in g["subs"])
-                cols += (f'<div class="mcol"><a class="mcol-head" href="/collections/{g["k"]}/">'
-                         f'{g["t"]}<span>{len(in_group(g["k"]))}</span></a>'
-                         f'<div class="mcol-subs">{subs}</div></div>')
+                cells += (
+                  f'<div class="mcell" style="--acc:{GROUP_ACC[g["k"]]}">'
+                  f'<a class="mtile" href="/collections/{g["k"]}/">'
+                  f'<img src="/assets/tiles/{GROUP_TILE[g["k"]]}.webp?v={V}" '
+                  f'alt="LusterLux {plain(g["t"]).lower()} products" loading="lazy" decoding="async" />'
+                  f'<i></i><span class="mtile-body"><b>{g["t"]}</b>'
+                  f'<span>{len(in_group(g["k"]))} products</span></span></a>'
+                  + (f'<div class="mcol-subs">{subs}</div>' if subs else '')
+                  + '</div>')
             links += (f'<li class="has-mega"><a href="{href}"{cur}>{label}'
                       '<svg class="car" viewBox="0 0 24 24" fill="none" stroke-linecap="round" '
                       'stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>'
-                      f'<div class="mega"><div class="mega-cols">{cols}</div>'
+                      f'<div class="mega"><div class="mega-grid">{cells}</div>'
                       '<div class="mega-foot"><p>New to this? '
                       '<a class="lime" href="/pages/find-your-product/">Answer two questions</a> '
                       'and we will name the bottle.</p>'
@@ -356,7 +363,7 @@ def card(p, small=True):
            '<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>')
     return f"""<article class="card" style="--acc:{p['acc']}">
   <a class="card-fig" href="{p['url']}" tabindex="-1" aria-hidden="true">
-    <img src="{img}" alt="" loading="lazy" decoding="async" /></a>
+    <img src="{img}" alt="LusterLux {plain(p['n'])} {plain(p['fn'])}" loading="lazy" decoding="async" /></a>
   <div class="card-body">
     <p class="card-cat">{prod_sub_name(p)}</p>
     <h3><a href="{p['url']}">{esc(p['n'])}<span>{p['fn']}</span></a></h3>
@@ -579,7 +586,7 @@ def build_home():
 
 <div class="strip" aria-hidden="true"><div class="strip-in">{strip_items()}{strip_items()}</div></div>
 
-<section class="sec" id="categories">
+<section class="sec bone" id="categories">
   <div class="wrap">
     <div class="sec-head">
       <p class="kick slide">Shop by Category</p>
@@ -623,7 +630,7 @@ def build_home():
   </div>
 </section>
 
-<section class="sec bone" id="story">
+<section class="sec" id="story">
   <div class="wrap story-grid">
     <div class="story-copy">
       <p class="kick slide">Why We Started</p>
@@ -635,6 +642,9 @@ def build_home():
         a long time testing and reformulating until we had products that solved the problems we were
         actually having &mdash; and we still test every formula against real vehicles in Arizona sun before
         it goes in a bottle.</p>
+      <p class="fade" data-d="3">We&rsquo;re Chase and Brandon. When we&rsquo;re not detailing you&rsquo;ll find us
+        at the Glamis dunes, riding up north in Heber, or out on the dirt trails &mdash; which is exactly why
+        this line has to hold up on more than a garage queen.</p>
       <p class="sign fade" data-d="3"><b>Chase &amp; Brandon</b> &middot; Founders, Arizona</p>
       <p class="fade" data-d="3" style="margin-top:26px">
         <a class="btn btn-primary" href="/pages/about/">Read the full story
@@ -654,12 +664,6 @@ def build_home():
       <p class="lead fade" data-d="2">A 720S blanketed in LuxFoam and rinsed. Same car, same camera, four minutes apart.</p>
     </div>
     {before_after()}
-    <div class="hive fade" data-d="2" aria-label="LusterLux at work">
-      <span class="hive-word w1">Foam.</span>
-      <span class="hive-word w2">Wheels.</span>
-      <span class="hive-word w3">Finish.</span>
-      {honeycomb()}
-    </div>
   </div>
 </section>
 
@@ -679,7 +683,7 @@ def build_home():
   <div class="wrap">
     <div class="sec-head">
       <p class="kick slide">Reviews</p>
-      <h2 class="fade" data-d="1">People who wash their own car <em>are the hardest to impress.</em></h2>
+      <h2 class="fade" data-d="1">The hardest crowd <em>there is.</em></h2>
     </div>
     <div class="rev-lead fade" data-d="2">
       <p class="rev-score"><b>5.00</b><span class="stars" aria-label="5 out of 5">{stars_svg()}</span>
@@ -705,8 +709,14 @@ def build_home():
       <p class="lead fade" data-d="2">Daily drivers, project cars, carts, boats, work trucks. Tag us and we will share it.</p>
       <p class="fade" data-d="3" style="margin-top:30px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap">
         <a class="btn btn-primary" href="/pages/community/">Join the community<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn-line" href="/pages/about/">Our story</a>
+        <a class="btn btn-ghost" href="/pages/about/">Our story</a>
       </p>
+    </div>
+    <div class="hive small fade" data-d="2" aria-label="LusterLux at work">
+      <span class="hive-word w1">Foam.</span>
+      <span class="hive-word w2">Wheels.</span>
+      <span class="hive-word w3">Finish.</span>
+      {honeycomb()}
     </div>
   </div>
 </section>
@@ -714,7 +724,7 @@ def build_home():
 </main>
 {footer()}"""
     extra = f'<link rel="preload" as="image" href="/assets/scene/nano-hood.webp?v={V}" />\n' + "\n".join(ld(s) for s in schema) + "\n"
-    write("/index.html", head("LusterLux | Car Care &amp; Detailing Products Engineered with NanoFusion",
+    write("/index.html", head("Car Detailing Products Engineered with NanoFusion | LusterLux",
         meta_desc("Car care built by detailers — waterless wash, ceramic spray, foam soap, wheel and tire care, and interior.",
                   "Engineered with NanoFusion Surface Technology. Made in the USA."),
         "/", extra) + body)
@@ -1257,7 +1267,7 @@ def build_about():
 def guide_card(g):
     return f"""<article class="gcard">
   <a class="gcard-fig" href="/blogs/guides/{g['slug']}/" tabindex="-1" aria-hidden="true">
-    <img src="/assets/scene/{g['img']}-sm.webp?v={V}" alt="" loading="lazy" decoding="async" /></a>
+    <img src="/assets/scene/{g['img']}-sm.webp?v={V}" alt="{esc(plain(g['title']))}" loading="lazy" decoding="async" /></a>
   <div class="gcard-body">
     <p class="gcard-cat">{g['cat']} &middot; {g['read']} min read</p>
     <h3><a href="/blogs/guides/{g['slug']}/">{g['title']}</a></h3>
