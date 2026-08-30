@@ -1,0 +1,40 @@
+# from,to,note
+/products/newcarember-air-freshener-show,/products/newcarember-air-freshener/,trade-show duplicate — undercuts retail pricing, de-index
+/products/vanillaember-air-freshener-show,/products/vanillaember-air-freshener/,trade-show duplicate — undercuts retail pricing, de-index
+/products/interiorx-interior-cleaner-show,/products/interiorx-interior-cleaner/,trade-show duplicate — undercuts retail pricing, de-index
+/products/restorx-rvp-plastic-dressing-show,/products/restorx-rvp-plastic-dressing/,trade-show duplicate — undercuts retail pricing, de-index
+/products/tirevenom-tire-dressing-show,/products/tirevenom-tire-dressing/,trade-show duplicate — undercuts retail pricing, de-index
+/products/luxwheelassassin-wheel-cleaner-show,/products/luxwheelassassin-wheel-cleaner/,trade-show duplicate — undercuts retail pricing, de-index
+/products/luxfoam-foam-soap-show,/products/luxfoam-foam-cannon-soap/,trade-show duplicate — undercuts retail pricing, de-index
+/products/luxquick-detail-spray-copy,/products/luxquick-detail-spray/,trade-show duplicate — undercuts retail pricing, de-index
+/products/ceramicx-ceramic-detail-spray-show,/products/ceramicx-ceramic-detail-spray/,trade-show duplicate — undercuts retail pricing, de-index
+/products/ultimate-wash-system,/products/ultimate-wash-system-1/,clean handle — rename target, -1 currently 404s
+/products/rim-and-tire-system-kit,/products/rim-and-tire-system-kit-1/,clean handle — rename target, -1 currently 404s
+/products/foam-wash-system,/products/foam-wash-system-1/,clean handle — rename target, -1 currently 404s
+/products/complete-interior-system,/products/complete-interior-system-1/,clean handle — rename target, -1 currently 404s
+/products/paint-care-system,/products/paint-care-system-1/,clean handle — rename target, -1 currently 404s
+/products/complete-detail-system,/products/complete-detail-system-1/,clean handle — rename target, -1 currently 404s
+/products/interior-restoration-system,/products/interior-restoration-system-1/,clean handle — rename target, -1 currently 404s
+/products/tire-care-system,/products/tire-care-system-1/,clean handle — rename target, -1 currently 404s
+/products/waterless-wash-system,/products/waterless-wash-system-1/,clean handle — rename target, -1 currently 404s
+/products/dual-scent-system,/products/dual-scent-system-1/,clean handle — rename target, -1 currently 404s
+/collections/starter-kits,/collections/kits-systems/,renamed
+/collections/interior-essentials,/collections/interior/,"Essentials" retired
+/collections/interior-tools,/collections/towels-tools/,renamed
+/collections/exterior-essentials,/collections/wash-waterless/,"Essentials" retired
+/collections/rims-and-tires-essentials,/collections/wheels-tires/,"Essentials" retired
+/collections/ceramic-essentials,/collections/wash-waterless/,"Essentials" retired
+/collections/drying-essentials,/collections/towels-tools/,"Essentials" retired
+/collections/premium-towel-essentials,/collections/towels-tools/,"Essentials" retired
+/collections/golfcart-care,/collections/beyond-the-car/,renamed
+/collections/boat-care,/collections/beyond-the-car/,renamed
+/collections/off-road-care-coming-soon,/collections/beyond-the-car/,renamed
+/collections/kits,/collections/kits-systems/,renamed
+/collections/all,/collections/,renamed
+/collections/starter-kits/Everything-for-the-Perfect-Waterless-Wash.,/collections/kits-systems/,broken tag filter with trailing period — crawl garbage
+/pages/why-lusterlux,/pages/nanofusion/,merged
+/pages/built-ahead-of-the-industry,/pages/nanofusion/,merged
+/pages/lusterlux-community,/pages/community/,renamed
+/pages/contact,/pages/community/,contact lives with community
+/pages/faq,/pages/nanofusion/,FAQs now sit on the pages they answer
+/blogs/news,/blogs/guides/,blog is empty — repoint to guides

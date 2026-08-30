@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /cart/
+Allow: /
+
+Sitemap: https://lusterluxauto.com/sitemap.xml
