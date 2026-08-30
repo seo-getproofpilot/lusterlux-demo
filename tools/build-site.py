@@ -14,7 +14,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = json.load(open(os.path.join(ROOT, "data", "catalog.json")))
 P    = DATA["products"]
 CATS = DATA["cats"]
-V    = "32"                                   # cache-bust, bump on every build
+WORLDS = DATA["worlds"]
+V    = "34"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -37,11 +38,39 @@ def cat_desc(k):
     return ""
 def in_cat(k):
     return [p for p in P if p["cat"] == k or k in p.get("also", [])]
+def in_world(k):
+    return [p for p in P if k in p.get("worlds", [])]
+def world_name(k):
+    for w in WORLDS:
+        if w["k"] == k: return w["t"]
+    return k
 
 SHOP_CATS = [c for c in CATS if c["k"] != "merch"]
 CAT_ACC = {"wash-waterless":"#6a4cf0","wheels-tires":"#c8763a","interior":"#d4a53c",
            "towels-tools":"#9aa4ae","beyond-the-car":"#8a76e8","kits-systems":"#84D019",
            "merch":"#9aa4ae"}
+
+
+def worlds_links():
+    return "".join(
+      f'<a href="/collections/{w["k"]}/">{w["t"]}<b>{len(in_world(w["k"]))}</b></a>'
+      for w in WORLDS)
+
+
+def world_tiles(current=""):
+    return "".join(
+      f'<a class="wtile{" on" if w["k"]==current else ""}" href="/collections/{w["k"]}/">'
+      f'<img src="/assets/tiles/world-{w["k"]}.webp?v={V}" alt="" loading="lazy" decoding="async" />'
+      f'<span class="wtile-body"><b>{w["t"]}</b><em>{w["d"]}</em>'
+      f'<i>{len(in_world(w["k"]))} products</i></span></a>' for w in WORLDS)
+
+
+def cat_tiles():
+    return "".join(
+      f'<a class="ctile" href="/collections/{c["k"]}/" style="--acc:{CAT_ACC[c["k"]]}">'
+      f'<img src="/assets/tiles/{c["k"]}.webp?v={V}" alt="" loading="lazy" decoding="async" />'
+      f'<span class="ctile-body"><b>{c["t"]}</b><i>{len(in_cat(c["k"]))} products</i></span></a>'
+      for c in SHOP_CATS)
 
 
 def strip_items():
@@ -103,6 +132,7 @@ def nav(active=""):
                       '<svg class="car" viewBox="0 0 24 24" fill="none" stroke-linecap="round" '
                       'stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>'
                       f'<div class="mega"><div class="mega-tiles">{mega}</div>'
+                      f'<div class="mega-worlds"><span>Shop what you drive</span>{worlds_links()}</div>'
                       '<div class="mega-foot"><p>Not sure what you need? '
                       '<a class="lime" href="/pages/find-your-product/">Answer two questions.</a></p>'
                       '<a class="btn btn-primary btn-sm" href="/collections/">Shop all'
@@ -167,7 +197,7 @@ def footer():
     shop = "".join(f'<li><a href="/collections/{c["k"]}/">{c["t"]}</a></li>' for c in SHOP_CATS)
     return f"""<footer class="foot">
   <div class="wrap">
-    <div class="foot-grid">
+    <div class="foot-grid five">
       <div class="foot-brand">
         <a href="/" aria-label="LusterLux home">
           <img class="foot-lockup" src="/assets/brand/lusterlux-lockup.webp?v={V}" alt="LusterLux" />
@@ -179,6 +209,7 @@ def footer():
            LusterLux; checkout hands off to their live store.</p>
       </div>
       <div><h3>Shop</h3><ul>{shop}<li><a href="/collections/">All products</a></li></ul></div>
+      <div><h3>What You Drive</h3><ul>{"".join(f'<li><a href="/collections/{w["k"]}/">{w["t"]}</a></li>' for w in WORLDS)}</ul></div>
       <div><h3>Learn</h3><ul>
         <li><a href="/pages/find-your-product/">Find Your Product</a></li>
         <li><a href="/pages/nanofusion/">NanoFusion</a></li>
@@ -336,9 +367,42 @@ def before_after():
 
 
 # ================================================================ HOMEPAGE ==
+def showcase(p, i, total):
+    """One product, full width. Big bottle, what it is, what it does, buy it."""
+    specs = "".join(f"<li>{s}</li>" for s in p["specs"])
+    return f"""<section class="show{' alt' if i % 2 else ''}" id="p-{p['img']}" style="--acc:{p['acc']}">
+  <div class="wrap show-in">
+    <div class="show-media">
+      <div class="stage">
+        <span class="stage-badge">{p['fn']}</span>
+        {f'<span class="stage-size">{p["size"]}</span>' if p['size'] else ''}
+        <div class="plinth">
+          <img class="bottle" src="/assets/products/{p['img']}.webp?v={V}" alt="{esc(plain(p['title']))} by LusterLux" loading="lazy" decoding="async" />
+          <img class="refl" src="/assets/products/{p['img']}.webp?v={V}" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+        </div>
+      </div>
+    </div>
+    <div class="show-info fade">
+      <p class="show-idx"><b>{i+1:02d}</b> &frasl; {total:02d} &middot; <a href="/collections/{p['cat']}/">{cat_name(p['cat'])}</a></p>
+      <p class="show-sub">{p['fn']}</p>
+      <h3 class="show-name">{esc(p['n'])}</h3>
+      {f'<p class="show-line">{p["line"]}</p>' if p['line'] else ''}
+      <p class="show-copy">{p['short']}</p>
+      {f'<ul class="show-specs">{specs}</ul>' if specs else ''}
+      <div class="show-buy">
+        <span class="show-price">{money(p['price'])}<small>{p['size']}</small></span>
+        <button class="btn btn-primary add" type="button" data-add="{p['h']}">Add to cart
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <a class="tlink" href="{p['url']}">Full details<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>"""
+
+
 def build_home():
     heroes = sorted([p for p in P if p["hero"]], key=lambda p: p["hero"])
-    line_cards = "".join(card(p) for p in heroes)
+    line_cards = "".join(showcase(p, i, len(heroes)) for i, p in enumerate(heroes))
 
     system = [
       ("01", "Foam", "luxfoam-foam-cannon-soap", "Blanket it and let the soap lift the grit before anything touches paint."),
@@ -453,17 +517,40 @@ def build_home():
   </div>
 </section>
 
-<section class="sec" id="line">
+<section class="sec" id="categories">
   <div class="wrap">
     <div class="sec-head">
+      <p class="kick slide">Shop by Category</p>
+      <h2 class="fade" data-d="1">Know what you need? <em>Start here.</em></h2>
+    </div>
+    <div class="ctiles fade" data-d="2">{cat_tiles()}</div>
+  </div>
+</section>
+
+<section class="sec bone" id="worlds">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kick slide">Shop What You Drive</p>
+      <h2 class="fade" data-d="1">Not every finish <em>is paint.</em></h2>
+      <p class="lead fade" data-d="2">A cart bench seat, a gelcoat hull and a mud-caked fender all take different handling. Pick the one in your garage and we will only show you what applies.</p>
+    </div>
+    <div class="wtiles fade" data-d="2">{world_tiles()}</div>
+  </div>
+</section>
+
+<div class="shows" id="line">
+  <div class="wrap">
+    <div class="sec-head" style="padding-top:clamp(74px,9vw,130px)">
       <p class="kick slide">The Line</p>
       <h2 class="fade" data-d="1">Six bottles. <em>Every surface.</em></h2>
       <p class="lead fade" data-d="2">Each one does a single job properly. No shelf of half-used bottles you never reach for again.</p>
     </div>
-    <div class="grid four fade" data-d="2">{line_cards}</div>
-    <p class="fade" data-d="3" style="margin-top:34px"><a class="tlink" href="/collections/">See all {len(P)} products<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
   </div>
-</section>
+  {line_cards}
+  <div class="wrap" style="padding-bottom:clamp(74px,9vw,130px)">
+    <a class="tlink" href="/collections/">See all {len(P)} products<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+  </div>
+</div>
 
 <section class="sec bone" id="nanofusion">
   <div class="wrap">
@@ -765,11 +852,14 @@ def nano_steps():
 
 
 # ============================================================== COLLECTIONS ==
-def collection_page(key, title, desc, items, url, intro=""):
+def collection_page(key, title, desc, items, url, intro="", world=False):
     cards = "".join(card(p) for p in items) or '<p class="empty">Nothing here yet.</p>'
     chips = "".join(
       f'<a class="chip{" on" if c["k"]==key else ""}" href="/collections/{c["k"]}/">{c["t"]}'
       f'<b>{len(in_cat(c["k"]))}</b></a>' for c in SHOP_CATS)
+    wchips = "".join(
+      f'<a class="chip w{" on" if w["k"]==key else ""}" href="/collections/{w["k"]}/">{w["t"]}'
+      f'<b>{len(in_world(w["k"]))}</b></a>' for w in WORLDS)
     trail = [("Home","/"),("Shop","/collections/")] + ([(title, url)] if key else [])
     sch = [crumbs(trail),
       {"@context":"https://schema.org","@type":"CollectionPage","name":title,"url":SITE+url,
@@ -793,6 +883,7 @@ def collection_page(key, title, desc, items, url, intro=""):
   </section>
   <div class="catbar"><div class="wrap catbar-in">
     <a class="chip{" on" if not key else ""}" href="/collections/">All<b>{len(P)}</b></a>{chips}
+    <span class="chip-sep" aria-hidden="true"></span>{wchips}
     <div class="catbar-tools">
       <label class="srch"><span class="vh">Search products</span>
         <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m16.5 16.5 4 4"/></svg>
@@ -829,6 +920,12 @@ def build_collections():
                     f'{len(items)} products in {plain(c["t"])} from LusterLux.',
                     f'Made in the USA. Free shipping over {money(FREE)}.'),
           items, f'/collections/{c["k"]}/', c["d"])
+    for w in WORLDS:
+        items = in_world(w["k"])
+        collection_page(w["k"], w["t"].replace("&amp;", "&"),
+          meta_desc(w["d"], f'{len(items)} LusterLux products that apply to {plain(w["t"]).lower()}.',
+                    f'Made in the USA. Free shipping over {money(FREE)}.'),
+          items, f'/collections/{w["k"]}/', w["d"], world=True)
     m = [p for p in P if p["cat"] == "merch"]
     collection_page("merch", "Merch",
       meta_desc("LusterLux tees and caps for the people who spend their weekends in the driveway rather than out of it.",
@@ -1243,6 +1340,7 @@ def build_meta_files():
     urls = ["/", "/collections/", "/cart/", "/pages/find-your-product/",
             "/pages/nanofusion/", "/pages/about/"]
     urls += [f'/collections/{c["k"]}/' for c in SHOP_CATS] + ["/collections/merch/"]
+    urls += [f'/collections/{w["k"]}/' for w in WORLDS]
     urls += [p["url"] for p in P]
     urls += [f"/pages/find-your-product/{s}-{j}/" for s, _, _ in SURFACES for j, _ in JOBS]
     urls += ["/blogs/guides/", "/pages/community/"]

@@ -75,7 +75,7 @@ SCENES = {
 
 # plates that are ever shown full-bleed, so they keep a large variant too
 SCENE_FULL = {"hero-foam", "hero-wheel", "hero-hood", "nano-hood", "wheel-caliper",
-              "ba-before", "ba-after", "interior", "cart", "towels", "kitshot"}
+              "ba-before", "ba-after", "interior", "cart", "towels", "kitshot", "marine", "ceramic"}
 
 # --- everything else in the catalog, so the shop grid is one cohesive dark set.
 # Photoroom_* files already ship with an alpha channel; the pipeline detects that

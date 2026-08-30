@@ -748,3 +748,102 @@ a.contact:hover b{color:var(--brand)}
 @media(max-width:460px){
   .grid.four,.sys{grid-template-columns:1fr}
 }
+
+/* ---------- shop-by-category tiles ---------- */
+.ctiles{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:clamp(34px,4vw,52px)}
+.ctile{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;border-radius:4px;background:#000;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);transition:box-shadow .4s,transform .45s var(--ease)}
+.ctile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .9s var(--ease),filter .5s;filter:brightness(.86)}
+.ctile::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 38%,rgba(4,5,8,.86))}
+.ctile-body{position:absolute;inset:auto 0 0;z-index:2;padding:22px 22px 24px}
+.ctile b{display:block;font-family:var(--display);font-weight:800;font-stretch:90%;text-transform:uppercase;
+  font-size:clamp(19px,1.7vw,26px);color:#fff;letter-spacing:-.02em;line-height:1}
+.ctile i{display:block;margin-top:9px;font-family:var(--face);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);font-style:normal;transition:color .3s}
+.ctile::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;z-index:3;background:var(--acc);
+  transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+@media(hover:hover){
+  .ctile:hover{transform:translateY(-4px);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--acc) 55%,transparent),
+    0 26px 54px rgba(0,0,0,.5)}
+  .ctile:hover img{transform:scale(1.06);filter:brightness(1)}
+  .ctile:hover::before{transform:scaleX(1)}
+  .ctile:hover i{color:var(--acc)}
+}
+
+/* ---------- shop-what-you-drive tiles ---------- */
+.wtiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:clamp(34px,4vw,52px)}
+.wtile{position:relative;display:block;aspect-ratio:5/6;overflow:hidden;border-radius:4px;background:#000;
+  transition:transform .45s var(--ease),box-shadow .4s}
+.wtile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .9s var(--ease)}
+.wtile::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 26%,rgba(4,5,8,.9))}
+.wtile-body{position:absolute;inset:auto 0 0;z-index:2;padding:24px 22px 26px}
+.wtile b{display:block;font-family:var(--display);font-weight:800;font-stretch:90%;text-transform:uppercase;
+  font-size:clamp(20px,1.8vw,28px);color:#fff;letter-spacing:-.02em;line-height:1}
+.wtile em{display:block;margin-top:11px;font-style:normal;font-size:13.5px;color:#b9c0c6;line-height:1.55}
+.wtile i{display:block;margin-top:14px;font-family:var(--face);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--brand);font-style:normal}
+@media(hover:hover){
+  .wtile:hover{transform:translateY(-5px);box-shadow:0 26px 56px rgba(0,0,0,.5)}
+  .wtile:hover img{transform:scale(1.06)}
+}
+.wtile.on{box-shadow:inset 0 0 0 2px var(--brand)}
+.chip.w{background:rgba(132,208,25,.08);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--brand) 30%,transparent)}
+.chip.w:hover{background:rgba(132,208,25,.16)}
+/* .chip.w and .chip.on have equal specificity — the active world chip needs to win */
+.chip.w.on{background:var(--brand);color:var(--brand-ink);box-shadow:0 6px 20px var(--brand-glow)}
+.chip-sep{width:1px;height:24px;background:var(--line-2);margin:0 4px}
+
+/* ---------- full-width product showcases ---------- */
+.shows{background:var(--bg)}
+.show{position:relative;padding:clamp(48px,6vw,90px) 0}
+.show::before{content:"";position:absolute;inset:auto 0 0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1) 30%,rgba(255,255,255,.1) 70%,transparent)}
+.show:last-of-type::before{display:none}
+.show-in{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:clamp(30px,5vw,80px);align-items:center}
+.show.alt .show-media{order:2}
+.show.alt .show-info{order:1}
+.show-media .stage{aspect-ratio:1/1.02}
+.show-idx{display:flex;align-items:center;gap:10px;font-family:var(--face);font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+.show-idx b{color:var(--acc);font-weight:400}
+.show-idx a{color:var(--soft)}
+.show-idx a:hover{color:var(--acc)}
+.show-sub{margin-top:20px;font-family:var(--face);font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;color:#aeb5bc}
+.show-name{margin-top:14px;font-size:clamp(44px,6.4vw,102px);color:#fff;letter-spacing:-.035em;line-height:.9}
+.show-line{margin-top:20px;font-family:var(--display);font-weight:800;font-stretch:90%;text-transform:uppercase;
+  font-size:clamp(17px,1.9vw,26px);color:var(--acc);letter-spacing:-.02em;line-height:1.06}
+.show-copy{margin-top:20px;font-size:16.5px;line-height:1.76;color:#c7ccd1;max-width:52ch}
+.show-specs{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:28px;max-width:540px}
+.show-specs li{padding:13px 15px;border-radius:2px;font-size:12.5px;color:#dfe4e8;
+  background:rgba(255,255,255,.04);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+.show-buy{display:flex;flex-wrap:wrap;align-items:center;gap:16px 26px;margin-top:32px}
+.show-price{font-family:var(--display);font-weight:800;font-stretch:90%;font-size:34px;color:#fff;
+  letter-spacing:-.03em}
+.show-price small{font-family:var(--face);font-size:9px;letter-spacing:.14em;color:var(--soft);margin-left:11px}
+
+.foot-grid.five{grid-template-columns:1.4fr repeat(4,1fr)}
+
+@media(max-width:1200px){
+  .ctiles{grid-template-columns:repeat(2,1fr)}
+  .wtiles{grid-template-columns:repeat(2,1fr)}
+  .foot-grid.five{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:1024px){
+  .show-in{grid-template-columns:1fr;gap:32px}
+  .show.alt .show-media{order:0}
+  .show.alt .show-info{order:0}
+  .show-media .stage{max-width:460px}
+}
+@media(max-width:760px){
+  .ctiles,.wtiles{grid-template-columns:1fr}
+  .ctile{aspect-ratio:16/10}
+  .wtile{aspect-ratio:4/3}
+  .show-specs{grid-template-columns:1fr}
+  .foot-grid.five{grid-template-columns:1fr 1fr}
+}

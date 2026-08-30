@@ -36,6 +36,32 @@
    "d": "Wear it."
   }
  ],
+ "worlds": [
+  {
+   "k": "car-truck",
+   "t": "Car &amp; Truck",
+   "d": "Daily drivers, weekend cars and work trucks. The full line applies here.",
+   "img": "hero-foam"
+  },
+  {
+   "k": "golf-cart",
+   "t": "Golf Cart",
+   "d": "Cart paint, plastic body panels and vinyl bench seats, cleaned where the cart sits.",
+   "img": "cart"
+  },
+  {
+   "k": "marine",
+   "t": "Marine",
+   "d": "Gelcoat, vinyl seating and trim take sun and salt harder than anything on the road.",
+   "img": "marine"
+  },
+  {
+   "k": "off-road",
+   "t": "Off-Road &amp; UTV",
+   "d": "Mud, trail dust and baked-on film. Same chemistry, harder job.",
+   "img": "hero-hood"
+  }
+ ],
  "products": [
   {
    "h": "luxpro-waterless-wash-detail-spray",
@@ -86,7 +112,13 @@
    "hero": 1,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxpro-waterless-wash-detail-spray",
-   "url": "/products/luxpro-waterless-wash-detail-spray/"
+   "url": "/products/luxpro-waterless-wash-detail-spray/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "marine",
+    "off-road"
+   ]
   },
   {
    "h": "ceramicx-ceramic-detail-spray",
@@ -133,7 +165,12 @@
    "hero": 2,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/ceramicx-ceramic-detail-spray",
-   "url": "/products/ceramicx-ceramic-detail-spray/"
+   "url": "/products/ceramicx-ceramic-detail-spray/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "marine"
+   ]
   },
   {
    "h": "luxfoam-foam-cannon-soap",
@@ -183,7 +220,12 @@
    "hero": 3,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxfoam-foam-cannon-soap",
-   "url": "/products/luxfoam-foam-cannon-soap/"
+   "url": "/products/luxfoam-foam-cannon-soap/",
+   "worlds": [
+    "car-truck",
+    "marine",
+    "off-road"
+   ]
   },
   {
    "h": "luxwheelassassin-wheel-cleaner",
@@ -231,7 +273,12 @@
    "hero": 4,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxwheelassassin-wheel-cleaner",
-   "url": "/products/luxwheelassassin-wheel-cleaner/"
+   "url": "/products/luxwheelassassin-wheel-cleaner/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "off-road"
+   ]
   },
   {
    "h": "tirevenom-tire-dressing",
@@ -277,7 +324,12 @@
    "hero": 5,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/tirevenom-tire-dressing",
-   "url": "/products/tirevenom-tire-dressing/"
+   "url": "/products/tirevenom-tire-dressing/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "off-road"
+   ]
   },
   {
    "h": "interiorx-interior-cleaner",
@@ -324,7 +376,11 @@
    "hero": 6,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/interiorx-interior-cleaner",
-   "url": "/products/interiorx-interior-cleaner/"
+   "url": "/products/interiorx-interior-cleaner/",
+   "worlds": [
+    "car-truck",
+    "off-road"
+   ]
   },
   {
    "h": "fairway-finish-system",
@@ -350,7 +406,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/fairway-finish-system",
-   "url": "/products/fairway-finish-system/"
+   "url": "/products/fairway-finish-system/",
+   "worlds": [
+    "golf-cart"
+   ]
   },
   {
    "h": "birdielux-golf-cart-exterior-cleaner",
@@ -394,7 +453,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/birdielux-golf-cart-exterior-cleaner",
-   "url": "/products/birdielux-golf-cart-exterior-cleaner/"
+   "url": "/products/birdielux-golf-cart-exterior-cleaner/",
+   "worlds": [
+    "golf-cart"
+   ]
   },
   {
    "h": "xfresh-golf-cart-interior-cleaner",
@@ -437,7 +499,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/xfresh-golf-cart-interior-cleaner",
-   "url": "/products/xfresh-golf-cart-interior-cleaner/"
+   "url": "/products/xfresh-golf-cart-interior-cleaner/",
+   "worlds": [
+    "golf-cart",
+    "marine"
+   ]
   },
   {
    "h": "trail-foam-coming-soon",
@@ -463,7 +529,10 @@
    "hero": 0,
    "soon": true,
    "storeUrl": "https://lusterluxauto.com/products/trail-foam-coming-soon",
-   "url": "/products/trail-foam-coming-soon/"
+   "url": "/products/trail-foam-coming-soon/",
+   "worlds": [
+    "off-road"
+   ]
   },
   {
    "h": "lux-brush-interior-brush",
@@ -489,7 +558,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-brush-interior-brush",
-   "url": "/products/lux-brush-interior-brush/"
+   "url": "/products/lux-brush-interior-brush/",
+   "worlds": [
+    "car-truck",
+    "golf-cart"
+   ]
   },
   {
    "h": "restorx-rvp-plastic-dressing",
@@ -537,7 +610,13 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/restorx-rvp-plastic-dressing",
-   "url": "/products/restorx-rvp-plastic-dressing/"
+   "url": "/products/restorx-rvp-plastic-dressing/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "marine",
+    "off-road"
+   ]
   },
   {
    "h": "newcarember-air-freshener",
@@ -578,7 +657,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/newcarember-air-freshener",
-   "url": "/products/newcarember-air-freshener/"
+   "url": "/products/newcarember-air-freshener/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "vanillaember-air-freshener",
@@ -619,7 +701,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/vanillaember-air-freshener",
-   "url": "/products/vanillaember-air-freshener/"
+   "url": "/products/vanillaember-air-freshener/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "the-platinum-system",
@@ -645,7 +730,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/the-platinum-system",
-   "url": "/products/the-platinum-system/"
+   "url": "/products/the-platinum-system/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "ultimate-wash-system-1",
@@ -671,7 +759,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/ultimate-wash-system-1",
-   "url": "/products/ultimate-wash-system-1/"
+   "url": "/products/ultimate-wash-system-1/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "rim-and-tire-system-kit-1",
@@ -697,7 +788,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/rim-and-tire-system-kit-1",
-   "url": "/products/rim-and-tire-system-kit-1/"
+   "url": "/products/rim-and-tire-system-kit-1/",
+   "worlds": [
+    "car-truck",
+    "off-road"
+   ]
   },
   {
    "h": "foam-wash-system-1",
@@ -723,7 +818,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/foam-wash-system-1",
-   "url": "/products/foam-wash-system-1/"
+   "url": "/products/foam-wash-system-1/",
+   "worlds": [
+    "car-truck",
+    "off-road"
+   ]
   },
   {
    "h": "complete-interior-system-1",
@@ -749,7 +848,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/complete-interior-system-1",
-   "url": "/products/complete-interior-system-1/"
+   "url": "/products/complete-interior-system-1/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "paint-care-system-1",
@@ -775,7 +877,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/paint-care-system-1",
-   "url": "/products/paint-care-system-1/"
+   "url": "/products/paint-care-system-1/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "complete-detail-system-1",
@@ -801,7 +906,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/complete-detail-system-1",
-   "url": "/products/complete-detail-system-1/"
+   "url": "/products/complete-detail-system-1/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "interior-restoration-system-1",
@@ -827,7 +935,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/interior-restoration-system-1",
-   "url": "/products/interior-restoration-system-1/"
+   "url": "/products/interior-restoration-system-1/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "tire-care-system-1",
@@ -853,7 +964,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/tire-care-system-1",
-   "url": "/products/tire-care-system-1/"
+   "url": "/products/tire-care-system-1/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "waterless-wash-system-1",
@@ -879,7 +993,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/waterless-wash-system-1",
-   "url": "/products/waterless-wash-system-1/"
+   "url": "/products/waterless-wash-system-1/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "dual-scent-system-1",
@@ -905,7 +1022,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/dual-scent-system-1",
-   "url": "/products/dual-scent-system-1/"
+   "url": "/products/dual-scent-system-1/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "the-luxcap-limited-supply",
@@ -931,7 +1051,8 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/the-luxcap-limited-supply",
-   "url": "/products/the-luxcap-limited-supply/"
+   "url": "/products/the-luxcap-limited-supply/",
+   "worlds": []
   },
   {
    "h": "lux-t",
@@ -957,7 +1078,8 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-t",
-   "url": "/products/lux-t/"
+   "url": "/products/lux-t/",
+   "worlds": []
   },
   {
    "h": "towel-tantrum-kit-every-surface-every-step-every-finish",
@@ -983,7 +1105,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/towel-tantrum-kit-every-surface-every-step-every-finish",
-   "url": "/products/towel-tantrum-kit-every-surface-every-step-every-finish/"
+   "url": "/products/towel-tantrum-kit-every-surface-every-step-every-finish/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "luxcannon-foam-cannon",
@@ -1015,7 +1140,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxcannon-foam-cannon",
-   "url": "/products/luxcannon-foam-cannon/"
+   "url": "/products/luxcannon-foam-cannon/",
+   "worlds": [
+    "car-truck",
+    "off-road"
+   ]
   },
   {
    "h": "luxgun-pressure-washer-gun",
@@ -1046,7 +1175,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxgun-pressure-washer-gun",
-   "url": "/products/luxgun-pressure-washer-gun/"
+   "url": "/products/luxgun-pressure-washer-gun/",
+   "worlds": [
+    "car-truck",
+    "off-road"
+   ]
   },
   {
    "h": "luxtowel-drying-towel",
@@ -1072,7 +1205,12 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxtowel-drying-towel",
-   "url": "/products/luxtowel-drying-towel/"
+   "url": "/products/luxtowel-drying-towel/",
+   "worlds": [
+    "car-truck",
+    "marine",
+    "off-road"
+   ]
   },
   {
    "h": "foamx-sprayer-electric-sprayer",
@@ -1098,7 +1236,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/foamx-sprayer-electric-sprayer",
-   "url": "/products/foamx-sprayer-electric-sprayer/"
+   "url": "/products/foamx-sprayer-electric-sprayer/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "lux-sprayer-pump-sprayer",
@@ -1124,7 +1265,10 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-sprayer-pump-sprayer",
-   "url": "/products/lux-sprayer-pump-sprayer/"
+   "url": "/products/lux-sprayer-pump-sprayer/",
+   "worlds": [
+    "car-truck"
+   ]
   },
   {
    "h": "luxmit-wash-mit",
@@ -1150,7 +1294,12 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxmit-wash-mit",
-   "url": "/products/luxmit-wash-mit/"
+   "url": "/products/luxmit-wash-mit/",
+   "worlds": [
+    "car-truck",
+    "marine",
+    "off-road"
+   ]
   },
   {
    "h": "3-pack-edgeless-lux-edgeless-microfiber-towels",
@@ -1183,7 +1332,12 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/3-pack-edgeless-lux-edgeless-microfiber-towels",
-   "url": "/products/3-pack-edgeless-lux-edgeless-microfiber-towels/"
+   "url": "/products/3-pack-edgeless-lux-edgeless-microfiber-towels/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "marine"
+   ]
   },
   {
    "h": "5-pack-microlux-microfiber-towels",
@@ -1216,7 +1370,13 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/5-pack-microlux-microfiber-towels",
-   "url": "/products/5-pack-microlux-microfiber-towels/"
+   "url": "/products/5-pack-microlux-microfiber-towels/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "marine",
+    "off-road"
+   ]
   },
   {
    "h": "2-pack-xpad-applicator-pad",
@@ -1242,7 +1402,12 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/2-pack-xpad-applicator-pad",
-   "url": "/products/2-pack-xpad-applicator-pad/"
+   "url": "/products/2-pack-xpad-applicator-pad/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "marine"
+   ]
   },
   {
    "h": "lux-bucket-car-washing-bucket",
@@ -1273,7 +1438,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-bucket-car-washing-bucket",
-   "url": "/products/lux-bucket-car-washing-bucket/"
+   "url": "/products/lux-bucket-car-washing-bucket/",
+   "worlds": [
+    "car-truck",
+    "off-road"
+   ]
   },
   {
    "h": "2-pack-luxwindow-waffle-window-towel",
@@ -1299,7 +1468,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/2-pack-luxwindow-waffle-window-towel",
-   "url": "/products/2-pack-luxwindow-waffle-window-towel/"
+   "url": "/products/2-pack-luxwindow-waffle-window-towel/",
+   "worlds": [
+    "car-truck",
+    "marine"
+   ]
   },
   {
    "h": "luxbug-bug-and-tar-remover-sponge",
@@ -1325,7 +1498,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxbug-bug-and-tar-remover-sponge",
-   "url": "/products/luxbug-bug-and-tar-remover-sponge/"
+   "url": "/products/luxbug-bug-and-tar-remover-sponge/",
+   "worlds": [
+    "car-truck",
+    "off-road"
+   ]
   },
   {
    "h": "luxquick-detail-spray",
@@ -1372,7 +1549,12 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/luxquick-detail-spray",
-   "url": "/products/luxquick-detail-spray/"
+   "url": "/products/luxquick-detail-spray/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "marine"
+   ]
   },
   {
    "h": "lux-tire-brush",
@@ -1398,7 +1580,12 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-tire-brush",
-   "url": "/products/lux-tire-brush/"
+   "url": "/products/lux-tire-brush/",
+   "worlds": [
+    "car-truck",
+    "golf-cart",
+    "off-road"
+   ]
   },
   {
    "h": "lux-wheel-brush",
@@ -1424,7 +1611,11 @@
    "hero": 0,
    "soon": false,
    "storeUrl": "https://lusterluxauto.com/products/lux-wheel-brush",
-   "url": "/products/lux-wheel-brush/"
+   "url": "/products/lux-wheel-brush/",
+   "worlds": [
+    "car-truck",
+    "off-road"
+   ]
   }
  ],
  "meta": {

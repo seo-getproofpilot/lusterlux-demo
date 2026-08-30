@@ -228,6 +228,49 @@ FALLBACK = {
  "the-luxcap-limited-supply":    ("merch", "LuxCap", "Cap", "Structured cap with the LusterLux leather patch. Limited run, and when this batch is gone it is gone."),
 }
 
+# ---- vehicle worlds -------------------------------------------------------
+# What you drive, not what job it does. Seeded from LusterLux's own
+# golfcart-care / boat-care / off-road collections, then extended with the
+# products whose own directions name those surfaces. Their live boat-care
+# collection is three towels, which is not a shoppable category.
+WORLDS = [
+ ("car-truck", "Car &amp; Truck",
+  "Daily drivers, weekend cars and work trucks. The full line applies here.",
+  "hero-foam"),
+ ("golf-cart", "Golf Cart",
+  "Cart paint, plastic body panels and vinyl bench seats, cleaned where the cart sits.",
+  "cart"),
+ ("marine", "Marine",
+  "Gelcoat, vinyl seating and trim take sun and salt harder than anything on the road.",
+  "marine"),
+ ("off-road", "Off-Road &amp; UTV",
+  "Mud, trail dust and baked-on film. Same chemistry, harder job.",
+  "hero-hood"),
+]
+# handles that belong to each world beyond the catch-all car-truck
+WORLD_MEMBERS = {
+ "golf-cart": ["birdielux-golf-cart-exterior-cleaner","xfresh-golf-cart-interior-cleaner",
+   "fairway-finish-system","3-pack-edgeless-lux-edgeless-microfiber-towels",
+   "5-pack-microlux-microfiber-towels","lux-brush-interior-brush",
+   "luxwheelassassin-wheel-cleaner","tirevenom-tire-dressing","restorx-rvp-plastic-dressing",
+   "luxpro-waterless-wash-detail-spray","luxquick-detail-spray","ceramicx-ceramic-detail-spray",
+   "2-pack-xpad-applicator-pad","lux-tire-brush"],
+ "marine": ["3-pack-edgeless-lux-edgeless-microfiber-towels","5-pack-microlux-microfiber-towels",
+   "2-pack-luxwindow-waffle-window-towel","restorx-rvp-plastic-dressing",
+   "ceramicx-ceramic-detail-spray","luxpro-waterless-wash-detail-spray","luxquick-detail-spray",
+   "luxfoam-foam-cannon-soap","xfresh-golf-cart-interior-cleaner","luxtowel-drying-towel",
+   "2-pack-xpad-applicator-pad","luxmit-wash-mit"],
+ "off-road": ["trail-foam-coming-soon","luxtowel-drying-towel","luxcannon-foam-cannon",
+   "5-pack-microlux-microfiber-towels","luxbug-bug-and-tar-remover-sponge","luxmit-wash-mit",
+   "luxfoam-foam-cannon-soap","luxwheelassassin-wheel-cleaner","tirevenom-tire-dressing",
+   "restorx-rvp-plastic-dressing","luxpro-waterless-wash-detail-spray","interiorx-interior-cleaner",
+   "lux-tire-brush","lux-wheel-brush","lux-bucket-car-washing-bucket","luxgun-pressure-washer-gun",
+   "rim-and-tire-system-kit-1","foam-wash-system-1"],
+}
+# cart- and trail-specific products are not general car care
+NOT_CAR = {"birdielux-golf-cart-exterior-cleaner","xfresh-golf-cart-interior-cleaner",
+           "fairway-finish-system","trail-foam-coming-soon"}
+
 # products that also belong to Beyond the Car (cross-listed, as on the live store)
 ALSO_BEYOND = ["tirevenom-tire-dressing", "restorx-rvp-plastic-dressing",
                "luxwheelassassin-wheel-cleaner", "luxfoam-foam-cannon-soap",
@@ -297,8 +340,17 @@ def main():
                 problems.append(f"{i['h']} pairs with missing handle {pr}")
 
     items.sort(key=lambda i: (i["hero"] == 0, i["hero"], i["cat"], -i["price"]))
+    for i in items:
+        w = []
+        if i["h"] not in NOT_CAR and i["cat"] != "merch":
+            w.append("car-truck")
+        for wk, members in WORLD_MEMBERS.items():
+            if i["h"] in members:
+                w.append(wk)
+        i["worlds"] = w
     cats = [{"k": k, "t": t, "d": d} for k, t, d in CATS] + [{"k": MERCH[0], "t": MERCH[1], "d": MERCH[2]}]
-    payload = {"cats": cats, "products": items,
+    worlds = [{"k": k, "t": t, "d": d, "img": im} for k, t, d, im in WORLDS]
+    payload = {"cats": cats, "worlds": worlds, "products": items,
                "meta": {"source": f"{STORE}/products.json", "fetched": "2026-08-29",
                         "freeShipping": 45.0}}
 
@@ -315,6 +367,9 @@ def main():
         n = sum(1 for i in items if i["cat"] == c["k"])
         x = sum(1 for i in items if c["k"] in i["also"])
         print(f"  {c['k']:<16} {n}" + (f"  (+{x} cross-listed)" if x else ""))
+    print("  --- worlds ---")
+    for w in worlds:
+        print(f"  {w['k']:<16} {sum(1 for i in items if w['k'] in i['worlds'])}")
     print("\nPROBLEMS:", *(problems or ["none"]), sep="\n  ")
 
 
