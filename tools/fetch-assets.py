@@ -69,6 +69,14 @@ SCENES = {
   # the LuxFoam drag comparison -- same car, same framing, foamed vs rinsed
   "towels":      "IMG_1086.jpg",
   "kitshot":     "IMG_9420_-_Edited.png",
+  # in-use plates: each hero product photographed on the surface it works on.
+  # These sit behind the cut-out bottle in the homepage showcases.
+  "use-luxpro":        "IMG_0873_faea6b48-ce36-43c9-b4f1-84d2a5d82b35.jpg",
+  "use-ceramicx":      "IMG_0927.jpg",
+  "use-luxfoam":       "IMG_1217.jpg",
+  "use-wheelassassin": "IMG_6876.jpg",
+  "use-tirevenom":     "IMG_6881.jpg",
+  "use-interiorx":     "IMG_0813.jpg",
   "ba-before":   "IMG_4677.jpg",
   "ba-after":    "IMG_4704.jpg",
 }

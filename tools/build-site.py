@@ -15,7 +15,7 @@ DATA = json.load(open(os.path.join(ROOT, "data", "catalog.json")))
 P    = DATA["products"]
 CATS = DATA["cats"]
 WORLDS = DATA["worlds"]
-V    = "34"                                   # cache-bust, bump on every build
+V    = "43"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -71,6 +71,31 @@ def cat_tiles():
       f'<img src="/assets/tiles/{c["k"]}.webp?v={V}" alt="" loading="lazy" decoding="async" />'
       f'<span class="ctile-body"><b>{c["t"]}</b><i>{len(in_cat(c["k"]))} products</i></span></a>'
       for c in SHOP_CATS)
+
+
+def stars_svg(n=5):
+    star = ('<svg viewBox="0 0 24 24"><path d="m12 2 3 6.6 7 .8-5.2 4.8 1.4 7L12 17.8 5.8 21.2'
+            'l1.4-7L2 9.4l7-.8L12 2Z"/></svg>')
+    return star * n
+
+
+def honeycomb():
+    """Photo mosaic for the founder section. Pointy-top hexes in offset columns;
+       falls back to a plain staggered grid below 900px (see .hex-* in site.css)."""
+    cols = [[1, 2, 3], [4, 5, 6, 7], [8, 9, 10]]
+    alts = ["A car mid foam wash", "A performance wheel and LusterLux wheel cleaner",
+            "LuxPro on a pearl hood", "A McLaren blanketed in LuxFoam",
+            "A carbon steering wheel being detailed", "A golf cart cleaned with BirdieLux",
+            "The same McLaren rinsed clean", "CeramicX beside a green performance car",
+            "LusterLux products beside a boat", "A dressed tire and wheel",
+            "Foam clinging to a hood", "LusterLux microfiber towels"]
+    out = ""
+    for ci, col in enumerate(cols):
+        cells = "".join(
+          f'<span class="hex"><img src="/assets/hex/hex-{n:02d}.webp?v={V}" '
+          f'alt="{esc(alts[n-1])}" loading="lazy" decoding="async" /></span>' for n in col)
+        out += f'<div class="hex-col{" off" if ci % 2 else ""}">{cells}</div>'
+    return out
 
 
 def strip_items():
@@ -373,7 +398,8 @@ def showcase(p, i, total):
     return f"""<section class="show{' alt' if i % 2 else ''}" id="p-{p['img']}" style="--acc:{p['acc']}">
   <div class="wrap show-in">
     <div class="show-media">
-      <div class="stage">
+      <div class="stage has-scene">
+        {f'<img class="stage-scene" src="/assets/scene/{p["inuse"]}.webp?v={V}" alt="{esc(plain(p["n"]))} in use" loading="lazy" decoding="async" />' if p.get('inuse') else ''}
         <span class="stage-badge">{p['fn']}</span>
         {f'<span class="stage-size">{p["size"]}</span>' if p['size'] else ''}
         <div class="plinth">
@@ -387,7 +413,8 @@ def showcase(p, i, total):
       <p class="show-sub">{p['fn']}</p>
       <h3 class="show-name">{esc(p['n'])}</h3>
       {f'<p class="show-line">{p["line"]}</p>' if p['line'] else ''}
-      <p class="show-copy">{p['short']}</p>
+      <p class="show-copy">{p.get('showBody') or p['short']}</p>
+      {f'<p class="show-why">{p["showWhy"]}</p>' if p.get('showWhy') else ''}
       {f'<ul class="show-specs">{specs}</ul>' if specs else ''}
       <div class="show-buy">
         <span class="show-price">{money(p['price'])}<small>{p['size']}</small></span>
@@ -436,7 +463,6 @@ def build_home():
       ]))
 
     reviews = [
-      ("Dr. Handshoes", "I&rsquo;ve tried them all and have a whole shelf full of different companies and products &mdash; until now. I&rsquo;ve cleared out the shelf and filled it with LusterLux. This stuff works, like actually works. The Assassin wheel cleaner melted old grime off my wife&rsquo;s Yukon wheels before I even scrubbed them."),
       ("Lucas Greenbank &middot; Complete Detail", "Chase and Brandon are fantastic to work with. Their professionalism, knowledge, and passion for car care really stand out. From their drying towels to tire venom and protectants, they have delivered great results."),
       ("Tammy C", "I have been using LusterLux on my black vehicle for months now. It really protects it from water spotting. My car is always shiny and looks like it just rolled off the lot."),
       ("Hank H", "Was skeptical to purchase the RestorX for the interior of my truck but am glad I did. The results exceeded my expectations and the shine has maintained longer than the Armor All I had always used prior."),
@@ -510,31 +536,15 @@ def build_home():
 
 <div class="strip" aria-hidden="true"><div class="strip-in">{strip_items()}{strip_items()}</div></div>
 
-<section class="sec" id="find">
-  <div class="wrap">
-    <p class="kick slide">Find Your Product</p>
-    {finder_widget()}
-  </div>
-</section>
-
 <section class="sec" id="categories">
   <div class="wrap">
     <div class="sec-head">
       <p class="kick slide">Shop by Category</p>
       <h2 class="fade" data-d="1">Know what you need? <em>Start here.</em></h2>
+      <p class="lead fade" data-d="2">Nine categories, every product in one of them. Not sure which?
+        <a class="lime" href="/pages/find-your-product/">Answer two questions</a> and we will name the bottle.</p>
     </div>
     <div class="ctiles fade" data-d="2">{cat_tiles()}</div>
-  </div>
-</section>
-
-<section class="sec bone" id="worlds">
-  <div class="wrap">
-    <div class="sec-head">
-      <p class="kick slide">Shop What You Drive</p>
-      <h2 class="fade" data-d="1">Not every finish <em>is paint.</em></h2>
-      <p class="lead fade" data-d="2">A cart bench seat, a gelcoat hull and a mud-caked fender all take different handling. Pick the one in your garage and we will only show you what applies.</p>
-    </div>
-    <div class="wtiles fade" data-d="2">{world_tiles()}</div>
   </div>
 </section>
 
@@ -566,24 +576,34 @@ def build_home():
         <figcaption>LuxPro on a pearl finish &mdash; spray, wipe, done</figcaption>
       </figure>
     </div>
-    <ol class="steps">{nano_steps()}</ol>
+    <ol class="flow">{nano_steps()}</ol>
   </div>
 </section>
 
-<section class="sec story" id="story">
-  <div class="wrap">
-    <div class="story-grid">
-      <div class="story-copy">
-        <p class="kick slide">Built Through Experience</p>
-        <h2 class="fade" data-d="1">Four years, <em>two to ten cars a day.</em></h2>
-        <p class="fade" data-d="2">Brandon and Chase maintained a rental fleet before they made a single bottle. That is a brutal way to learn what car care products actually do &mdash; which ones sling onto paint, which streak in the sun, which leave a dash you can see reflected in the windshield.</p>
-        <p class="fade" data-d="2">They knew what the products should do and what most of them were missing. So they built the line to get professional results without the guesswork, and they still test every formula against real cars in real conditions.</p>
-        <p class="sign fade" data-d="3"><b>Brandon &amp; Chase</b> &middot; Founders, LusterLux</p>
-        <p class="fade" data-d="3" style="margin-top:22px"><a class="tlink" href="/pages/about/">Read the full story<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
-      </div>
-      <figure class="story-fig fade" data-d="2">
-        <img src="/assets/scene/hero-foam.webp?v={V}" alt="Brandon washing a car with a pressure washer and LusterLux foam in a driveway" loading="lazy" decoding="async" />
-      </figure>
+<section class="sec bone hive" id="story">
+  <div class="wrap hive-in">
+    <div class="hive-copy">
+      <p class="kick slide">Why We Started</p>
+      <h2 class="fade" data-d="1">We are <em>LusterLux.</em></h2>
+      <p class="fade" data-d="2">We didn&rsquo;t start this because the world needed another detailing brand.
+        We started it because the products we depended on every day weren&rsquo;t doing what they promised.</p>
+      <p class="fade" data-d="2">Running a rental car business meant cleaning and detailing vehicle after
+        vehicle. Streaky finishes. Greasy interior dressings. Tire shine that lasted a weekend. So we spent
+        a long time testing and reformulating until we had products that solved the problems we were
+        actually having.</p>
+      <p class="fade" data-d="3">We&rsquo;re Chase and Brandon. When we&rsquo;re not detailing you&rsquo;ll find us
+        at the Glamis dunes, riding up north in Heber, or out on the dirt trails &mdash; which is exactly why
+        this line has to work on more than a garage queen.</p>
+      <p class="sign fade" data-d="3"><b>Chase &amp; Brandon</b> &middot; Founders</p>
+      <p class="fade" data-d="3" style="margin-top:26px">
+        <a class="btn btn-primary" href="/pages/about/">Read the full story
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+    </div>
+    <div class="hive fade" data-d="2" aria-hidden="true">
+      <span class="hive-word w1">Fleet.</span>
+      <span class="hive-word w2">Dunes.</span>
+      <span class="hive-word w3">Trails.</span>
+      {honeycomb()}
     </div>
   </div>
 </section>
@@ -595,7 +615,7 @@ def build_home():
       <h2 class="fade" data-d="1">Five stages. <em>In this order.</em></h2>
       <p class="lead fade" data-d="2">Sequence matters more than product count. Do it in this order and every stage makes the next one easier.</p>
     </div>
-    <ol class="sys">{steps}</ol>
+    <ol class="sys flow-rail">{steps}</ol>
     <div class="sys-cta fade" data-d="3">
       <p>All five stages, one box.</p>
       <a class="btn btn-primary" href="/products/complete-detail-system-1/">Complete Detail System &middot; {money(by_handle['complete-detail-system-1']['price'])}<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -614,14 +634,16 @@ def build_home():
   </div>
 </section>
 
-<section class="sec verts" id="beyond">
+<section class="sec bone" id="worlds">
   <div class="wrap">
     <div class="sec-head">
-      <p class="kick slide">Beyond the Car</p>
-      <h2 class="fade" data-d="1">If it has a finish, <em>it deserves this.</em></h2>
-      <p class="lead fade" data-d="2">The same chemistry, aimed at the surfaces that take the worst of it. Cart paths, salt water, dust and trail film included.</p>
+      <p class="kick slide">Shop What You Drive</p>
+      <h2 class="fade" data-d="1">Built for <em>all of it.</em></h2>
+      <p class="lead fade" data-d="2">Chase and Brandon didn&rsquo;t build this line for one clean car in a
+        garage. Between the rental fleet, the Glamis dunes and the Heber trails, it had to hold up on
+        whatever came home dirty. Pick yours and we will only show you what applies.</p>
     </div>
-    <div class="vgrid">{beyond}</div>
+    <div class="wtiles fade" data-d="2">{world_tiles()}</div>
   </div>
 </section>
 
@@ -637,11 +659,19 @@ def build_home():
   </div>
 </section>
 
-<section class="sec revs" id="reviews">
+<section class="sec bone revs" id="reviews">
   <div class="wrap">
     <div class="sec-head">
-      <p class="kick slide">5.00 &#9733; &middot; 17 verified reviews</p>
+      <p class="kick slide">Reviews</p>
       <h2 class="fade" data-d="1">People who wash their own car <em>are the hardest to impress.</em></h2>
+    </div>
+    <div class="rev-lead fade" data-d="2">
+      <p class="rev-score"><b>5.00</b><span class="stars" aria-label="5 out of 5">{stars_svg()}</span>
+        <em>17 verified reviews</em></p>
+      <blockquote>I&rsquo;ve tried them all and have a whole shelf full of different companies and products
+        &mdash; until now. I&rsquo;ve cleared out the shelf and filled it with LusterLux. This stuff works,
+        like actually works.</blockquote>
+      <cite>Dr. Handshoes &middot; Verified</cite>
     </div>
     <div class="rev-rail" id="revRail">{rcards}</div>
     <div class="rev-ctrl">
@@ -834,21 +864,25 @@ def build_finder():
 
 
 def nano_steps():
+    """One connected diagram. Three boxes in a row was the copy-paste tell."""
     steps = [
-      ("01 &middot; Encapsulate", "Wrapped, not smeared",
+      ("01", "Encapsulate", "Wrapped, not smeared",
        "Nano-polymers surround each particle of dust, pollen and road film so it is suspended away from the finish before a towel ever touches it.",
        '<circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="5.5"/><path d="M24 4v5M24 39v5M4 24h5M39 24h5M10 10l3.5 3.5M34.5 34.5 38 38M38 10l-3.5 3.5M13.5 34.5 10 38"/>'),
-      ("02 &middot; Glide", "Lubricity does the work",
+      ("02", "Glide", "Lubricity does the work",
        "A high-slip layer lets the towel travel instead of grabbing. This is the single biggest thing standing between a maintenance wipe and a panel full of swirls.",
        '<path d="M6 30c6-9 12-9 18 0s12 9 18 0"/><path d="M6 39h36"/><path d="M17 16c0-4 3-7 7-7s7 3 7 7"/><path d="M24 9V4"/>'),
-      ("03 &middot; Seal", "Protection stays behind",
-       "What is left on the panel is an invisible, hydrophobic film — more gloss, tighter beading, less dust adhesion, and a car that stays clean longer between washes.",
+      ("03", "Seal", "Protection stays behind",
+       "What is left on the panel is an invisible, hydrophobic film \u2014 more gloss, tighter beading, less dust adhesion, and a car that stays clean longer between washes.",
        '<path d="M24 5 40 11v11.5C40 32 33.2 38.6 24 42c-9.2-3.4-16-10-16-19.5V11L24 5Z"/><path d="m17.5 23.5 4.5 4.5 9-9.5"/>'),
     ]
     return "".join(
-      f'<li class="step fade" data-d="{i}"><p class="step-n">{n}</p>'
-      f'<svg class="ic" viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round">{ic}</svg>'
-      f'<h3>{t}</h3><p>{c}</p></li>' for i, (n, t, c, ic) in enumerate(steps))
+      f'<li class="flow-step fade" data-d="{i}">'
+      f'<span class="flow-num">{n}</span>'
+      f'<span class="flow-node"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round">{ic}</svg></span>'
+      f'<span class="flow-tag">{tag}</span>'
+      f'<h3>{title}</h3><p>{copy}</p></li>'
+      for i, (n, tag, title, copy, ic) in enumerate(steps))
 
 
 # ============================================================== COLLECTIONS ==
@@ -1093,7 +1127,7 @@ def build_nanofusion():
     </div>
   </section>
   <section class="sec"><div class="wrap">
-    <ol class="steps">{nano_steps()}</ol>
+    <ol class="flow">{nano_steps()}</ol>
   </div></section>
   <section class="sec alt"><div class="wrap nano-top">
     <div class="sec-head">

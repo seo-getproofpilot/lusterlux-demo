@@ -283,6 +283,16 @@ IMG_ALIAS = {"towel-tantrum-kit-every-surface-every-step-every-finish":"towel-ta
              "2-pack-luxwindow-waffle-window-towel":"2-pack-luxwindow"}
 
 
+# showcase copy: hook line, body paragraph, and the beat that makes it matter.
+# Every figure here is LusterLux's own -- coverage counts and durability windows
+# come straight off their product pages.
+SHOWCASE = {'luxpro-waterless-wash-detail-spray': ('Skip the hose. Keep the shine.', 'Most quick detailers move dirt around. LuxPro wraps it. Nano-polymers encapsulate each particle of dust, pollen and road film so it lifts clear of the panel rather than being dragged across it, while a high-lubricity carrier keeps the towel gliding on liquid instead of on your clear coat.', 'That matters because a swirl is not a scratch from something sharp — it is a grain of grit held against the paint by a towel and pulled twelve inches. Take the grit off the panel first and the swirl never happens. One 16 oz bottle does 15 to 30 vehicles.'), 'ceramicx-ceramic-detail-spray': ('Bonded protection, one panel at a time.', 'CeramicX bonds to the surface and leaves a hydrophobic layer that repels water, road grime and UV. Gloss goes up, dirt has less to grab, and the next wash takes half as long. It layers on top of a coating you already have rather than replacing it.', 'Up to eight months from one application, and 10 to 20 vehicles from a bottle. In hard-water country that layer is the difference between water beading off and water sitting on the panel long enough to leave minerals behind.'), 'luxfoam-foam-cannon-soap': ('Let the foam do the scrubbing.', 'LuxFoam throws thick foam that clings long enough to actually break down road film instead of sliding off. High lubricity means the mitt glides rather than grabs, and dirt stays encapsulated in the suds where it cannot cut into the finish.', 'Every minute the foam dwells is a minute of cleaning happening with nothing touching your paint. It rinses clean with no residue and will not strip the wax, sealant or coating already on the car. 8 to 16 washes a bottle.'), 'luxwheelassassin-wheel-cleaner': ('Attack the brake dust. Leave the finish alone.', 'Brake dust is not dirt. It is hot metal fused into your finish, and scrubbing it is how wheels get ruined. LuxWheelAssassin breaks it down chemically so it releases with minimal agitation, then rinses away clean.', 'Safe on clear-coated, painted, chrome, alloy and factory wheels, which covers virtually everything short of bare polished aluminium. 12 to 20 vehicles a bottle. Always test an inconspicuous area first.'), 'tirevenom-tire-dressing': ('Deep black that stays on the tire.', 'Most tire shine is silicone that never really dries, which is why it ends up in a stripe along your rocker panel. TireVenom dries to the touch and stays where you put it, restoring faded rubber to a deep, even finish.', 'It shields against UV, cracking and browning without the greasy film that pulls dust the moment you park. Up to three months an application, and 30 to 50 tires from a bottle.'), 'interiorx-interior-cleaner': ('Clean cabin. No gloss, no glare.', 'Interior cleaner is the easiest place to make a car look worse. Anything that leaves shine puts glare in your windshield and turns a steering wheel slippery. InteriorX pulls dirt, fingerprints and spills off the surface and dries to a factory matte.', 'Safe on dashboards, door panels, consoles, steering wheels, vinyl, plastic and rubber, and it goes 15 to 25 vehicles a bottle. The cabin reads clean rather than coated.')}
+
+# each hero product photographed on the surface it works on; sits behind the
+# cut-out bottle in the homepage showcases
+IN_USE = {'luxpro-waterless-wash-detail-spray': 'use-luxpro', 'ceramicx-ceramic-detail-spray': 'use-ceramicx', 'luxfoam-foam-cannon-soap': 'use-luxfoam', 'luxwheelassassin-wheel-cleaner': 'use-wheelassassin', 'tirevenom-tire-dressing': 'use-tirevenom', 'interiorx-interior-cleaner': 'use-interiorx'}
+
+
 def main():
     src = json.load(open(RAW))["products"]
     items, seen, problems = [], set(), []
@@ -313,7 +323,7 @@ def main():
             "size": ed.get("size", ""),
             "acc": ed.get("acc") or CAT_ACC.get(cat, "#9aa4ae"),
             "img": ed.get("img") or IMG_ALIAS.get(h, h),
-            "line": ed.get("line", ""),
+            "line": SHOWCASE.get(h, (None,))[0] or ed.get("line", ""),
             "short": short,
             "desc": ed.get("desc", short),
             "bestFor": ed.get("bestFor", []),
@@ -323,11 +333,14 @@ def main():
             "note": ed.get("note", ""),
             "specs": ed.get("specs", []),
             "hero": ed.get("hero", 0),
+            "inuse": IN_USE.get(h, ""),
+            "showBody": SHOWCASE.get(h, (None, None, None))[1] or "",
+            "showWhy": SHOWCASE.get(h, (None, None, None))[2] or "",
             "soon": price == 0,
             "storeUrl": f"{STORE}/products/{h}",
             "url": f"/products/{h}/",
         }
-        for field in ("line", "short", "desc"):
+        for field in ("line", "short", "desc", "showBody", "showWhy"):
             if BANNED.search(item[field] or ""):
                 problems.append(f"banned word in {h}.{field}: {BANNED.search(item[field]).group(0)}")
         items.append(item)
