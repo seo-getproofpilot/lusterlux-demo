@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "lusterlux",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4700", "--directory", "/Users/christophercathcart/lusterlux-demo"],
+      "port": 4700
+    }
+  ]
+}

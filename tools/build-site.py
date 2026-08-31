@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "54"                                   # cache-bust, bump on every build
+V    = "69"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -168,7 +168,7 @@ def head(title, desc, canonical, extra="", og_img="/assets/brand/og-card.jpg"):
 <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600;700&family=Michroma&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cinzel:wght@400..900&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/assets/site.css?v={V}" />
 {extra}</head>
 <body>
@@ -270,7 +270,7 @@ def drawer():
 
 def footer():
     shop = "".join(f'<li><a href="/collections/{g["k"]}/">{g["t"]}</a></li>' for g in GROUPS)
-    return f"""<footer class="foot">
+    return f"""<footer class="foot dark">
   <div class="wrap">
     <div class="foot-grid five">
       <div class="foot-brand">
@@ -513,18 +513,26 @@ def build_home():
       ]))
 
     reviews = [
-      ("Lucas Greenbank &middot; Complete Detail", "Chase and Brandon are fantastic to work with. Their professionalism, knowledge, and passion for car care really stand out. From their drying towels to tire venom and protectants, they have delivered great results."),
-      ("Tammy C", "I have been using LusterLux on my black vehicle for months now. It really protects it from water spotting. My car is always shiny and looks like it just rolled off the lot."),
-      ("Hank H", "Was skeptical to purchase the RestorX for the interior of my truck but am glad I did. The results exceeded my expectations and the shine has maintained longer than the Armor All I had always used prior."),
-      ("Bree", "As a busy mom of three, my car is basically a second home &mdash; filled with crumbs, fingerprints, and the chaos of everyday life. I honestly didn&rsquo;t expect much, but LusterLux completely exceeded my expectations."),
+      ("Dr. Handshoes", "luxpro-waterless-wash-detail-spray",
+       "I&rsquo;ve tried them all and have a whole shelf full of different companies and products &mdash; until now. I&rsquo;ve cleared out the shelf and filled it with LusterLux. This stuff works, like actually works."),
+      ("Lucas Greenbank", "luxtowel-drying-towel", "Chase and Brandon are fantastic to work with. Their professionalism, knowledge, and passion for car care really stand out. From their drying towels to tire venom and protectants, they have delivered great results."),
+      ("Tammy C", "ceramicx-ceramic-detail-spray", "I have been using LusterLux on my black vehicle for months now. It really protects it from water spotting. My car is always shiny and looks like it just rolled off the lot."),
+      ("Hank H", "restorx-rvp-plastic-dressing", "Was skeptical to purchase the RestorX for the interior of my truck but am glad I did. The results exceeded my expectations and the shine has maintained longer than the Armor All I had always used prior."),
+      ("Bree", "interiorx-interior-cleaner", "As a busy mom of three, my car is basically a second home &mdash; filled with crumbs, fingerprints, and the chaos of everyday life. I honestly didn&rsquo;t expect much, but LusterLux completely exceeded my expectations."),
     ]
     stars = ('<span class="stars" aria-label="5 out of 5">' +
              '<svg viewBox="0 0 24 24"><path d="m12 2 3 6.6 7 .8-5.2 4.8 1.4 7L12 17.8 5.8 21.2l1.4-7L2 9.4l7-.8L12 2Z"/></svg>' * 5 +
              '</span>')
     rcards = "".join(
-      f'<article class="rcard">{stars}<blockquote>{q}</blockquote>'
-      f'<footer><cite>{who}</cite><span class="vfy">Verified</span></footer></article>'
-      for who, q in reviews)
+      f'<article class="rcard">'
+      f'<a class="rcard-fig" href="{by_handle[h]["url"]}" tabindex="-1" aria-hidden="true">'
+      f'<img src="/assets/products/{by_handle[h]["img"]}-sm.webp?v={V}" '
+      f'alt="LusterLux {plain(by_handle[h]["n"])}" loading="lazy" decoding="async" /></a>'
+      f'<div class="rcard-body">{stars}<blockquote>{q}</blockquote>'
+      f'<footer><cite>{who}</cite>'
+      f'<a class="rcard-prod" href="{by_handle[h]["url"]}">{by_handle[h]["n"]}</a></footer></div>'
+      f'</article>'
+      for who, h, q in reviews)
 
     schema = [
       {"@context":"https://schema.org","@type":"Organization","@id":SITE+"/#org","name":"LusterLux",
@@ -681,17 +689,14 @@ def build_home():
 
 <section class="sec bone revs" id="reviews">
   <div class="wrap">
-    <div class="sec-head">
-      <p class="kick slide">Reviews</p>
-      <h2 class="fade" data-d="1">The hardest crowd <em>there is.</em></h2>
-    </div>
-    <div class="rev-lead fade" data-d="2">
-      <p class="rev-score"><b>5.00</b><span class="stars" aria-label="5 out of 5">{stars_svg()}</span>
+    <div class="rev-head">
+      <div>
+        <p class="kick slide">Reviews</p>
+        <h2 class="fade" data-d="1">The hardest crowd <em>there is.</em></h2>
+      </div>
+      <p class="rev-score fade" data-d="1"><b>5.00</b>
+        <span class="stars" aria-label="5 out of 5">{stars_svg()}</span>
         <em>17 verified reviews</em></p>
-      <blockquote>I&rsquo;ve tried them all and have a whole shelf full of different companies and products
-        &mdash; until now. I&rsquo;ve cleared out the shelf and filled it with LusterLux. This stuff works,
-        like actually works.</blockquote>
-      <cite>Dr. Handshoes &middot; Verified</cite>
     </div>
     <div class="rev-rail" id="revRail">{rcards}</div>
     <div class="rev-ctrl">
@@ -711,12 +716,6 @@ def build_home():
         <a class="btn btn-primary" href="/pages/community/">Join the community<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-ghost" href="/pages/about/">Our story</a>
       </p>
-    </div>
-    <div class="hive small fade" data-d="2" aria-label="LusterLux at work">
-      <span class="hive-word w1">Foam.</span>
-      <span class="hive-word w2">Wheels.</span>
-      <span class="hive-word w3">Finish.</span>
-      {honeycomb()}
     </div>
   </div>
 </section>
@@ -1256,6 +1255,20 @@ def build_about():
       <img src="/assets/scene/hero-foam.webp?v={V}" alt="Washing a car with a pressure washer and LusterLux foam in a driveway" loading="lazy" decoding="async" />
     </figure>
   </div></section>
+  <section class="sec bone">
+    <div class="wrap">
+      <div class="sec-head c">
+        <p class="kick c slide">In the field</p>
+        <h2 class="fade" data-d="1">Four years of <em>real vehicles.</em></h2>
+      </div>
+      <div class="hive small fade" data-d="2" aria-label="LusterLux at work">
+        <span class="hive-word w1">Foam.</span>
+        <span class="hive-word w2">Wheels.</span>
+        <span class="hive-word w3">Finish.</span>
+        {honeycomb([[1, 2], [3, 4, 5], [6, 7], [8, 9, 10]])}
+      </div>
+    </div>
+  </section>
 </main>
 {footer()}"""
     write("/pages/about/index.html",
