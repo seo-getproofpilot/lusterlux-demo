@@ -1306,15 +1306,18 @@ a.contact:hover b{color:var(--brand-ink)}
    Safari and Firefox. A one-shot transition reads the same and cannot fail
    that way. Body has overflow-x:clip, so the off-screen start never creates a
    horizontal scrollbar.                                                     */
-.dive-r,.dive-l{opacity:0;
+/* Gated on .js: the bottles are the most important thing on the page, so if
+   the script never runs they must stay visible rather than stranding at
+   opacity 0. <html class="js"> is set in the head, before this sheet. */
+.js .dive-r,.js .dive-l{opacity:0;
   transition:opacity .85s var(--ease),transform 1.35s var(--ease)}
-.dive-r{transform:translate3d(46vw,20vh,0)}
-.dive-l{transform:translate3d(-46vw,20vh,0)}
-.dive-r.in,.dive-l.in{opacity:1;transform:translate3d(0,0,0)}
+.js .dive-r{transform:translate3d(46vw,20vh,0)}
+.js .dive-l{transform:translate3d(-46vw,20vh,0)}
+.js .dive-r.in,.js .dive-l.in{opacity:1;transform:translate3d(0,0,0)}
 
 /* the copy trails the bottle slightly so the pair reads as one move */
 .show .show-info.fade{transition-delay:.12s}
 
 @media (prefers-reduced-motion: reduce){
-  .dive-r,.dive-l{transform:none;transition:opacity .3s linear}
+  .js .dive-r,.js .dive-l{transform:none;transition:opacity .3s linear}
 }

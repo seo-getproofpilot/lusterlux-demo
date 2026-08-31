@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "73"                                   # cache-bust, bump on every build
+V    = "75"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -201,6 +201,7 @@ def head(title, desc, canonical, extra="", og_img="/assets/brand/og-card.jpg"):
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cinzel:wght@400..900&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script>document.documentElement.className+=" js";</script>
 <link rel="stylesheet" href="/assets/site.css?v={V}" />
 {extra}</head>
 <body>
