@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "75"                                   # cache-bust, bump on every build
+V    = "83"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -38,41 +38,50 @@ YT = "https://www.youtube.com/@lusterluxauto"
 FB = "https://www.facebook.com/lusterluxauto"
 
 # Instagram strip. Their posts and reels are not fetchable — every platform
-# login-walls unauthenticated requests — so these are their own photographs
-# shaped like the profile, each opening the real account.
+# login-walls unauthenticated requests, their storefront has no feed app and
+# there is no video on their CDN — so these are their own photographs shaped
+# like the profile, each opening the real account.
+#
+# IG_STATS stays None on purpose: post and follower counts cannot be read
+# without access, and inventing them would put a fabricated number in front of
+# a client. Fill it with the real pair and the stat block renders itself.
+IG_STATS = None          # e.g. {"posts": "171", "followers": "2,449"}
+
 IG_TILES = [
-  ("ig-01", "Foam wash in the driveway",            True),
-  ("ig-02", "Wheel cleaner on a Porsche wheel",     False),
-  ("ig-03", "Ceramic spray on a green performance car", True),
-  ("ig-04", "A 720S blanketed in LuxFoam",          True),
-  ("ig-05", "Interior cleaner on a carbon wheel",   False),
-  ("ig-06", "Golf cart cleaned with BirdieLux",     True),
-  ("ig-07", "Tire dressing on a finished wheel",    False),
-  ("ig-08", "Waterless wash on a pearl hood",       False),
-  ("ig-09", "Marine wash on the lake",              True),
+  ("ig-01", "Foam day in the driveway",        "A car mid foam wash in the driveway"),
+  ("ig-02", "Brake dust never stood a chance", "LusterLux wheel cleaner at a performance wheel"),
+  ("ig-03", "Ceramic gloss on a green machine","CeramicX beside a green performance car"),
+  ("ig-04", "LuxFoam, top to bottom",          "A car blanketed in LuxFoam"),
+  ("ig-05", "Interiors get the same care",     "A carbon steering wheel being detailed"),
+  ("ig-06", "Carts clean up too",              "A golf cart cleaned with BirdieLux"),
+  ("ig-07", "Sidewalls back to black",         "Tire dressing on a finished wheel"),
+  ("ig-08", "Lake day prep",                   "Marine wash on the lake"),
 ]
 
+IG_GLYPH = ('<svg class="ig-glyph" viewBox="0 0 24 24" fill="none" stroke-linecap="round" '
+            'stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/>'
+            '<circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" '
+            'stroke="none"/></svg>')
+
+def ig_stats():
+    """Only renders when the real numbers are known — never a placeholder."""
+    if not IG_STATS:
+        return ""
+    return (f'<div class="ig-stats">'
+            f'<div><b>{IG_STATS["posts"]}</b><span>Posts</span></div>'
+            f'<div><b>{IG_STATS["followers"]}</b><span>Followers</span></div></div>')
+
 def ig_grid():
-    reel = ('<svg class="ig-reel" viewBox="0 0 24 24" fill="none" stroke-linecap="round" '
-            'stroke-linejoin="round"><path d="M3 8h18M8.5 3 11 8M15 3l2.5 5"/>'
-            '<rect x="3" y="3" width="18" height="18" rx="4"/>'
-            '<path d="m10.5 12.2 4 2.1-4 2.1Z" fill="currentColor"/></svg>')
+    reel = ('<span class="ig-tag">Reel</span>')
     return "".join(
-      f'<a class="ig-tile" href="{IG}" target="_blank" rel="noopener" '
+      f'<a class="ig-reel" href="{IG}" target="_blank" rel="noopener" '
       f'aria-label="{alt} — open LusterLux on Instagram">'
       f'<img src="/assets/ig/{k}.webp?v={V}" alt="{alt}" loading="lazy" decoding="async" />'
-      + (reel if is_reel else "") + '</a>'
-      for k, alt, is_reel in IG_TILES)
-def cat_name(k):
-    for c in CATS:
-        if c["k"] == k: return c["t"]
-    return k
-def cat_desc(k):
-    for c in CATS:
-        if c["k"] == k: return c["d"]
-    return ""
-def in_cat(k):
-    return [p for p in P if p["cat"] == k or k in p.get("also", [])]
+      f'{reel}<span class="ig-mark">{IG_GLYPH}</span>'
+      f'<span class="ig-cap">{cap}</span></a>'
+      for k, cap, alt in IG_TILES)
+
+
 def in_world(k):
     return [p for p in P if k in p.get("worlds", [])]
 def prod_sub(p):
@@ -90,6 +99,27 @@ def in_sub(k):
     """Beyond-the-Car subs are the vehicle worlds, which are cross-listed."""
     if k in WORLD_KEYS: return in_world(k)
     return [p for p in P if p.get("sub") == k]
+
+
+def world_groups(wk):
+    """Product groups present inside one vehicle world, with counts.
+
+    The client's IA: you pick the vehicle first, then the kind of product. This
+    is what turns the world tiles into a real two-level entry point rather than
+    four photos that all land on an unfiltered grid.
+    """
+    items = in_world(wk)
+    out = []
+    for g in GROUPS:
+        if g["k"] == "beyond-the-car":
+            continue          # the worlds ARE beyond-the-car; listing it recurses
+        n = len([p for p in items if p.get("group") == g["k"]
+                 or (g["k"] == "kits-systems" and p["cat"] == "kits-systems")])
+        if n:
+            out.append((g, n))
+    return out
+
+
 def in_group(k):
     if k == "kits-systems": return [p for p in P if p["cat"] == "kits-systems"]
     return [p for p in P if p.get("group") == k]
@@ -126,6 +156,28 @@ GROUP_TILE = {"exterior":"wash-waterless","interior":"interior","tools":"towels-
               "kits-systems":"kits-systems","beyond-the-car":"beyond-the-car"}
 GROUP_ACC  = {"exterior":"#6a4cf0","interior":"#d4a53c","tools":"#9aa4ae",
               "kits-systems":"#84D019","beyond-the-car":"#8a76e8"}
+
+def world_cards():
+    """Vehicle first, product type second — the homepage's primary entry point."""
+    out = ""
+    for w in WORLDS:
+        subs = "".join(
+          f'<a href="/collections/{w["k"]}/?g={g["k"]}">{g["t"]}<b>{n}</b></a>'
+          for g, n in world_groups(w["k"]))
+        out += (f'<article class="wcard">'
+                f'<a class="wcard-fig" href="/collections/{w["k"]}/" tabindex="-1" aria-hidden="true">'
+                f'<img src="/assets/tiles/world-{w["k"]}.webp?v={V}" '
+                f'alt="LusterLux detailing products for {plain(w["t"]).lower()}" '
+                f'loading="lazy" decoding="async" /></a>'
+                f'<div class="wcard-body">'
+                f'<h3><a href="/collections/{w["k"]}/">{w["t"]}</a></h3>'
+                f'<p>{w["d"]}</p>'
+                f'<nav class="wcard-subs">{subs}</nav>'
+                f'<a class="tlink" href="/collections/{w["k"]}/">All {len(in_world(w["k"]))} products'
+                f'<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>'
+                f'</div></article>')
+    return out
+
 
 def cat_tiles():
     out = ""
@@ -223,19 +275,22 @@ def nav(active=""):
                 subs = "".join(
                   f'<a href="/collections/{sk}/">{sub_meta(sk)["t"]}<b>{len(in_sub(sk))}</b></a>'
                   for sk in g["subs"])
+                # Label sits BELOW the plate, never on it: these are light studio
+                # shots and overlaid type was unreadable. Every cell is identical
+                # in shape, including the one with no subcategories.
                 cells += (
                   f'<div class="mcell" style="--acc:{GROUP_ACC[g["k"]]}">'
-                  f'<a class="mtile" href="/collections/{g["k"]}/">'
+                  f'<a class="mtile" href="/collections/{g["k"]}/" tabindex="-1" aria-hidden="true">'
                   f'<img src="/assets/tiles/{GROUP_TILE[g["k"]]}.webp?v={V}" '
-                  f'alt="LusterLux {plain(g["t"]).lower()} products" loading="lazy" decoding="async" />'
-                  f'<i></i><span class="mtile-body"><b>{g["t"]}</b>'
-                  f'<span>{len(in_group(g["k"]))} products</span></span></a>'
+                  f'alt="LusterLux {plain(g["t"]).lower()} products" loading="lazy" decoding="async" /></a>'
+                  f'<a class="mcell-name" href="/collections/{g["k"]}/">{g["t"]}'
+                  f'<span>{len(in_group(g["k"]))}</span></a>'
                   + (f'<div class="mcol-subs">{subs}</div>' if subs else '')
                   + '</div>')
             links += (f'<li class="has-mega"><a href="{href}"{cur}>{label}'
                       '<svg class="car" viewBox="0 0 24 24" fill="none" stroke-linecap="round" '
                       'stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></a>'
-                      f'<div class="mega"><div class="mega-grid">{cells}</div>'
+                      f'<div class="mega dark"><div class="mega-grid">{cells}</div>'
                       '<div class="mega-foot"><p>New to this? '
                       '<a class="lime" href="/pages/find-your-product/">Answer two questions</a> '
                       'and we will name the bottle.</p>'
@@ -394,7 +449,8 @@ def card(p, small=True):
     btn = ('' if p["soon"] else
            f'<button class="add" type="button" data-add="{p["h"]}" aria-label="Add {plain(p["n"])} to cart">'
            '<svg viewBox="0 0 24 24" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>')
-    return f"""<article class="card" style="--acc:{p['acc']}">
+    grp = p.get("group") or p["cat"]
+    return f"""<article class="card" data-group="{grp}" style="--acc:{p['acc']}">
   <a class="card-fig" href="{p['url']}" tabindex="-1" aria-hidden="true">
     <img src="{img}" alt="LusterLux {plain(p['n'])} {plain(p['fn'])}" loading="lazy" decoding="async" /></a>
   <div class="card-body">
@@ -475,44 +531,45 @@ def before_after():
 
 
 # ================================================================ HOMEPAGE ==
-def showcase(p, i, total):
-    """One product, full width. Big bottle, what it is, what it does, buy it."""
-    specs = "".join(f"<li>{s}</li>" for s in p["specs"])
-    feat4 = "".join(f'<li><b>{lead}</b> {body}</li>' for lead, body in (p.get("features") or [])[:4])
-    return f"""<section class="show{' alt' if i % 2 else ''}" id="p-{p['img']}" style="--acc:{p['acc']}">
-  <div class="wrap show-in">
-    <div class="show-media {'dive-l' if i % 2 else 'dive-r'}">
-      <div class="stage has-scene">
-        {f'<img class="stage-scene" src="/assets/scene/{p["inuse"]}.webp?v={V}" alt="{esc(plain(p["n"]))} in use" loading="lazy" decoding="async" />' if p.get('inuse') else ''}
-        <span class="stage-badge">{p['fn']}</span>
-        {f'<span class="stage-size">{p["size"]}</span>' if p['size'] else ''}
-        <div class="plinth">
-          <img class="bottle" src="/assets/products/{p['img']}.webp?v={V}" alt="{esc(plain(p['title']))} by LusterLux" loading="lazy" decoding="async" />
-          <img class="refl" src="/assets/products/{p['img']}.webp?v={V}" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </div>
-    <div class="show-info fade">
-      <p class="show-idx"><b>{i+1:02d}</b> &frasl; {total:02d} &middot; <a href="/collections/{prod_sub(p)}/">{prod_sub_name(p)}</a></p>
-      <p class="show-sub">{p['fn']}</p>
-      <h3 class="show-name">{esc(p['n'])}</h3>
-      {f'<p class="show-line">{p["line"]}</p>' if p['line'] else ''}
-      <p class="show-copy">{p.get('showBody') or p['short']}</p>
-      {f'<ul class="feat show-feat">{feat4}</ul>' if feat4 else f'<ul class="show-specs">{specs}</ul>'}
-      <div class="show-buy">
-        <span class="show-price">{money(p['price'])}<small>{p['size']}</small></span>
-        <button class="btn btn-primary add" type="button" data-add="{p['h']}">Add to cart
-          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <a class="tlink" href="{p['url']}">Full details<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
+def scope_card(p, i, total):
+    """One product inside the pinned horizontal track.
+
+    Modelled on metriccivil.com's full-scope section: the section is taller than
+    the viewport, a sticky child pins it, and scroll drives the photos sideways
+    — the active one leaves to the left as the next arrives from the right. The
+    copy deliberately moves on the vertical axis only, so it never races the
+    photo across the screen and nothing is missed mid-scroll.
+    """
+    feat4 = "".join(f'<li><b>{lead}</b> {body}</li>'
+                    for lead, body in (p.get("features") or [])[:3])
+    return f"""<article class="scope-card" data-i="{i}" style="--acc:{p['acc']}">
+  <div class="scope-fig">
+    <div class="scope-stage-in">
+      <span class="stage-badge">{p['fn']}</span>
+      {f'<span class="stage-size">{p["size"]}</span>' if p['size'] else ''}
+      <img class="scope-bottle" src="/assets/products/{p['img']}.webp?v={V}"
+           alt="{esc(plain(p['title']))} by LusterLux" loading="lazy" decoding="async" />
     </div>
   </div>
-</section>"""
-
+  <div class="scope-copy">
+    <p class="scope-idx"><b>{i+1:02d}</b> <i>/ {total:02d}</i>
+      <a href="/collections/{prod_sub(p)}/">{prod_sub_name(p)}</a></p>
+    <h3 class="scope-name">{esc(p['n'])}</h3>
+    {f'<p class="scope-line">{p["line"]}</p>' if p['line'] else ''}
+    <p class="scope-body">{p.get('showBody') or p['short']}</p>
+    {f'<ul class="feat scope-feat">{feat4}</ul>' if feat4 else ''}
+    <div class="scope-buy">
+      <span class="scope-price">{money(p['price'])}<small>{p['size']}</small></span>
+      <button class="btn btn-primary add" type="button" data-add="{p['h']}">Add to cart
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      <a class="tlink" href="{p['url']}">Full details<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</article>"""
 
 def build_home():
     heroes = sorted([p for p in P if p["hero"]], key=lambda p: p["hero"])
-    line_cards = "".join(showcase(p, i, len(heroes)) for i, p in enumerate(heroes))
+    line_cards = "".join(scope_card(p, i, len(heroes)) for i, p in enumerate(heroes))
 
     system = [
       ("01", "Foam", "luxfoam-foam-cannon-soap", "Blanket it and let the soap lift the grit before anything touches paint."),
@@ -625,33 +682,34 @@ def build_home():
   </div>
 </section>
 
-<div class="strip" aria-hidden="true"><div class="strip-in">{strip_items()}{strip_items()}</div></div>
 
 <section class="sec bone" id="categories">
   <div class="wrap">
     <div class="sec-head">
-      <p class="kick slide">Shop by Category</p>
-      <h2 class="fade" data-d="1">Know what you need? <em>Start here.</em></h2>
-      <p class="lead fade" data-d="2">Five aisles, twelve shelves, every product on one of them. Not sure which?
-        <a class="lime" href="/pages/find-your-product/">Answer two questions</a> and we will name the bottle.</p>
+      <p class="kick slide">Start Here</p>
+      <h2 class="fade" data-d="1">What are you <em>cleaning?</em></h2>
+      <p class="lead fade" data-d="2">Pick the vehicle, then the job. Already know the bottle you want?
+        <a class="lime" href="/collections/">Go straight to the shop.</a></p>
     </div>
-    <div class="ctiles fade" data-d="2">{cat_tiles()}</div>
+    <div class="wtiles fade" data-d="2">{world_cards()}</div>
   </div>
 </section>
 
-<div class="shows" id="line">
-  <div class="wrap">
-    <div class="sec-head" style="padding-top:clamp(74px,9vw,130px)">
-      <p class="kick slide">The Line</p>
-      <h2 class="fade" data-d="1">Six bottles. <em>Every surface.</em></h2>
-      <p class="lead fade" data-d="2">Each one does a single job properly. No shelf of half-used bottles you never reach for again.</p>
+<section class="scope" id="line" data-count="{len(heroes)}">
+  <div class="scope-pin">
+    <div class="wrap scope-in">
+      <div class="scope-head">
+        <p class="kick">The Line</p>
+        <h2>Six bottles. <em>Every surface.</em></h2>
+        <div class="scope-prog" aria-hidden="true"><span id="scopeBar"></span></div>
+      </div>
+      <div class="scope-track" id="scopeTrack">{line_cards}</div>
+      <div class="scope-foot">
+        <a class="tlink" href="/collections/">See all {len(P)} products<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
     </div>
   </div>
-  {line_cards}
-  <div class="wrap" style="padding-bottom:clamp(74px,9vw,130px)">
-    <a class="tlink" href="/collections/">See all {len(P)} products<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-  </div>
-</div>
+</section>
 
 <section class="sec bone" id="nanofusion">
   <div class="wrap">
@@ -662,16 +720,13 @@ def build_home():
         <p class="lead fade" data-d="2">A swirl is a piece of grit held against your clear coat by a towel and dragged twelve inches. NanoFusion wraps that grit in nano-polymer and floats it clear of the paint, then leaves a slick hydrophobic layer behind when it goes.</p>
         <p class="fade" data-d="3" style="margin-top:26px"><a class="tlink" href="/pages/nanofusion/">How it works<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
       </div>
-      <figure class="nano-fig fade" data-d="2">
-        <img src="/assets/scene/nano-hood.webp?v={V}" alt="LuxPro waterless wash being applied to the hood of a pearl-white sports car" loading="lazy" decoding="async" />
-        <figcaption>LuxPro on a pearl finish &mdash; spray, wipe, done</figcaption>
-      </figure>
+      {before_after()}
     </div>
     <ol class="flow">{nano_steps()}</ol>
   </div>
 </section>
 
-<section class="sec" id="story">
+<section class="sec story-az" id="story">
   <div class="wrap story-grid">
     <div class="story-copy">
       <p class="kick slide">Why We Started</p>
@@ -697,17 +752,6 @@ def build_home():
   </div>
 </section>
 
-<section class="sec bone" id="the-work">
-  <div class="wrap">
-    <div class="sec-head c">
-      <p class="kick c slide">Foam. Rinse. Shine.</p>
-      <h2 class="fade" data-d="1">One wash. <em>Drag it.</em></h2>
-      <p class="lead fade" data-d="2">A 720S blanketed in LuxFoam and rinsed. Same car, same camera, four minutes apart.</p>
-    </div>
-    {before_after()}
-  </div>
-</section>
-
 <section class="sec" id="guides">
   <div class="wrap">
     <div class="sec-head">
@@ -715,8 +759,14 @@ def build_home():
       <h2 class="fade" data-d="1">Do it properly, <em>the first time.</em></h2>
       <p class="lead fade" data-d="2">Written by the people who washed the fleet. The steps, the order, and the mistakes that cost you paint.</p>
     </div>
-    <div class="grid three fade" data-d="2">{"".join(guide_card(g) for g in GUIDES[:3])}</div>
-    <p class="fade" data-d="3" style="margin-top:32px"><a class="tlink" href="/blogs/guides/">All {len(GUIDES)} guides<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+    <div class="rail-wrap">
+      <div class="grail" id="gRail">{"".join(guide_card(g) for g in GUIDES)}</div>
+      <div class="rail-ctrl">
+        <button id="gPrev" type="button" aria-label="Previous guides"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button id="gNext" type="button" aria-label="More guides"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        <a class="tlink" href="/blogs/guides/">All {len(GUIDES)} guides<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -731,36 +781,38 @@ def build_home():
         <span class="stars" aria-label="5 out of 5">{stars_svg()}</span>
         <em>17 verified reviews</em></p>
     </div>
-    <div class="rev-rail" id="revRail">{rcards}</div>
-    <div class="rev-ctrl">
-      <button id="revPrev" type="button" aria-label="Previous reviews"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
-      <button id="revNext" type="button" aria-label="More reviews"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    <div class="belt" id="revBelt">
+      <div class="belt-run">{rcards}</div>
+      <div class="belt-run" aria-hidden="true">{rcards}</div>
     </div>
   </div>
 </section>
 
-<section class="sec bone" id="community">
+<section class="sec dark ig" id="community">
   <div class="wrap">
-    <div class="ig-head">
+    <p class="kick c slide">Follow us on Instagram</p>
+    <div class="ig-card">
       <a class="ig-av" href="{IG}" target="_blank" rel="noopener"
          aria-label="LusterLux on Instagram">
         <img src="/assets/brand/lusterlux-mark-320.webp?v={V}" alt="" width="218" height="320" /></a>
       <div class="ig-id">
-        <p class="ig-handle"><a href="{IG}" target="_blank" rel="noopener">@lusterluxauto</a></p>
-        <p class="ig-name">LusterLux Auto Care</p>
-        <p class="ig-bio">Detailing products engineered with NanoFusion. Made in the USA.
-          Daily drivers, project cars, carts, boats and work trucks.</p>
-      </div>
-      <div class="ig-cta">
-        <a class="btn btn-primary" href="{IG}" target="_blank" rel="noopener">Follow on Instagram
+        <p class="ig-handle"><a href="{IG}" target="_blank" rel="noopener">@lusterluxauto</a>
+          {IG_GLYPH}</p>
+        <p class="ig-name">Chase &amp; Brandon &middot; Detailing Products, Arizona</p>
+        <p class="ig-bio">Engineered with NanoFusion. Made in the USA.</p>
+        <p class="ig-bio">Cars, trucks, carts, boats and work rigs.</p>
+        <a class="ig-pill" href="{IG}" target="_blank" rel="noopener">Tap a reel to open Instagram
           <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <p class="ig-more"><a href="{TT}" target="_blank" rel="noopener">TikTok</a>
-          <a href="{YT}" target="_blank" rel="noopener">YouTube</a>
-          <a href="{FB}" target="_blank" rel="noopener">Facebook</a></p>
       </div>
+      {ig_stats()}
+      <a class="btn btn-primary ig-follow" href="{IG}" target="_blank" rel="noopener">Follow
+        <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
-    <div class="ig-grid">{ig_grid()}</div>
-    <p class="ig-note">Photography by LusterLux. Tiles open their Instagram profile.</p>
+    <div class="ig-reels">{ig_grid()}</div>
+    <p class="ig-note">Photography by LusterLux &middot;
+      <a href="{TT}" target="_blank" rel="noopener">TikTok</a>
+      <a href="{YT}" target="_blank" rel="noopener">YouTube</a>
+      <a href="{FB}" target="_blank" rel="noopener">Facebook</a></p>
   </div>
 </section>
 
@@ -963,6 +1015,18 @@ def collection_page(key, title, desc, items, url, intro="", world=False, subnav=
     wchips = "".join(
       f'<a class="chip w{" on" if w["k"]==key else ""}" href="/collections/{w["k"]}/">{w["t"]}'
       f'<b>{len(in_world(w["k"]))}</b></a>' for w in WORLDS)
+    # On a vehicle page the second level is the kind of job, filtered in place
+    # so the URL stays /collections/<vehicle>/ and the crumb trail stays honest.
+    wsubs = ""
+    if world:
+        btns = "".join(
+          f'<button class="gchip" type="button" data-g="{g["k"]}">{g["t"]}<b>{n}</b></button>'
+          for g, n in world_groups(key))
+        if btns:
+            wsubs = ('<nav class="gbar" id="gbar" aria-label="Filter by product type">'
+                     f'<button class="gchip on" type="button" data-g="">Everything'
+                     f'<b>{len(items)}</b></button>{btns}</nav>')
+
     trail = [("Home","/"),("Shop","/collections/")]
     if parent: trail.append((plain(group_meta(parent)["t"]), f'/collections/{parent}/'))
     if key: trail.append((title, url))
@@ -984,6 +1048,7 @@ def collection_page(key, title, desc, items, url, intro="", world=False, subnav=
       {crumb_nav(trail)}
       <h1>{title}</h1>
       <p class="lead">{intro or desc}</p>
+      {wsubs}
       {f'<nav class="subnav">{subnav}</nav>' if subnav else ''}
     </div>
   </section>

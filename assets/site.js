@@ -114,13 +114,90 @@
     }
   }
 
-  /* ---------- review rail ---------- */
-  var rail = $('#revRail');
-  if (rail) {
-    var step = function () { return Math.min(rail.clientWidth * 0.8, 420); };
-    var prev = $('#revPrev'), next = $('#revNext');
-    if (prev) prev.addEventListener('click', function () { rail.scrollBy({ left: -step(), behavior: 'smooth' }); });
-    if (next) next.addEventListener('click', function () { rail.scrollBy({ left: step(), behavior: 'smooth' }); });
+  /* ---------- guides rail ---------- */
+  var gRail = $('#gRail');
+  if (gRail) {
+    var gStep = function () { return Math.min(gRail.clientWidth * 0.8, 420); };
+    var gp = $('#gPrev'), gn = $('#gNext');
+    if (gp) gp.addEventListener('click', function () { gRail.scrollBy({ left: -gStep(), behavior: 'smooth' }); });
+    if (gn) gn.addEventListener('click', function () { gRail.scrollBy({ left: gStep(), behavior: 'smooth' }); });
+  }
+
+  /* ---------- reviews conveyor ----------
+     The clone run is offset by the first run's exact width so the loop has no
+     visible seam at any card count, and the duration scales with that width to
+     keep a constant speed. */
+  var belt = $('#revBelt');
+  if (belt) {
+    var runs = $$('.belt-run', belt);
+    var sizeBelt = function () {
+      var w = runs[0].scrollWidth;
+      if (!w) return;
+      if (runs[1]) runs[1].style.left = w + 'px';
+      var dur = Math.max(28, Math.round(w / 42));
+      runs.forEach(function (r) { r.style.animationDuration = dur + 's'; });
+    };
+    sizeBelt();
+    window.addEventListener('resize', sizeBelt, { passive: true });
+    window.addEventListener('load', sizeBelt);
+  }
+
+  /* ---------- The Line: pinned horizontal showcase ----------
+     Scroll through the tall section drives the track sideways. Photos move on
+     X (out to the left, in from the right); copy moves on Y only, so it reads
+     as a settle rather than a race across the screen.
+
+     One rAF-throttled handler writing transform/opacity on promoted elements —
+     no layout reads in the loop, and nothing animated carries a filter. */
+  var scope = document.getElementById('line');
+  var track = document.getElementById('scopeTrack');
+  var reducedM = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (scope && track) {
+    var sCards = $$('.scope-card', track);
+    var bar = document.getElementById('scopeBar');
+    scope.style.setProperty('--n', sCards.length);
+    var figs = sCards.map(function (c) { return $('.scope-fig', c); });
+    var cops = sCards.map(function (c) { return $('.scope-copy', c); });
+    var pinned = false, ticking = false;
+
+    function layout() {
+      pinned = window.innerWidth >= 1000 && !reducedM.matches;
+      if (!pinned) {
+        sCards.forEach(function (c, i) {
+          c.style.transform = ''; c.style.opacity = ''; c.style.zIndex = '';
+          figs[i].style.transform = ''; cops[i].style.transform = ''; cops[i].style.opacity = '';
+        });
+      }
+      render();
+    }
+
+    function render() {
+      if (!pinned) return;
+      var r = scope.getBoundingClientRect();
+      var span = scope.offsetHeight - window.innerHeight;
+      var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
+      var pos = p * (sCards.length - 1);
+      for (var i = 0; i < sCards.length; i++) {
+        var d = i - pos;                     // <0 already passed, >0 still coming
+        var ad = Math.abs(d);
+        var vis = ad < 1.02;
+        sCards[i].style.visibility = vis ? 'visible' : 'hidden';
+        sCards[i].style.zIndex = vis ? String(10 - Math.round(ad * 10)) : '0';
+        if (!vis) continue;
+        var e = Math.max(0, 1 - ad);          // 1 at centre, 0 at a full step away
+        figs[i].style.transform = 'translate3d(' + (d * 62) + 'vw,0,0) scale(' + (0.92 + e * 0.08) + ')';
+        figs[i].style.opacity = String(Math.max(0, 1 - ad * 1.15));
+        cops[i].style.transform = 'translate3d(0,' + (d * 46) + 'px,0)';
+        cops[i].style.opacity = String(Math.max(0, 1 - ad * 1.7));
+      }
+      if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
+    }
+
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; render(); }); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { layout(); }, { passive: true });
+    if (reducedM.addEventListener) reducedM.addEventListener('change', layout);
+    layout();
   }
 
   /* ---------- collection: search + sort over the server-rendered grid ---------- */
@@ -133,10 +210,15 @@
                name: (($('h3 a', c) || {}).textContent || '').trim(),
                text: c.textContent.toLowerCase() };
     });
+    // Vehicle pages filter by product type in place: the URL keeps ?g= so the
+    // choice survives a reload and a shared link, without a route per pair.
+    var gbar = document.getElementById('gbar');
+    var group = new URLSearchParams(location.search).get('g') || '';
     var apply = function () {
       var t = q.value.trim().toLowerCase();
       var shown = meta.filter(function (m) {
-        var hit = !t || m.text.indexOf(t) > -1;
+        var hit = (!t || m.text.indexOf(t) > -1) &&
+                  (!group || m.el.getAttribute('data-group') === group);
         m.el.hidden = !hit;
         return hit;
       });
@@ -156,6 +238,23 @@
     };
     var t0; q.addEventListener('input', function () { clearTimeout(t0); t0 = setTimeout(apply, 130); });
     sortEl.addEventListener('change', apply);
+    if (gbar) {
+      var chips = $$('.gchip', gbar);
+      var mark = function () {
+        chips.forEach(function (c) { c.classList.toggle('on', (c.getAttribute('data-g') || '') === group); });
+      };
+      chips.forEach(function (c) {
+        c.addEventListener('click', function () {
+          group = c.getAttribute('data-g') || '';
+          mark(); apply();
+          var u = new URL(location.href);
+          if (group) { u.searchParams.set('g', group); } else { u.searchParams.delete('g'); }
+          history.replaceState(null, '', u);
+        });
+      });
+      mark();
+    }
+    if (group) apply();
   }
 
   /* ---------- before / after drag compare ---------- */

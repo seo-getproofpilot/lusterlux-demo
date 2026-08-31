@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 420" width="1600" height="420"
+     preserveAspectRatio="xMidYMax slice" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="far" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#C9BFAE" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#C9BFAE" stop-opacity=".18"/>
+    </linearGradient>
+    <linearGradient id="near" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8C8672" stop-opacity=".42"/>
+      <stop offset="1" stop-color="#8C8672" stop-opacity=".14"/>
+    </linearGradient>
+    <linearGradient id="cact" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5C7A06" stop-opacity=".40"/>
+      <stop offset="1" stop-color="#5C7A06" stop-opacity=".16"/>
+    </linearGradient>
+  </defs>
+
+  <!-- far ridge -->
+  <path fill="url(#far)" d="M0 300 L120 250 L215 285 L330 205 L455 272 L560 232 L690 300 L800 262
+    L930 312 L1050 258 L1170 300 L1290 240 L1400 288 L1510 246 L1600 292 L1600 420 L0 420 Z"/>
+  <!-- near ridge -->
+  <path fill="url(#near)" d="M0 356 L145 322 L260 350 L395 312 L520 352 L650 328 L790 360 L905 330
+    L1040 362 L1180 334 L1310 364 L1450 336 L1600 358 L1600 420 L0 420 Z"/>
+
+  <!-- saguaros: trunk plus arms, rounded caps, drawn as strokes so they stay even -->
+  <g fill="none" stroke="url(#cact)" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke-width="26">
+      <path d="M258 420 V236"/>
+      <path d="M258 300 h-30 a16 16 0 0 1-16-16 V262" />
+      <path d="M258 278 h34 a16 16 0 0 0 16-16 V232" />
+    </g>
+    <g stroke-width="18">
+      <path d="M1128 420 V286"/>
+      <path d="M1128 334 h-22 a12 12 0 0 1-12-12 V300"/>
+    </g>
+    <g stroke-width="21">
+      <path d="M735 420 V264"/>
+      <path d="M735 318 h26 a14 14 0 0 0 14-14 V276"/>
+      <path d="M735 344 h-24 a14 14 0 0 1-14-14 V304"/>
+    </g>
+    <g stroke-width="14">
+      <path d="M1442 420 V320"/>
+      <path d="M1442 352 h18 a10 10 0 0 0 10-10 V322"/>
+    </g>
+    <g stroke-width="12">
+      <path d="M470 420 V336"/>
+    </g>
+  </g>
+</svg>
