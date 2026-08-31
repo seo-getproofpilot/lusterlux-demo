@@ -190,13 +190,20 @@
     window.addEventListener('load', sizeBelt);
   }
 
-  /* ---------- The Line: pinned horizontal showcase ----------
-     Scroll through the tall section drives the track sideways. Photos move on
-     X (out to the left, in from the right); copy moves on Y only, so it reads
-     as a settle rather than a race across the screen.
+  /* ---------- The Line: pinned deck ----------
+     The three states are metriccivil.ca's own, read out of its Webflow IX2
+     action list rather than eyeballed:
 
-     One rAF-throttled handler writing transform/opacity on promoted elements —
-     no layout reads in the loop, and nothing animated carries a filter. */
+       upcoming  translate(107%, 85%)  scale(.20, .15)   thumbnail, bottom right
+       active    translate(0, 0)       scale(1, 1)       fills the frame
+       past      translate(-26%, 0)    scale(.20, .15)   thumbnail, parked left
+
+     So the next photo blooms out of the bottom-right corner while the current
+     one shrinks away to the left. transform-origin is 0 0 — those percentages
+     are measured from the element's own top-left.
+
+     One rAF-throttled handler, transform/opacity only, no filters on anything
+     that moves. */
   var scope = document.getElementById('line');
   var track = document.getElementById('scopeTrack');
   var reducedM = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -208,11 +215,21 @@
     var cops = sCards.map(function (c) { return $('.scope-copy', c); });
     var pinned = false, ticking = false;
 
+    var UP   = { x: 107, y: 85, sx: 0.20, sy: 0.15 };
+    var ON   = { x: 0,   y: 0,  sx: 1,    sy: 1    };
+    var PAST = { x: -26, y: 0,  sx: 0.20, sy: 0.15 };
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function ease(t) { return t * t * (3 - 2 * t); }          // smoothstep
+    function mix(a, b, t) {
+      return { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t),
+               sx: lerp(a.sx, b.sx, t), sy: lerp(a.sy, b.sy, t) };
+    }
+
     function layout() {
       pinned = window.innerWidth >= 1000 && !reducedM.matches;
       if (!pinned) {
         sCards.forEach(function (c, i) {
-          c.style.transform = ''; c.style.opacity = ''; c.style.zIndex = '';
+          c.style.visibility = ''; c.style.zIndex = '';
           figs[i].style.transform = ''; cops[i].style.transform = ''; cops[i].style.opacity = '';
         });
       }
@@ -226,22 +243,22 @@
       var p = span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 0;
       var pos = p * (sCards.length - 1);
       for (var i = 0; i < sCards.length; i++) {
-        var d = i - pos;                     // <0 already passed, >0 still coming
-        var ad = Math.abs(d);
-        var vis = ad < 1.02;
+        var d = i - pos;                       // <0 already passed, >0 still coming
+        var vis = d > -1.15 && d < 1.15;
         sCards[i].style.visibility = vis ? 'visible' : 'hidden';
-        sCards[i].style.zIndex = vis ? String(10 - Math.round(ad * 10)) : '0';
         if (!vis) continue;
-        // The photo does NOT cross-fade. Fading it while it slides put two
-        // semi-transparent bottles on screen at once, which read as ghosting.
-        // It travels at full opacity and the pin's overflow clips it away,
-        // exactly as the reference does.
-        var e = Math.max(0, 1 - ad);          // 1 at centre, 0 a full step away
-        figs[i].style.transform = 'translate3d(' + (d * 64) + 'vw,0,0) scale(' + (0.96 + e * 0.04) + ')';
-        figs[i].style.opacity = '1';
-        // The copy DOES cross-fade, and sharply — every card's copy sits in the
-        // same column, so two legible blocks would overlap into mush.
-        cops[i].style.transform = 'translate3d(0,' + (d * 40) + 'px,0)';
+        sCards[i].style.zIndex = String(20 - Math.round(Math.abs(d) * 10));
+        var st = d <= -1 ? PAST
+               : d >= 1  ? UP
+               : d <= 0  ? mix(ON, PAST, ease(-d))     // active -> parked left
+                         : mix(UP, ON, ease(1 - d));   // corner thumb -> active
+        figs[i].style.transform =
+          'translate(' + st.x.toFixed(2) + '%,' + st.y.toFixed(2) + '%) ' +
+          'scale(' + st.sx.toFixed(4) + ',' + st.sy.toFixed(4) + ')';
+        // Copy stays in its column and only cross-fades, sharply — every card's
+        // copy shares one column, so two legible blocks would overlap into mush.
+        var ad = Math.abs(d);
+        cops[i].style.transform = 'translate3d(0,' + (d * 34).toFixed(1) + 'px,0)';
         cops[i].style.opacity = String(Math.min(1, Math.max(0, (0.5 - ad) / 0.16)));
       }
       if (bar) bar.style.width = (p * 100).toFixed(1) + '%';

@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "89"                                   # cache-bust, bump on every build
+V    = "93"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -567,17 +567,22 @@ def before_after():
 
 # ================================================================ HOMEPAGE ==
 def scope_card(p, i, total):
-    """One product inside the pinned horizontal track.
+    """One product in the pinned deck.
 
-    Modelled on metriccivil.com's full-scope section: the section is taller than
-    the viewport, a sticky child pins it, and scroll drives the photos sideways
-    — the active one leaves to the left as the next arrives from the right. The
-    copy deliberately moves on the vertical axis only, so it never races the
-    photo across the screen and nothing is missed mid-scroll.
+    Choreography lifted from metriccivil.ca's "Full Scope" section, whose real
+    values I read out of its Webflow IX2 action list rather than eyeballing:
+    the active photo fills the frame, the NEXT one waits as a thumbnail at the
+    bottom right (translate 107%/85%, scale .2/.15), and on scroll the active
+    shrinks and parks to the left (translate -26%, same scale) while the next
+    blooms out of the corner. It is a deck, not a slide.
+
+    Layout matches too — a left gutter, the photo absolutely centred over it,
+    and the copy held in flow on the right.
     """
-    feat4 = "".join(f'<li><b>{lead}</b> {body}</li>'
+    feat3 = "".join(f'<li><b>{lead}</b> {body}</li>'
                     for lead, body in (p.get("features") or [])[:3])
     return f"""<article class="scope-card" data-i="{i}" style="--acc:{p['acc']}">
+  <div class="scope-rail" aria-hidden="true"><span>{i+1:02d}</span><i>/ {total:02d}</i></div>
   <div class="scope-fig">
     <div class="scope-stage-in">
       <span class="stage-badge">{p['fn']}</span>
@@ -587,12 +592,11 @@ def scope_card(p, i, total):
     </div>
   </div>
   <div class="scope-copy">
-    <p class="scope-idx"><b>{i+1:02d}</b> <i>/ {total:02d}</i>
-      <a href="/collections/{prod_sub(p)}/">{prod_sub_name(p)}</a></p>
+    <p class="scope-idx"><a href="/collections/{prod_sub(p)}/">{prod_sub_name(p)}</a></p>
     <h3 class="scope-name">{esc(p['n'])}</h3>
     {f'<p class="scope-line">{p["line"]}</p>' if p['line'] else ''}
     <p class="scope-body">{p.get('showBody') or p['short']}</p>
-    {f'<ul class="feat scope-feat">{feat4}</ul>' if feat4 else ''}
+    {f'<ul class="feat scope-feat">{feat3}</ul>' if feat3 else ''}
     <div class="scope-buy">
       <span class="scope-price">{money(p['price'])}<small>{p['size']}</small></span>
       <button class="btn btn-primary add" type="button" data-add="{p['h']}">Add to cart

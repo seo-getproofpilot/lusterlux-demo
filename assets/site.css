@@ -1263,79 +1263,6 @@ a.contact:hover b{color:var(--brand-ink)}
 .gchip.on{background:var(--ink);color:#fff}
 .gchip.on b{opacity:.75}
 
-/* ---- The Line: pinned horizontal showcase -----------------------------
-   metriccivil.com's full-scope pattern. The section is taller than the
-   viewport; a sticky child pins it; scroll drives the photos sideways. The
-   active photo leaves left as the next arrives from the right, and the copy
-   moves on the vertical axis ONLY so it never races the photo across screen.
-
-   Nothing here carries a filter: a drop-shadow on a transformed element
-   re-rasterises every frame, which is what made an earlier build stutter.
-   Gated on .js so the cards fall back to a readable stack without script.  */
-.scope{position:relative;background:var(--bg)}
-.scope-pin{padding:clamp(56px,6vw,88px) 0}
-.scope-in{display:flex;flex-direction:column;gap:clamp(22px,2.6vw,34px)}
-.scope-head h2{font-size:clamp(30px,4.4vw,64px)}
-.scope-prog{display:none}
-.scope-track{display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
-.scope-card{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);
-  gap:clamp(24px,4vw,64px);align-items:center}
-.scope-fig{position:relative}
-.scope-stage-in{position:relative;aspect-ratio:1/.92;overflow:hidden;
-  clip-path:var(--clip-billet);
-  background:radial-gradient(58% 44% at 50% 30%,color-mix(in srgb,var(--acc) 15%,transparent),transparent 74%),
-             linear-gradient(180deg,#FFFFFF 0%,#FAF9F6 58%,#EFEDE7 100%);
-  box-shadow:var(--shadow-1)}
-.scope-bottle{position:absolute;left:6%;right:6%;top:4%;bottom:4%;
-  width:88%;height:92%;object-fit:contain;object-position:50% 50%}
-.scope-idx{display:flex;align-items:baseline;gap:10px;font-family:var(--face);font-size:9.5px;
-  font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-.scope-idx b{font-family:var(--display);font-weight:800;font-size:15px;color:var(--acc-ink)}
-.scope-idx i{font-style:normal;opacity:.6}
-.scope-idx a{color:var(--muted)} .scope-idx a:hover{color:var(--acc-ink)}
-.scope-name{margin-top:12px;font-family:var(--display);font-weight:800;font-stretch:90%;
-  text-transform:uppercase;font-size:clamp(34px,5vw,78px);color:var(--ink);
-  letter-spacing:-.035em;line-height:.92}
-.scope-line{margin-top:14px;font-family:var(--display);font-weight:800;font-stretch:90%;
-  text-transform:uppercase;font-size:clamp(16px,1.7vw,23px);
-  color:color-mix(in srgb,var(--acc) 72%,#000);letter-spacing:-.02em;line-height:1.08}
-.scope-body{margin-top:16px;font-size:16px;line-height:1.72;color:var(--muted);max-width:50ch}
-.scope-feat{margin-top:18px;max-width:50ch}
-.scope-buy{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:26px}
-.scope-price{font-family:var(--display);font-weight:800;font-stretch:90%;font-size:32px;
-  color:var(--ink);letter-spacing:-.03em}
-.scope-price small{font-family:var(--face);font-size:9px;letter-spacing:.14em;
-  color:var(--soft);margin-left:10px}
-.scope-foot{padding-top:clamp(8px,1vw,16px)}
-
-/* --- pinned mode: only with script, only on a real desktop viewport --- */
-@media(min-width:1000px){
- .js .scope{height:calc(100vh + (var(--n,6) - 1) * 62vh)}
- .js .scope-pin{position:sticky;top:0;height:100vh;overflow:hidden;
-   display:flex;align-items:center;padding:0}
- .js .scope-in{height:100%;justify-content:center;gap:clamp(14px,1.6vw,22px)}
- .js .scope-track{position:relative;flex:1;min-height:0;display:block;gap:0}
- .js .scope-card{position:absolute;inset:0;display:grid;align-content:center;
-   grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,3.4vw,54px)}
- /* the photo travels; the copy only rises and falls */
- .js .scope-card .scope-fig{will-change:transform}
- .js .scope-card .scope-copy{will-change:transform,opacity}
- .js .scope-stage-in{aspect-ratio:auto;height:min(74vh,660px)}
- .js .scope-prog{display:block;position:relative;height:2px;width:min(320px,34vw);
-   margin-top:14px;background:var(--line-2)}
- .js .scope-prog span{position:absolute;inset:0 auto 0 0;width:0;background:var(--brand-2);
-   transition:width .18s linear}
- .js .scope-head h2{font-size:clamp(26px,3vw,44px)}
- .js .scope-foot{padding-top:0}
-}
-@media (prefers-reduced-motion: reduce){
-  .js .scope{height:auto}
-  .js .scope-pin{position:static;height:auto;overflow:visible;padding:clamp(56px,6vw,88px) 0}
-  .js .scope-track{position:static;display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
-  .js .scope-card{position:static;transform:none!important;opacity:1!important}
-}
-@media(max-width:1000px){ .scope-card{grid-template-columns:1fr} }
-
 /* ---- Hero callouts: one home, not two ---------------------------------
    These used to appear in the hero AND again in a marquee directly beneath
    it. The marquee is gone; the hero pair is what survives, sized up.       */
@@ -1930,3 +1857,90 @@ a.contact:hover b{color:var(--brand-ink)}
   .wcard:hover .wcard-fig img{transform:scale(1.06)}
 }
 @media(max-width:860px){ .wtiles{grid-template-columns:1fr} }
+
+
+/* ---- The Line: pinned deck --------------------------------------------
+   metriccivil.ca's "Full Scope" section, to its own numbers (read out of its
+   Webflow IX2 action list): the active photo fills the frame, the next waits
+   as a thumbnail at the bottom right, and the outgoing one shrinks and parks
+   left. The copy is held in flow on the right and only cross-fades — the one
+   change from the reference is a small vertical rise on it, so it settles
+   rather than sitting still.
+
+   transform-origin is 0 0 because the reference's translate percentages are
+   measured from the element's own top-left; anything else puts the thumbnails
+   in the wrong corners. Nothing animated carries a filter.                  */
+.scope{position:relative;background:var(--bg)}
+.scope-pin{padding:clamp(56px,6vw,88px) 0}
+.scope-in{display:flex;flex-direction:column;gap:clamp(22px,2.6vw,34px)}
+.scope-head h2{font-size:clamp(30px,4.4vw,64px)}
+.scope-prog{display:none}
+.scope-track{display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
+.scope-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(24px,4vw,56px);align-items:center}
+.scope-rail{display:none}
+.scope-stage-in{position:relative;aspect-ratio:1/1.04;overflow:hidden;
+  border-radius:14px;
+  background:radial-gradient(58% 44% at 50% 30%,color-mix(in srgb,var(--acc) 15%,transparent),transparent 74%),
+             linear-gradient(180deg,#FFFFFF 0%,#FAF9F6 58%,#EFEDE7 100%);
+  box-shadow:var(--shadow-1)}
+.scope-bottle{position:absolute;left:6%;right:6%;top:4%;bottom:4%;
+  width:88%;height:92%;object-fit:contain;object-position:50% 50%}
+.scope-idx{font-family:var(--face);font-size:9.5px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted)}
+.scope-idx a{color:var(--muted)} .scope-idx a:hover{color:var(--acc-ink)}
+.scope-name{margin-top:12px;font-family:var(--display);font-weight:800;font-stretch:90%;
+  text-transform:uppercase;font-size:clamp(34px,5vw,76px);color:var(--ink);
+  letter-spacing:-.035em;line-height:.92}
+.scope-line{margin-top:14px;font-family:var(--display);font-weight:800;font-stretch:90%;
+  text-transform:uppercase;font-size:clamp(16px,1.7vw,23px);
+  color:color-mix(in srgb,var(--acc) 72%,#000);letter-spacing:-.02em;line-height:1.08}
+.scope-body{margin-top:16px;font-size:16px;line-height:1.72;color:var(--muted);max-width:48ch}
+.scope-feat{margin-top:18px;max-width:48ch}
+.scope-buy{display:flex;flex-wrap:wrap;align-items:center;gap:14px 24px;margin-top:26px}
+.scope-price{font-family:var(--display);font-weight:800;font-stretch:90%;font-size:32px;
+  color:var(--ink);letter-spacing:-.03em}
+.scope-price small{font-family:var(--face);font-size:9px;letter-spacing:.14em;
+  color:var(--soft);margin-left:10px}
+.scope-foot{padding-top:clamp(8px,1vw,16px)}
+
+@media(min-width:1000px){
+ .js .scope{height:calc(100vh + (var(--n,6) - 1) * 68vh)}
+ .js .scope-pin{position:sticky;top:0;height:100vh;overflow:hidden;
+   display:flex;align-items:center;padding:0}
+ .js .scope-in{height:100%;justify-content:center;gap:clamp(14px,1.6vw,22px)}
+ .js .scope-track{position:relative;flex:1;min-height:0;display:block;gap:0}
+
+ /* left gutter | photo (absolutely centred over it) | copy in flow at right */
+ .js .scope-card{position:absolute;inset:0;display:flex;
+   justify-content:flex-end;align-items:stretch;gap:0}
+ .js .scope-rail{display:flex;position:absolute;left:0;bottom:6vh;z-index:2;
+   align-items:baseline;gap:9px;font-family:var(--face);font-size:10px;font-weight:600;
+   letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+ .js .scope-rail span{font-family:var(--display);font-weight:800;font-size:15px;
+   color:var(--acc-ink)}
+ .js .scope-rail i{font-style:normal;opacity:.7}
+ .js .scope-fig{position:absolute;left:12%;right:auto;width:38%;height:78%;top:11%;
+   z-index:1;transform-origin:0 0;will-change:transform}
+ .js .scope-stage-in{aspect-ratio:auto;height:100%;border-radius:16px}
+ .js .scope-copy{position:relative;z-index:3;flex:none;width:31%;display:flex;
+   flex-direction:column;justify-content:center;will-change:transform,opacity}
+ .js .scope-name{font-size:clamp(30px,3.4vw,54px)}
+ .js .scope-body{font-size:15px}
+ .js .scope-head h2{font-size:clamp(26px,3vw,44px)}
+ .js .scope-prog{display:block;position:relative;height:2px;width:min(320px,34vw);
+   margin-top:14px;background:var(--line-2)}
+ .js .scope-prog span{position:absolute;inset:0 auto 0 0;width:0;background:var(--brand-2);
+   transition:width .18s linear}
+ .js .scope-foot{padding-top:0}
+}
+@media (prefers-reduced-motion: reduce){
+  .js .scope{height:auto}
+  .js .scope-pin{position:static;height:auto;overflow:visible;padding:clamp(56px,6vw,88px) 0}
+  .js .scope-track{position:static;display:flex;flex-direction:column;gap:clamp(40px,5vw,72px)}
+  .js .scope-card{position:static;display:grid;grid-template-columns:1fr 1fr}
+  .js .scope-fig{position:relative;inset:auto;width:auto;height:auto;transform:none!important}
+  .js .scope-copy{width:auto;transform:none!important;opacity:1!important}
+  .js .scope-rail{display:none}
+}
+@media(max-width:1000px){ .scope-card{grid-template-columns:1fr} }
