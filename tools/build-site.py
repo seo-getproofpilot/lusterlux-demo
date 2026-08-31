@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "69"                                   # cache-bust, bump on every build
+V    = "73"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -31,6 +31,38 @@ _gm = importlib.util.module_from_spec(_gs); _gs.loader.exec_module(_gm)
 GUIDES = _gm.GUIDES
 
 by_handle = {p["h"]: p for p in P}
+
+IG = "https://www.instagram.com/lusterluxauto/"
+TT = "https://www.tiktok.com/@lusterluxauto"
+YT = "https://www.youtube.com/@lusterluxauto"
+FB = "https://www.facebook.com/lusterluxauto"
+
+# Instagram strip. Their posts and reels are not fetchable — every platform
+# login-walls unauthenticated requests — so these are their own photographs
+# shaped like the profile, each opening the real account.
+IG_TILES = [
+  ("ig-01", "Foam wash in the driveway",            True),
+  ("ig-02", "Wheel cleaner on a Porsche wheel",     False),
+  ("ig-03", "Ceramic spray on a green performance car", True),
+  ("ig-04", "A 720S blanketed in LuxFoam",          True),
+  ("ig-05", "Interior cleaner on a carbon wheel",   False),
+  ("ig-06", "Golf cart cleaned with BirdieLux",     True),
+  ("ig-07", "Tire dressing on a finished wheel",    False),
+  ("ig-08", "Waterless wash on a pearl hood",       False),
+  ("ig-09", "Marine wash on the lake",              True),
+]
+
+def ig_grid():
+    reel = ('<svg class="ig-reel" viewBox="0 0 24 24" fill="none" stroke-linecap="round" '
+            'stroke-linejoin="round"><path d="M3 8h18M8.5 3 11 8M15 3l2.5 5"/>'
+            '<rect x="3" y="3" width="18" height="18" rx="4"/>'
+            '<path d="m10.5 12.2 4 2.1-4 2.1Z" fill="currentColor"/></svg>')
+    return "".join(
+      f'<a class="ig-tile" href="{IG}" target="_blank" rel="noopener" '
+      f'aria-label="{alt} — open LusterLux on Instagram">'
+      f'<img src="/assets/ig/{k}.webp?v={V}" alt="{alt}" loading="lazy" decoding="async" />'
+      + (reel if is_reel else "") + '</a>'
+      for k, alt, is_reel in IG_TILES)
 def cat_name(k):
     for c in CATS:
         if c["k"] == k: return c["t"]
@@ -448,7 +480,7 @@ def showcase(p, i, total):
     feat4 = "".join(f'<li><b>{lead}</b> {body}</li>' for lead, body in (p.get("features") or [])[:4])
     return f"""<section class="show{' alt' if i % 2 else ''}" id="p-{p['img']}" style="--acc:{p['acc']}">
   <div class="wrap show-in">
-    <div class="show-media">
+    <div class="show-media {'dive-l' if i % 2 else 'dive-r'}">
       <div class="stage has-scene">
         {f'<img class="stage-scene" src="/assets/scene/{p["inuse"]}.webp?v={V}" alt="{esc(plain(p["n"]))} in use" loading="lazy" decoding="async" />' if p.get('inuse') else ''}
         <span class="stage-badge">{p['fn']}</span>
@@ -706,17 +738,28 @@ def build_home():
   </div>
 </section>
 
-<section class="sec alt" id="community">
+<section class="sec bone" id="community">
   <div class="wrap">
-    <div class="sec-head c">
-      <p class="kick c slide">Community</p>
-      <h2 class="fade" data-d="1">Show us <em>the car.</em></h2>
-      <p class="lead fade" data-d="2">Daily drivers, project cars, carts, boats, work trucks. Tag us and we will share it.</p>
-      <p class="fade" data-d="3" style="margin-top:30px;display:flex;justify-content:center;gap:14px;flex-wrap:wrap">
-        <a class="btn btn-primary" href="/pages/community/">Join the community<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn-ghost" href="/pages/about/">Our story</a>
-      </p>
+    <div class="ig-head">
+      <a class="ig-av" href="{IG}" target="_blank" rel="noopener"
+         aria-label="LusterLux on Instagram">
+        <img src="/assets/brand/lusterlux-mark-320.webp?v={V}" alt="" width="218" height="320" /></a>
+      <div class="ig-id">
+        <p class="ig-handle"><a href="{IG}" target="_blank" rel="noopener">@lusterluxauto</a></p>
+        <p class="ig-name">LusterLux Auto Care</p>
+        <p class="ig-bio">Detailing products engineered with NanoFusion. Made in the USA.
+          Daily drivers, project cars, carts, boats and work trucks.</p>
+      </div>
+      <div class="ig-cta">
+        <a class="btn btn-primary" href="{IG}" target="_blank" rel="noopener">Follow on Instagram
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <p class="ig-more"><a href="{TT}" target="_blank" rel="noopener">TikTok</a>
+          <a href="{YT}" target="_blank" rel="noopener">YouTube</a>
+          <a href="{FB}" target="_blank" rel="noopener">Facebook</a></p>
+      </div>
     </div>
+    <div class="ig-grid">{ig_grid()}</div>
+    <p class="ig-note">Photography by LusterLux. Tiles open their Instagram profile.</p>
   </div>
 </section>
 

@@ -29,7 +29,7 @@
   }
 
   /* ---------- reveals ---------- */
-  var SEL = '.fade,.slide,.mask';
+  var SEL = '.fade,.slide,.mask,.dive-r,.dive-l';
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
       es.forEach(function (e) {
