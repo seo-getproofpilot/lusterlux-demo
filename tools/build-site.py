@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "83"                                   # cache-bust, bump on every build
+V    = "89"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -63,6 +63,20 @@ IG_GLYPH = ('<svg class="ig-glyph" viewBox="0 0 24 24" fill="none" stroke-lineca
             '<circle cx="12" cy="12" r="4"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" '
             'stroke="none"/></svg>')
 
+REELS_DIR = os.path.join(ROOT, "assets", "reels")
+
+def reel_src(key):
+    """An MP4 for this tile, if one has been dropped in assets/reels/.
+
+    No video exists on their CDN and their reels are not reachable, so the
+    tiles are stills today. The player is built anyway: add ig-01.mp4 and that
+    tile starts playing on hover with an unmute button, no code change.
+    """
+    for ext in (".mp4", ".webm"):
+        if os.path.exists(os.path.join(REELS_DIR, key + ext)):
+            return f"/assets/reels/{key}{ext}"
+    return None
+
 def ig_stats():
     """Only renders when the real numbers are known — never a placeholder."""
     if not IG_STATS:
@@ -72,14 +86,35 @@ def ig_stats():
             f'<div><b>{IG_STATS["followers"]}</b><span>Followers</span></div></div>')
 
 def ig_grid():
-    reel = ('<span class="ig-tag">Reel</span>')
-    return "".join(
-      f'<a class="ig-reel" href="{IG}" target="_blank" rel="noopener" '
-      f'aria-label="{alt} — open LusterLux on Instagram">'
-      f'<img src="/assets/ig/{k}.webp?v={V}" alt="{alt}" loading="lazy" decoding="async" />'
-      f'{reel}<span class="ig-mark">{IG_GLYPH}</span>'
-      f'<span class="ig-cap">{cap}</span></a>'
-      for k, cap, alt in IG_TILES)
+    out = ""
+    for k, cap, alt in IG_TILES:
+        src = reel_src(k)
+        poster = f"/assets/ig/{k}.webp?v={V}"
+        if src:
+            # Muted is not optional: browsers block audible autoplay, and sound
+            # must never start from a hover. The unmute button is the only path
+            # to audio and it needs a real click.
+            media = (f'<video class="ig-vid" poster="{poster}" muted loop playsinline '
+                     f'preload="none" tabindex="-1" aria-label="{alt}">'
+                     f'<source src="{src}?v={V}" type="video/mp4" /></video>')
+            sound = ('<button class="ig-sound" type="button" data-sound aria-pressed="false" '
+                     'aria-label="Unmute this reel">'
+                     '<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">'
+                     '<path class="spk" d="M4 9.5v5h3.2L12 18V6L7.2 9.5Z"/>'
+                     '<path class="off" d="m16 9.5 4 5m0-5-4 5"/>'
+                     '<path class="on" d="M15.6 9a4.2 4.2 0 0 1 0 6M18 6.6a7.6 7.6 0 0 1 0 10.8"/>'
+                     '</svg></button>')
+        else:
+            media = (f'<img src="{poster}" alt="{alt}" loading="lazy" decoding="async" />')
+            sound = ''
+        out += (f'<article class="ig-reel{" has-vid" if src else ""}">'
+                f'{media}<span class="ig-tag">Reel</span>{sound}'
+                f'<a class="ig-open" href="{IG}" target="_blank" rel="noopener">'
+                f'<span class="ig-mark">{IG_GLYPH}</span>'
+                f'<span class="ig-cap">{cap}</span>'
+                f'<span class="vh">Open LusterLux on Instagram</span></a>'
+                f'</article>')
+    return out
 
 
 def in_world(k):
@@ -770,24 +805,6 @@ def build_home():
   </div>
 </section>
 
-<section class="sec bone revs" id="reviews">
-  <div class="wrap">
-    <div class="rev-head">
-      <div>
-        <p class="kick slide">Reviews</p>
-        <h2 class="fade" data-d="1">The hardest crowd <em>there is.</em></h2>
-      </div>
-      <p class="rev-score fade" data-d="1"><b>5.00</b>
-        <span class="stars" aria-label="5 out of 5">{stars_svg()}</span>
-        <em>17 verified reviews</em></p>
-    </div>
-    <div class="belt" id="revBelt">
-      <div class="belt-run">{rcards}</div>
-      <div class="belt-run" aria-hidden="true">{rcards}</div>
-    </div>
-  </div>
-</section>
-
 <section class="sec dark ig" id="community">
   <div class="wrap">
     <p class="kick c slide">Follow us on Instagram</p>
@@ -813,6 +830,24 @@ def build_home():
       <a href="{TT}" target="_blank" rel="noopener">TikTok</a>
       <a href="{YT}" target="_blank" rel="noopener">YouTube</a>
       <a href="{FB}" target="_blank" rel="noopener">Facebook</a></p>
+  </div>
+</section>
+
+<section class="sec bone revs" id="reviews">
+  <div class="wrap">
+    <div class="rev-head">
+      <div>
+        <p class="kick slide">Reviews</p>
+        <h2 class="fade" data-d="1">The hardest crowd <em>there is.</em></h2>
+      </div>
+      <p class="rev-score fade" data-d="1"><b>5.00</b>
+        <span class="stars" aria-label="5 out of 5">{stars_svg()}</span>
+        <em>17 verified reviews</em></p>
+    </div>
+    <div class="belt" id="revBelt">
+      <div class="belt-run">{rcards}</div>
+      <div class="belt-run" aria-hidden="true">{rcards}</div>
+    </div>
   </div>
 </section>
 
@@ -985,25 +1020,26 @@ def build_finder():
 
 
 def nano_steps():
-    """One connected diagram. Three boxes in a row was the copy-paste tell."""
+    """Three stages, no infographic furniture.
+
+    The previous version had oversized outline numerals, a connecting rule and
+    a generic icon sitting on each node — stock-diagram cliches that read as
+    filler. What is left is a machined numeral chip, the claim, and the reason.
+    """
     steps = [
       ("01", "Encapsulate", "Wrapped, not smeared",
-       "Nano-polymers surround each particle of dust, pollen and road film so it is suspended away from the finish before a towel ever touches it.",
-       '<circle cx="24" cy="24" r="14"/><circle cx="24" cy="24" r="5.5"/><path d="M24 4v5M24 39v5M4 24h5M39 24h5M10 10l3.5 3.5M34.5 34.5 38 38M38 10l-3.5 3.5M13.5 34.5 10 38"/>'),
+       "Nano-polymers surround each particle of dust, pollen and road film so it is suspended away from the finish before a towel ever touches it."),
       ("02", "Glide", "Lubricity does the work",
-       "A high-slip layer lets the towel travel instead of grabbing. This is the single biggest thing standing between a maintenance wipe and a panel full of swirls.",
-       '<path d="M6 30c6-9 12-9 18 0s12 9 18 0"/><path d="M6 39h36"/><path d="M17 16c0-4 3-7 7-7s7 3 7 7"/><path d="M24 9V4"/>'),
+       "A high-slip layer lets the towel travel instead of grabbing. This is the single biggest thing standing between a maintenance wipe and a panel full of swirls."),
       ("03", "Seal", "Protection stays behind",
-       "What is left on the panel is an invisible, hydrophobic film \u2014 more gloss, tighter beading, less dust adhesion, and a car that stays clean longer between washes.",
-       '<path d="M24 5 40 11v11.5C40 32 33.2 38.6 24 42c-9.2-3.4-16-10-16-19.5V11L24 5Z"/><path d="m17.5 23.5 4.5 4.5 9-9.5"/>'),
+       "What is left on the panel is an invisible, hydrophobic film \u2014 more gloss, tighter beading, less dust adhesion, and a car that stays clean longer between washes."),
     ]
     return "".join(
       f'<li class="flow-step fade" data-d="{i}">'
       f'<span class="flow-num">{n}</span>'
-      f'<span class="flow-node"><svg viewBox="0 0 48 48" fill="none" stroke-linecap="round" stroke-linejoin="round">{ic}</svg></span>'
       f'<span class="flow-tag">{tag}</span>'
       f'<h3>{title}</h3><p>{copy}</p></li>'
-      for i, (n, tag, title, copy, ic) in enumerate(steps))
+      for i, (n, tag, title, copy) in enumerate(steps))
 
 
 # ============================================================== COLLECTIONS ==

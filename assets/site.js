@@ -114,6 +114,54 @@
     }
   }
 
+  /* ---------- Instagram reels ----------
+     Hover (or keyboard focus) plays the clip muted. Sound NEVER starts from a
+     hover — a site may not begin playing audio on its own, and browsers block
+     audible autoplay anyway. The unmute button is the only route to sound and
+     needs a real click; unmuting one reel mutes the others so two clips can
+     never talk over each other. */
+  var reels = $$('.ig-reel.has-vid');
+  if (reels.length) {
+    var loud = null;
+    reels.forEach(function (r) {
+      var v = $('video', r), btn = $('[data-sound]', r);
+      if (!v) return;
+      var play = function () {
+        var pr = v.play();
+        if (pr && pr.catch) pr.catch(function () { /* blocked: poster stays */ });
+      };
+      var stop = function () {
+        v.pause();
+        if (loud !== v) { try { v.currentTime = 0; } catch (e) {} }
+      };
+      r.addEventListener('mouseenter', play);
+      r.addEventListener('mouseleave', stop);
+      r.addEventListener('focusin', play);
+      r.addEventListener('focusout', stop);
+      if (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault(); e.stopPropagation();
+          var makeLoud = v.muted;
+          reels.forEach(function (o) {
+            var ov = $('video', o), ob = $('[data-sound]', o);
+            if (!ov) return;
+            ov.muted = true;
+            if (ob) { ob.setAttribute('aria-pressed', 'false');
+                      ob.setAttribute('aria-label', 'Unmute this reel'); }
+            o.classList.remove('loud');
+          });
+          if (makeLoud) {
+            v.muted = false; loud = v;
+            btn.setAttribute('aria-pressed', 'true');
+            btn.setAttribute('aria-label', 'Mute this reel');
+            r.classList.add('loud');
+            play();
+          } else { loud = null; }
+        });
+      }
+    });
+  }
+
   /* ---------- guides rail ---------- */
   var gRail = $('#gRail');
   if (gRail) {
@@ -184,11 +232,17 @@
         sCards[i].style.visibility = vis ? 'visible' : 'hidden';
         sCards[i].style.zIndex = vis ? String(10 - Math.round(ad * 10)) : '0';
         if (!vis) continue;
-        var e = Math.max(0, 1 - ad);          // 1 at centre, 0 at a full step away
-        figs[i].style.transform = 'translate3d(' + (d * 62) + 'vw,0,0) scale(' + (0.92 + e * 0.08) + ')';
-        figs[i].style.opacity = String(Math.max(0, 1 - ad * 1.15));
-        cops[i].style.transform = 'translate3d(0,' + (d * 46) + 'px,0)';
-        cops[i].style.opacity = String(Math.max(0, 1 - ad * 1.7));
+        // The photo does NOT cross-fade. Fading it while it slides put two
+        // semi-transparent bottles on screen at once, which read as ghosting.
+        // It travels at full opacity and the pin's overflow clips it away,
+        // exactly as the reference does.
+        var e = Math.max(0, 1 - ad);          // 1 at centre, 0 a full step away
+        figs[i].style.transform = 'translate3d(' + (d * 64) + 'vw,0,0) scale(' + (0.96 + e * 0.04) + ')';
+        figs[i].style.opacity = '1';
+        // The copy DOES cross-fade, and sharply — every card's copy sits in the
+        // same column, so two legible blocks would overlap into mush.
+        cops[i].style.transform = 'translate3d(0,' + (d * 40) + 'px,0)';
+        cops[i].style.opacity = String(Math.min(1, Math.max(0, (0.5 - ad) / 0.16)));
       }
       if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
     }
