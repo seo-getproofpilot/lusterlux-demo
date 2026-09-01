@@ -264,6 +264,26 @@
       if (bar) bar.style.width = (p * 100).toFixed(1) + '%';
     }
 
+    // Driven by a rAF loop that runs only while the section is on screen, not by
+    // scroll events. A scroll listener assumes every scroll reaches this window
+    // — smooth-scroll shims, embedded contexts and trackpad momentum can all
+    // break that, and the failure is silent: the section just scrolls past with
+    // nothing happening. The loop costs one frame's work while in view and
+    // stops the moment the section leaves.
+    var running = false;
+    function tick() { if (!running) return; render(); requestAnimationFrame(tick); }
+    function start() { if (!running) { running = true; requestAnimationFrame(tick); } }
+    function stop() { running = false; }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es[0].isIntersecting ? start() : (stop(), render());
+      }, { rootMargin: '25% 0px' }).observe(scope);
+    } else {
+      start();
+    }
+    // Belt and braces: a plain scroll listener still nudges a render, so the
+    // first paint is right even before the observer has reported in.
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { ticking = false; render(); }); } }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', function () { layout(); }, { passive: true });
