@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "95"                                   # cache-bust, bump on every build
+V    = "105"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -437,6 +437,7 @@ def footer():
 <script src="/data/catalog.js?v={V}"></script>
 <script src="/assets/cart.js?v={V}"></script>
 <script src="/assets/site.js?v={V}"></script>
+<script src="/assets/wash.js?v={V}"></script>
 </body>
 </html>"""
 
@@ -692,32 +693,42 @@ def build_home():
     body = f"""{nav()}
 <main id="main">
 
-<section class="hero" id="hero">
-  <div class="hero-bg" id="heroBg" data-par="26">
-    <figure class="on"><img src="/assets/scene/nano-hood.webp?v={V}" alt="LuxPro waterless wash on the hood of a pearl-white sports car" style="object-position:50% 46%" fetchpriority="high" decoding="async" /></figure>
-    <figure><img src="/assets/scene/hero-wheel.webp?v={V}" alt="A performance wheel with red brake calipers beside a bottle of LusterLux wheel cleaner" style="object-position:50% 48%" loading="lazy" decoding="async" /></figure>
-    <figure><img src="/assets/scene/hero-foam.webp?v={V}" alt="A sports car covered in thick LuxFoam during a foam-cannon wash" style="object-position:50% 62%" loading="lazy" decoding="async" /></figure>
-  </div>
-  <div class="hero-veil"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-in">
-    <p class="kick rev">NanoFusion Surface Technology</p>
-    <h1 class="rev d1">More than just a <em>clean car.</em></h1>
-    <p class="lead rev d2">Four years on a rental fleet taught us what actually works and what just looks good in the bottle. So we built the line ourselves.</p>
-    <div class="hero-ctas rev d3">
-      <a class="btn btn-primary" href="/collections/">Shop the Line<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <a class="btn btn-ghost" href="/pages/find-your-product/">Find your product</a>
+<section class="wash" id="wash" data-v="?v={V}" data-act="1">
+  <div class="wash-pin">
+    <canvas id="washCv" aria-hidden="true"></canvas>
+    <img class="wash-fallback" src="/assets/wash/clean-d.webp?v={V}"
+         alt="A McLaren 720S rinsed clean after a LuxFoam wash" fetchpriority="high" decoding="async" />
+
+    <div class="wash-ui">
+      <div class="wash-act a1">
+        <p class="wash-kick"><i></i>LuxFoam &middot; the wash</p>
+        <h1>Nothing touches <em>the paint.</em></h1>
+        <p class="wash-sub">A 720S under a full blanket of LuxFoam, in their own bay.
+          Keep scrolling and it rinses.</p>
+      </div>
+      <div class="wash-act a2" aria-hidden="true">
+        <p class="wash-kick"><i></i>NanoFusion &middot; the reason</p>
+        <h2>This is <em>why.</em></h2>
+        <p class="wash-sub">Nano-polymers close around each particle of grit and float it clear of the
+          clear coat, so nothing gets dragged across your paint. What stays behind is the slick,
+          hydrophobic layer that makes every wash after this one easier.</p>
+      </div>
+      <div class="wash-ctas">
+        <a class="btn btn-primary" href="/collections/">Shop the Line<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="/pages/nanofusion/">How NanoFusion works</a>
+      </div>
+      <ul class="hero-strip">
+        <li>Made in the USA</li>
+        <li>Safe on PPF, wraps &amp; ceramic</li>
+        <li>Free shipping over {money(FREE)}</li>
+      </ul>
     </div>
-    <ul class="hero-strip rev d4">
-      <li>Made in the USA</li>
-      <li>Safe on PPF, wraps &amp; ceramic</li>
-      <li>Free shipping over {money(FREE)}</li>
-    </ul>
-    <div class="hero-dots" id="heroDots">
-      <button type="button" aria-label="Show slide 1" aria-current="true"></button>
-      <button type="button" aria-label="Show slide 2" aria-current="false"></button>
-      <button type="button" aria-label="Show slide 3" aria-current="false"></button>
+
+    <div class="wash-rail" aria-hidden="true">
+      <span class="wash-rail-fill" id="washRail"></span>
+      <b class="s1">Foamed</b><b class="s2">Rinsed</b><b class="s3">Clear coat</b>
     </div>
+    <p class="wash-cue" aria-hidden="true">Scroll<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></p>
   </div>
 </section>
 
@@ -786,7 +797,7 @@ def build_home():
           <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
     </div>
     <figure class="story-fig fade" data-d="2">
-      <img src="/assets/scene/founders.webp?v={V}" alt="Chase and Brandon, the founders of LusterLux, with their trucks in the Arizona desert" loading="lazy" decoding="async" />
+      <img src="/assets/scene/founders-2.webp?v={V}" alt="Chase and Brandon, the founders of LusterLux, in the Arizona desert beside a saguaro" loading="lazy" decoding="async" />
     </figure>
   </div>
 </section>
