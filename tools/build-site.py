@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "105"                                   # cache-bust, bump on every build
+V    = "112"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -192,6 +192,31 @@ GROUP_TILE = {"exterior":"wash-waterless","interior":"interior","tools":"towels-
 GROUP_ACC  = {"exterior":"#6a4cf0","interior":"#d4a53c","tools":"#9aa4ae",
               "kits-systems":"#84D019","beyond-the-car":"#8a76e8"}
 
+def kit_data():
+    """The (surface, job) -> products map, as JSON for the kit builder.
+
+    Reuses RESULTS, which already pairs every job with the bottle that does it,
+    the thing it works with, and the kit that covers it. Nothing is invented
+    here: the builder only ever assembles handles that exist in the catalog.
+    """
+    m = {}
+    for (sk, jk), (prim, pair, kit, reason) in RESULTS.items():
+        m.setdefault(sk, {})[jk] = {"p": prim, "x": pair, "k": kit, "why": plain(reason)}
+    return json.dumps({
+        "map": m,
+        "surfaces": [{"k": k, "t": plain(t_), "d": d} for k, t_, d in SURFACES],
+        "jobs": [{"k": k, "t": plain(t_)} for k, t_ in JOBS],
+    }, ensure_ascii=False)
+
+
+def kit_keys(group, items, icons=False):
+    return "".join(
+      f'<button class="kkey" type="button" data-g="{group}" data-k="{it["k"]}">'
+      + (f'<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="{it["d"]}"/></svg>' if icons else '')
+      + f'<span>{it["t"]}</span><i class="kled" aria-hidden="true"></i></button>'
+      for it in items)
+
+
 def world_cards():
     """Vehicle first, product type second — the homepage's primary entry point."""
     out = ""
@@ -287,7 +312,7 @@ def head(title, desc, canonical, extra="", og_img="/assets/brand/og-card.jpg"):
 <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cinzel:wght@400..900&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Cinzel:wght@400..900&family=Cormorant+Garamond:ital,wght@1,300;1,400;1,500&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <script>document.documentElement.className+=" js";</script>
 <link rel="stylesheet" href="/assets/site.css?v={V}" />
 {extra}</head>
@@ -744,6 +769,37 @@ def build_home():
     <div class="wtiles fade" data-d="2">{world_cards()}</div>
   </div>
 </section>
+
+<section class="sec kit" id="kit">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="kick slide">Build your kit</p>
+      <h2 class="fade" data-d="1">Tell us the job. <em>We will fill the shelf.</em></h2>
+      <p class="lead fade" data-d="2">Pick what you are cleaning and everything you want to do to it.
+        We assemble the exact bottles, price it, and put the whole thing in your cart in one go.</p>
+    </div>
+
+    <div class="kit-panel fade" data-d="2">
+      <span class="kit-screw tl" aria-hidden="true"></span><span class="kit-screw tr" aria-hidden="true"></span>
+      <span class="kit-screw bl" aria-hidden="true"></span><span class="kit-screw br" aria-hidden="true"></span>
+
+      <div class="kit-steps">
+        <div class="kit-step">
+          <p class="kit-lbl"><b>01</b> What are you cleaning?</p>
+          <div class="kit-keys" id="kitSurf" role="group" aria-label="Vehicle">{kit_keys("surface", [{"k":k,"t":plain(tt),"d":d} for k,tt,d in SURFACES], icons=True)}</div>
+        </div>
+        <div class="kit-step">
+          <p class="kit-lbl"><b>02</b> What do you want to do? <i>pick any</i></p>
+          <div class="kit-keys wrap-keys" id="kitJob" role="group" aria-label="Jobs">{kit_keys("job", [{"k":k,"t":plain(tt)} for k,tt in JOBS])}</div>
+        </div>
+      </div>
+
+      <div class="kit-out" id="kitOut" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+<script>window.LL_KIT={kit_data()};</script>
 
 <section class="scope" id="line" data-count="{len(heroes)}">
   <div class="scope-pin">

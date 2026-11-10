@@ -692,15 +692,15 @@ select.sort{padding:0 12px}
   background:linear-gradient(90deg,var(--brand),transparent 70%);opacity:.5;transition:opacity .4s}
 @media(hover:hover){.gcard:hover{transform:translateY(-5px);filter:drop-shadow(0 22px 44px rgba(0,0,0,.55))}
   .gcard:hover::after{opacity:1}}
-.gcard-fig{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:#000}
+.gcard-fig{position:relative;display:block;aspect-ratio:16/10;overflow:hidden;background:var(--panel-2)}
 .gcard-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   filter:grayscale(.2) brightness(.82);transition:transform .8s var(--ease),filter .5s}
 .gcard:hover .gcard-fig img{transform:scale(1.05);filter:grayscale(0) brightness(.95)}
 .gcard-body{padding:24px 24px 28px;display:flex;flex-direction:column;flex:1}
-.gcard-cat{font-family:var(--face);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand)}
+.gcard-cat{font-family:var(--face);font-size:8.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--brand-ink)}
 .gcard h3{margin-top:13px;font-size:23px;line-height:1.06;letter-spacing:-.02em}
-.gcard h3 a{color:#fff}
-.gcard h3 a:hover{color:var(--brand)}
+.gcard h3 a{color:var(--ink)}
+.gcard h3 a:hover{color:var(--brand-ink)}
 .gcard p{margin-top:13px;font-size:14px;color:var(--muted);line-height:1.62;flex:1}
 .gfig img{width:100%;height:auto;aspect-ratio:16/8;object-fit:cover;border-radius:4px}
 .gbody h2{font-size:clamp(22px,2.4vw,34px);margin-top:clamp(38px,4vw,56px);letter-spacing:-.02em}
@@ -1706,3 +1706,227 @@ a.contact:hover b{color:var(--brand-ink)}
   .wash-pin::before{background:linear-gradient(180deg,rgba(6,9,12,.82) 0%,
     rgba(6,9,12,.56) 46%,rgba(6,9,12,.78) 100%)}
 }
+
+/* ======================================================================
+   LUXURY TYPE + BUTTON SYSTEM
+   The old display setting was Archivo 800 at width 90 with -0.04em tracking:
+   that is a performance/sport voice, not a luxury one. Luxury reads as more
+   air, less weight and wider tracking, so the display is now Archivo 600 at
+   width 112 with positive tracking, and accent words get a Cormorant italic.
+   Cinzel stays on the brand lockup only, because it is their actual logo.
+
+   Directions are live-switchable for review: ?type=a|b|c and ?btn=a|b|c.
+   ====================================================================== */
+:root{
+  --disp-wdth:112;
+  --disp-wght:600;
+  --disp-track:.045em;
+  --accent-serif:"Cormorant Garamond",Georgia,serif;
+}
+
+/* --- display --- */
+h1,h2,h3,.scope-name,.wcard h3,.wash-act h1,.wash-act h2,.ig-handle,.rev-score b,
+.flow-step h3,.mcell-name,.ctile-name,.scope-price,.sub b,.cart-name,.pdp-price,
+.fq-q,.res-index b,.ig-stats b,.show-name{
+  font-variation-settings:"wdth" var(--disp-wdth),"wght" var(--disp-wght);
+  font-weight:var(--disp-wght);
+  letter-spacing:var(--disp-track)}
+h1,h2,.wash-act h1,.wash-act h2,.scope-name,.fq-q{letter-spacing:calc(var(--disp-track) - .012em)}
+
+/* the grace note: accent words set in a light italic serif, sentence case */
+h1 em,h2 em,h3 em,.wash-act em,.scope-name em{
+  font-family:var(--accent-serif);font-style:italic;font-weight:400;
+  font-variation-settings:normal;text-transform:none;
+  letter-spacing:.005em;color:var(--brand-ink)}
+.dark h1 em,.dark h2 em,.dark h3 em,.wash-act em{color:var(--brand-vivid)}
+/* an italic serif sits small next to heavy caps — give it back its size */
+h1 em,.wash-act h1 em,.wash-act h2 em{font-size:1.1em}
+h2 em,h3 em{font-size:1.08em}
+
+/* --- alternate directions, loaded on demand --- */
+html[data-type="b"]{--disp-wdth:100;--disp-wght:700;--disp-track:-.012em;
+  --display:"Bodoni Moda",Didot,Georgia,serif}
+html[data-type="b"] h1 em,html[data-type="b"] h2 em,html[data-type="b"] .wash-act em{
+  font-family:var(--display);font-style:italic}
+html[data-type="c"]{--disp-wdth:100;--disp-wght:600;--disp-track:.06em;
+  --display:"Sora",system-ui,sans-serif}
+html[data-type="c"] h1 em,html[data-type="c"] h2 em,html[data-type="c"] .wash-act em{
+  font-family:var(--display);font-style:normal;font-weight:300}
+
+/* ======================  BUTTONS  ======================
+   A · Hairline (default): a deep ink face with a hairline metal rim and wide
+       tracking. The rim lights lime on hover; the face barely moves.
+   B · Billet: the previous liquid-chrome fill, kept switchable.
+   C · Capsule: fully rounded, same rim language.                        */
+html[data-btn="a"] .btn,
+html:not([data-btn]) .btn{
+  min-height:56px;padding:0 32px;font-size:10.5px;letter-spacing:.2em;font-weight:600;
+  clip-path:var(--clip-billet-sm);
+  transition:transform .3s var(--ease),color .3s,box-shadow .35s,background .3s}
+html[data-btn="a"] .btn-primary,html:not([data-btn]) .btn-primary,
+html[data-btn="a"] .bone .btn-primary,html:not([data-btn]) .bone .btn-primary{
+  color:#F4F6F3;background:linear-gradient(180deg,#232A32 0%,#141A20 46%,#0A0E12 100%);
+  text-shadow:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.26),inset 0 1px 0 rgba(255,255,255,.34)}
+html[data-btn="a"] .btn-primary:hover,html:not([data-btn]) .btn-primary:hover,
+html[data-btn="a"] .bone .btn-primary:hover,html:not([data-btn]) .bone .btn-primary:hover{
+  color:#fff;
+  box-shadow:inset 0 0 0 1px var(--brand-vivid),inset 0 1px 0 rgba(255,255,255,.3),
+    0 0 26px rgba(175,207,11,.26)}
+html[data-btn="a"] .btn-ghost,html:not([data-btn]) .btn-ghost{
+  color:var(--ink);background:transparent;
+  box-shadow:inset 0 0 0 1px rgba(13,16,19,.26)}
+html[data-btn="a"] .btn-ghost::after,html:not([data-btn]) .btn-ghost::after{display:none}
+html[data-btn="a"] .btn-ghost:hover,html:not([data-btn]) .btn-ghost:hover{
+  color:var(--brand-ink);background:transparent;
+  box-shadow:inset 0 0 0 1px var(--brand-2)}
+html[data-btn="a"] .wash .btn-ghost, html:not([data-btn]) .wash .btn-ghost,
+html[data-btn="a"] .ig .btn-ghost,   html:not([data-btn]) .ig .btn-ghost,
+html[data-btn="a"] .dark .btn-ghost, html:not([data-btn]) .dark .btn-ghost,
+html[data-btn="a"] .kit-out .btn-ghost, html:not([data-btn]) .kit-out .btn-ghost{
+  color:#F4F6F3;background:transparent;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.32)}
+html[data-btn="a"] .wash .btn-ghost:hover, html:not([data-btn]) .wash .btn-ghost:hover,
+html[data-btn="a"] .ig .btn-ghost:hover,   html:not([data-btn]) .ig .btn-ghost:hover,
+html[data-btn="a"] .dark .btn-ghost:hover, html:not([data-btn]) .dark .btn-ghost:hover,
+html[data-btn="a"] .kit-out .btn-ghost:hover, html:not([data-btn]) .kit-out .btn-ghost:hover{
+  color:var(--brand-vivid);background:transparent;
+  box-shadow:inset 0 0 0 1px var(--brand-vivid)}
+
+html[data-btn="c"] .btn{border-radius:999px;clip-path:none}
+html[data-btn="c"] .btn-sm{border-radius:999px;clip-path:none}
+
+/* ======================================================================
+   PER-SECTION FRAMING
+   Chris's standing note from ITM: "different borders, don't want it to look
+   cookie cutter". Every section gets its OWN frame language, and none of them
+   reuse the product-card chamfer.
+   ---------------------------------------------------------------------- */
+
+/* --- Kit builder: a machined control plate ---------------------------- */
+.kit{background:linear-gradient(180deg,#F3F2EE 0%,#EBE9E3 100%)}
+.kit-panel{position:relative;margin-top:clamp(28px,3.4vw,44px);
+  padding:clamp(26px,3vw,42px);
+  background:linear-gradient(158deg,#FDFDFC 0%,#F2F1EC 48%,#E7E5DE 100%);
+  box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(13,16,19,.13),
+    0 2px 6px rgba(13,16,19,.07),0 26px 54px rgba(13,16,19,.11);
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.78fr);
+  gap:clamp(24px,3vw,46px)}
+/* four machined screws, the plate's whole border language */
+.kit-screw{position:absolute;width:13px;height:13px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff,#C9CBC6 48%,#8E918B 100%);
+  box-shadow:inset 0 0 0 1px rgba(13,16,19,.22),0 1px 1px rgba(255,255,255,.9)}
+.kit-screw::after{content:"";position:absolute;inset:4px 2px;
+  border-top:1.5px solid rgba(13,16,19,.42);transform:rotate(38deg)}
+.kit-screw.tl{top:12px;left:12px}.kit-screw.tr{top:12px;right:12px}
+.kit-screw.bl{bottom:12px;left:12px}.kit-screw.br{bottom:12px;right:12px}
+
+.kit-steps{display:flex;flex-direction:column;gap:clamp(22px,2.6vw,34px);min-width:0}
+.kit-lbl{display:flex;align-items:baseline;gap:11px;font-family:var(--face);font-size:10px;
+  font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.kit-lbl b{font-family:var(--display);font-size:13px;color:var(--brand-ink)}
+.kit-lbl i{font-style:normal;margin-left:auto;font-size:8.5px;color:var(--soft);letter-spacing:.16em}
+.kit-keys{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:13px}
+.kit-keys.wrap-keys{grid-template-columns:1fr}
+
+/* the keys are latching push-buttons with an LED, not pills */
+.kkey{position:relative;display:flex;align-items:center;gap:12px;
+  padding:14px 16px;text-align:left;
+  background:linear-gradient(180deg,#FFFFFF,#EDEBE5);
+  box-shadow:inset 0 1px 0 #fff,inset 0 0 0 1px rgba(13,16,19,.15),0 1px 2px rgba(13,16,19,.07);
+  font-family:var(--face);font-size:10.5px;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--text);
+  transition:background .22s,box-shadow .22s,color .22s,transform .12s}
+.kkey svg{width:21px;height:21px;flex:none;stroke:var(--muted);stroke-width:1.5;fill:none;
+  transition:stroke .22s}
+.kkey span{flex:1;min-width:0}
+.kled{width:9px;height:9px;flex:none;border-radius:50%;
+  background:radial-gradient(circle at 36% 32%,#fff,#C6C8C3 55%,#9A9D97);
+  box-shadow:inset 0 0 0 1px rgba(13,16,19,.24);transition:background .22s,box-shadow .22s}
+.kkey:hover{background:linear-gradient(180deg,#fff,#E6E4DD)}
+.kkey:active{transform:translateY(1px)}
+.kkey.on{background:linear-gradient(180deg,#1C232A,#0D1216);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(13,16,19,.6),
+    0 2px 10px rgba(13,16,19,.22)}
+.kkey.on svg{stroke:var(--brand-vivid)}
+.kkey.on .kled{background:radial-gradient(circle at 36% 32%,#F2FFB0,#AFCF0B 52%,#6E8F06);
+  box-shadow:0 0 12px rgba(175,207,11,.85),inset 0 0 0 1px rgba(0,0,0,.25)}
+.kkey:focus-visible{outline:2px solid var(--brand-2);outline-offset:2px}
+
+/* the readout half of the plate */
+.kit-out{display:flex;flex-direction:column;min-width:0;
+  padding:clamp(18px,2vw,24px);background:#12161C;color:#F4F6F3;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.kit-empty{margin:auto 0;font-size:14px;line-height:1.6;color:rgba(255,255,255,.52)}
+.kit-list-head{display:flex;align-items:baseline;justify-content:space-between;
+  padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.14);
+  font-family:var(--face);font-size:9.5px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase}
+.kit-list-head p{color:var(--brand-vivid)}
+.kit-list-head span{color:rgba(255,255,255,.5)}
+.kit-list{display:flex;flex-direction:column;gap:2px;margin:10px 0 0}
+.kit-row{display:grid;grid-template-columns:42px 1fr auto;align-items:center;gap:13px;
+  padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.kit-fig{position:relative;height:42px;background:rgba(255,255,255,.05);border-radius:4px;
+  overflow:hidden}
+.kit-fig img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:4px}
+.kit-nm a{display:block;font-family:var(--display);font-weight:700;font-size:13.5px;
+  letter-spacing:.01em;color:#fff;text-transform:uppercase}
+.kit-nm a:hover{color:var(--brand-vivid)}
+.kit-nm span{display:block;margin-top:2px;font-size:11.5px;color:rgba(255,255,255,.55)}
+.kit-pr{font-family:var(--display);font-weight:700;font-size:14px;color:#fff;
+  font-variant-numeric:tabular-nums}
+.kit-alt{margin-top:14px;padding:13px 15px;background:rgba(175,207,11,.10);
+  box-shadow:inset 0 0 0 1px rgba(175,207,11,.32)}
+.kit-alt p{font-size:13px;line-height:1.5;color:rgba(255,255,255,.86)}
+.kit-alt b{color:#fff}
+.kit-alt em{font-style:normal;color:var(--brand-vivid);font-weight:600}
+.kit-alt .btn{margin-top:11px}
+.kit-alt .btn-ghost{color:#F4F6F3;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.kit-total{display:flex;align-items:baseline;justify-content:space-between;
+  margin-top:auto;padding-top:16px;
+  font-family:var(--face);font-size:10px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.55)}
+.kit-total b{font-family:var(--display);font-weight:700;font-size:30px;color:#fff;
+  letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.kit-add{width:100%;margin-top:14px}
+@media(max-width:980px){
+  .kit-panel{grid-template-columns:1fr}
+  .kit-keys{grid-template-columns:1fr}
+}
+.kit-alt-h{font-family:var(--face);font-size:8.5px;font-weight:600;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--brand-vivid);margin-bottom:6px}
+.kit-alt-inc{margin-top:6px;font-size:11.5px;line-height:1.45;color:rgba(255,255,255,.52)}
+/* the italic serif accent runs long; keep it from owning its own line */
+h1 em,.wash-act h1 em,.wash-act h2 em{font-size:1.04em}
+h2 em,h3 em{font-size:1.02em}
+
+/* --- NanoFusion: a technical spec card, not a product card -------------
+   Hairline rule with corner ticks and an engraved index. No chamfer, no
+   fill, no shadow — deliberately the opposite of the kit plate.          */
+.flow-step{position:relative;padding:clamp(24px,2.4vw,34px) clamp(20px,2vw,28px);
+  clip-path:none;background:transparent;box-shadow:none;
+  border:1px solid rgba(13,16,19,.16)}
+.flow-step::before,.flow-step::after{content:"";position:absolute;width:11px;height:11px;
+  border:1px solid var(--brand-2);pointer-events:none}
+.flow-step::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.flow-step::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.flow-step .flow-num{background:none;box-shadow:none;clip-path:none;
+  min-width:0;height:auto;padding:0;display:block;
+  font-family:var(--face);font-size:9.5px;font-weight:600;letter-spacing:.24em;
+  color:var(--brand-ink)}
+.flow-step .flow-tag{margin-top:14px;color:var(--muted)}
+
+/* --- Guides: a dossier tab -------------------------------------------- */
+.gcard{position:relative;background:var(--bg-2);clip-path:none;border-radius:0;
+  box-shadow:0 1px 2px rgba(13,16,19,.06),0 14px 30px rgba(13,16,19,.09);
+  padding-top:26px}
+/* the tab itself, cut out of the top-left corner */
+.gcard::before{content:"";position:absolute;top:0;left:0;width:46%;height:26px;
+  background:var(--ink);
+  clip-path:polygon(0 0,calc(100% - 16px) 0,100% 100%,0 100%)}
+.gcard::after{content:"Guide";position:absolute;top:6px;left:14px;z-index:2;
+  font-family:var(--face);font-size:8px;font-weight:600;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--brand-vivid)}
+.gcard-fig{margin:0 10px}
+.gcard-body{padding:16px 18px 20px}

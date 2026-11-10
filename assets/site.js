@@ -7,6 +7,28 @@
   var $  = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
 
+  /* ---------- review switches ----------
+     ?type=a|b|c and ?btn=a|b|c let the type and button directions be compared
+     on the real page instead of from a description. Default (no param) is
+     direction A, so nothing changes for a normal visitor. Alternate display
+     families are only fetched when actually asked for. */
+  (function () {
+    var q = new URLSearchParams(location.search);
+    var ty = (q.get('type') || '').toLowerCase(), bt = (q.get('btn') || '').toLowerCase();
+    if (/^[abc]$/.test(ty)) {
+      document.documentElement.setAttribute('data-type', ty);
+      var fam = ty === 'b' ? 'Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700'
+              : ty === 'c' ? 'Sora:wght@300;400;600;700' : null;
+      if (fam) {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = 'https://fonts.googleapis.com/css2?family=' + fam + '&display=swap';
+        document.head.appendChild(l);
+      }
+    }
+    if (/^[abc]$/.test(bt)) document.documentElement.setAttribute('data-btn', bt);
+  })();
+
   /* ---------- nav ---------- */
   var nav = $('#nav'), burger = $('#burger'), panel = $('#mpanel');
   if (nav) {
@@ -289,6 +311,134 @@
     window.addEventListener('resize', function () { layout(); }, { passive: true });
     if (reducedM.addEventListener) reducedM.addEventListener('change', layout);
     layout();
+  }
+
+  /* ---------- kit builder ----------
+     ITM's count configurator, translated: there is nothing to book here, so
+     the end of the flow is simply a filled cart. It only ever assembles
+     handles that exist in the catalog, every price is the live store price,
+     and the saving against a system kit is computed, never claimed. */
+  var kitOut = document.getElementById('kitOut');
+  if (kitOut && window.LL_KIT && window.LL && window.LL.products) {
+    var K = window.LL_KIT, P = window.LL.products;
+    var byH = {};
+    P.forEach(function (p) { byH[p.h] = p; });
+    var surf = 'car-truck', jobs = [];
+
+    var money = function (n) { return '$' + n.toFixed(2); };
+
+    function chosen() {
+      var seen = {}, list = [];
+      var m = (K.map || {})[surf] || {};
+      jobs.forEach(function (jk) {
+        var r = m[jk]; if (!r) return;
+        [r.p, r.x].forEach(function (h) {
+          var pr = byH[h];
+          if (pr && !pr.soon && !seen[h]) { seen[h] = 1; list.push(pr); }
+        });
+      });
+      return list;
+    }
+
+    /* The system kit that covers every job picked, offered with its REAL
+       numbers. Their kits usually cost more than the two parts the finder
+       names, because they bundle more in — so this says "steps up to" and
+       lists what it adds, and only claims a saving when there is one. */
+    function kitOffer(sum) {
+      var m = (K.map || {})[surf] || {}, ks = {};
+      jobs.forEach(function (jk) { if (m[jk]) { ks[m[jk].k] = (ks[m[jk].k] || 0) + 1; } });
+      var names = Object.keys(ks);
+      if (names.length !== 1 || ks[names[0]] !== jobs.length) return null;
+      var kp = byH[names[0]];
+      if (!kp || kp.soon) return null;
+      return { p: kp, save: sum - kp.price };
+    }
+
+    function render() {
+      if (!jobs.length) {
+        kitOut.innerHTML = '<p class="kit-empty">Pick at least one job and the kit builds itself.</p>';
+        return;
+      }
+      var list = chosen();
+      if (!list.length) {
+        kitOut.innerHTML = '<p class="kit-empty">Nothing in the line covers that combination yet.</p>';
+        return;
+      }
+      var sum = 0;
+      list.forEach(function (p) { sum += p.price; });
+
+      var rows = list.map(function (p) {
+        return '<li class="kit-row">'
+          + '<a class="kit-fig" href="' + p.url + '" tabindex="-1" aria-hidden="true">'
+          + '<img src="' + (window.LL_BASE || '') + '/assets/products/' + p.img + '-sm.webp" alt="" loading="lazy" decoding="async" /></a>'
+          + '<div class="kit-nm"><a href="' + p.url + '">' + p.n + '</a><span>' + p.fn + '</span></div>'
+          + '<span class="kit-pr">' + money(p.price) + '</span></li>';
+      }).join('');
+
+      var off = kitOffer(sum);
+      var alt = '';
+      if (off) {
+        var inc = (off.p.includes || []).slice(0, 3).join(' &middot; ');
+        var line = off.save > 0
+          ? '<em>save ' + money(off.save) + '</em>'
+          : '<em>' + money(off.p.price - sum) + ' more</em>';
+        alt = '<div class="kit-alt"><p class="kit-alt-h">Or step up</p>'
+            + '<p><b>' + off.p.n + '</b> covers all of this for ' + money(off.p.price)
+            + ' &mdash; ' + line + '</p>'
+            + (inc ? '<p class="kit-alt-inc">' + inc + '</p>' : '')
+            + '<button class="btn btn-ghost btn-sm" type="button" id="kitAlt" data-h="'
+            + off.p.h + '">Use the system instead</button></div>';
+      }
+
+      kitOut.innerHTML =
+        '<div class="kit-list-head"><p>Your kit</p><span>' + list.length + ' product'
+        + (list.length === 1 ? '' : 's') + '</span></div>'
+        + '<ul class="kit-list">' + rows + '</ul>' + alt
+        + '<div class="kit-total"><span>Total</span><b>' + money(sum) + '</b></div>'
+        + '<button class="btn btn-primary kit-add" type="button" id="kitAdd">Add ' + list.length
+        + ' to cart<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>';
+
+      document.getElementById('kitAdd').addEventListener('click', function () {
+        if (!window.LLCart) return;
+        // add() opens the drawer itself, so adding N products must not also
+        // call open N times — the last add leaves it open on the full cart.
+        list.forEach(function (p) { window.LLCart.add(p.h, 1); });
+      });
+      var ab = document.getElementById('kitAlt');
+      if (ab) {
+        ab.addEventListener('click', function () {
+          if (!window.LLCart) return;
+          window.LLCart.add(ab.getAttribute('data-h'), 1);
+        });
+      }
+    }
+
+    function mark() {
+      $$('#kitSurf .kkey').forEach(function (b) {
+        var on = b.getAttribute('data-k') === surf;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      $$('#kitJob .kkey').forEach(function (b) {
+        var on = jobs.indexOf(b.getAttribute('data-k')) > -1;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+    }
+
+    $$('#kitSurf .kkey').forEach(function (b) {
+      b.addEventListener('click', function () {
+        surf = b.getAttribute('data-k'); mark(); render();
+      });
+    });
+    $$('#kitJob .kkey').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var k = b.getAttribute('data-k'), i = jobs.indexOf(k);
+        if (i > -1) { jobs.splice(i, 1); } else { jobs.push(k); }
+        mark(); render();
+      });
+    });
+    mark(); render();
   }
 
   /* ---------- collection: search + sort over the server-rendered grid ---------- */
