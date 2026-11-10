@@ -18,7 +18,7 @@ WORLDS = DATA["worlds"]
 GROUPS = DATA["groups"]
 SUBS   = DATA["subs"]
 WORLD_KEYS = {w["k"] for w in WORLDS}
-V    = "112"                                   # cache-bust, bump on every build
+V    = "116"                                   # cache-bust, bump on every build
 STORE = "https://lusterluxauto.com"
 SITE  = "https://lusterluxauto.com"           # canonical host — canonicals/schema always point here
 # Deploy prefix. Empty for the real domain; set LL_BASE=/lusterlux-demo for a
@@ -462,7 +462,7 @@ def footer():
 <script src="/data/catalog.js?v={V}"></script>
 <script src="/assets/cart.js?v={V}"></script>
 <script src="/assets/site.js?v={V}"></script>
-<script src="/assets/wash.js?v={V}"></script>
+<script type="module" src="/assets/garage.js?v={V}"></script>
 </body>
 </html>"""
 
@@ -718,29 +718,29 @@ def build_home():
     body = f"""{nav()}
 <main id="main">
 
-<section class="wash" id="wash" data-v="?v={V}" data-act="1">
-  <div class="wash-pin">
-    <canvas id="washCv" aria-hidden="true"></canvas>
-    <img class="wash-fallback" src="/assets/wash/clean-d.webp?v={V}"
-         alt="A McLaren 720S rinsed clean after a LuxFoam wash" fetchpriority="high" decoding="async" />
+<section class="bay" id="bay" data-v="?v={V}" data-act="1">
+  <div class="bay-pin">
+    <canvas id="bayCv" aria-hidden="true"></canvas>
+    <img class="bay-fallback" src="/assets/wash/clean-d.webp?v={V}"
+         alt="A McLaren 720S in the LusterLux detail bay after a LuxFoam wash"
+         fetchpriority="high" decoding="async" />
 
-    <div class="wash-ui">
-      <div class="wash-act a1">
-        <p class="wash-kick"><i></i>LuxFoam &middot; the wash</p>
+    <div class="bay-ui">
+      <div class="bay-act a1">
+        <p class="bay-kick"><i></i>The bay</p>
         <h1>Nothing touches <em>the paint.</em></h1>
-        <p class="wash-sub">A 720S under a full blanket of LuxFoam, in their own bay.
-          Keep scrolling and it rinses.</p>
+        <p class="bay-sub">A 720S, a full blanket of LuxFoam, and a rinse that lifts the grit
+          clear instead of dragging it. Keep scrolling and watch it happen.</p>
       </div>
-      <div class="wash-act a2" aria-hidden="true">
-        <p class="wash-kick"><i></i>NanoFusion &middot; the reason</p>
-        <h2>This is <em>why.</em></h2>
-        <p class="wash-sub">Nano-polymers close around each particle of grit and float it clear of the
-          clear coat, so nothing gets dragged across your paint. What stays behind is the slick,
-          hydrophobic layer that makes every wash after this one easier.</p>
+      <div class="bay-act a2" aria-hidden="true">
+        <p class="bay-kick"><i></i>The line</p>
+        <h2>Six bottles. <em>Every surface.</em></h2>
+        <p class="bay-sub">Each one does a single job properly, on paint, glass, wheels, trim,
+          leather and plastic &mdash; and on anything else you keep in the garage.</p>
       </div>
-      <div class="wash-ctas">
-        <a class="btn btn-primary" href="/collections/">Shop the Line<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-        <a class="btn btn-ghost" href="/pages/nanofusion/">How NanoFusion works</a>
+      <div class="bay-ctas">
+        <a class="btn btn-primary" href="/collections/">Shop the line<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="btn btn-ghost" href="#kit">Build a kit</a>
       </div>
       <ul class="hero-strip">
         <li>Made in the USA</li>
@@ -749,11 +749,11 @@ def build_home():
       </ul>
     </div>
 
-    <div class="wash-rail" aria-hidden="true">
-      <span class="wash-rail-fill" id="washRail"></span>
-      <b class="s1">Foamed</b><b class="s2">Rinsed</b><b class="s3">Clear coat</b>
+    <div class="bay-rail" aria-hidden="true">
+      <span class="bay-rail-fill" id="bayRail"></span>
+      <b class="s1">Dusty</b><b class="s2">Foamed</b><b class="s3">Rinsed</b>
     </div>
-    <p class="wash-cue" aria-hidden="true">Scroll<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></p>
+    <p class="bay-cue" aria-hidden="true">Scroll<svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></p>
   </div>
 </section>
 

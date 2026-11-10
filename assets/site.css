@@ -1626,87 +1626,6 @@ a.contact:hover b{color:var(--brand-ink)}
 .gchip.on b{opacity:.75}
 .wcard h3 a:hover{color:var(--brand-ink)}
 
-/* ---- Hero: "Two Scales" ------------------------------------------------
-   Act I rinses their own McLaren; Act II dives into the clear coat. Both are
-   drawn by one WebGL canvas (assets/wash.js). Markup ships the rinsed plate
-   as an <img>, so with no WebGL or reduced motion the section is simply that
-   photograph with the copy over it — .wash-static turns the canvas off.     */
-.wash{position:relative;height:360vh;background:#070A0D}
-.wash-pin{position:sticky;top:0;height:100vh;overflow:hidden;isolation:isolate}
-#washCv{position:absolute;inset:0;width:100%;height:100%;display:block;
-  opacity:0;transition:opacity .7s var(--ease)}
-.wash-ready #washCv{opacity:1}
-.wash-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  object-position:56% 50%}
-.wash-ready .wash-fallback{opacity:0;transition:opacity .7s var(--ease)}
-.wash-static #washCv{display:none}
-/* No grain layer here. mix-blend-mode:overlay against a mostly-dark backdrop
-   crushed the whole hero — it cost the photograph far more than it added. */
-.wash-ui{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;
-  justify-content:center;width:min(100% - 48px,var(--max));margin-inline:auto;
-  padding-bottom:5vh;pointer-events:none}
-.wash-ui>*{pointer-events:auto}
-.wash-act{max-width:62ch;transition:opacity .5s var(--ease),transform .6s var(--ease)}
-.wash-act.a2{position:absolute;top:50%;transform:translateY(-50%) translateY(26px);
-  opacity:0;pointer-events:none}
-.wash[data-act="2"] .wash-act.a1{opacity:0;transform:translateY(-26px);pointer-events:none}
-.wash[data-act="2"] .wash-act.a2{opacity:1;transform:translateY(-50%);pointer-events:auto}
-.wash-kick{display:flex;align-items:center;gap:12px;font-family:var(--face);font-size:10.5px;
-  font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--brand-vivid)}
-.wash-kick i{width:30px;height:2px;background:var(--brand-vivid);flex:none}
-.wash-act h1,.wash-act h2{margin-top:18px;font-family:var(--display);font-weight:800;
-  font-stretch:90%;text-transform:uppercase;font-size:clamp(42px,8.2vw,124px);
-  color:#fff;letter-spacing:-.045em;line-height:.88;
-  text-shadow:0 2px 40px rgba(0,0,0,.45)}
-.wash-act em{font-style:normal;color:var(--brand-vivid)}
-.wash-sub{margin-top:20px;font-size:clamp(15px,1.35vw,18.5px);line-height:1.66;
-  color:rgba(255,255,255,.80);max-width:52ch;text-shadow:0 1px 18px rgba(0,0,0,.5)}
-.wash-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:clamp(26px,3vw,38px)}
-.wash-ui .hero-strip{margin-top:clamp(22px,2.6vw,32px)}
-
-/* act rail: where you are in the two scales */
-.wash-rail{position:absolute;z-index:4;left:50%;transform:translateX(-50%);
-  bottom:clamp(20px,3.4vh,34px);width:min(100% - 48px,var(--max));height:2px;
-  background:rgba(255,255,255,.16)}
-.wash-rail-fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--brand-vivid);
-  box-shadow:0 0 14px rgba(175,207,11,.6)}
-.wash-rail b{position:absolute;top:12px;font-family:var(--face);font-size:8.5px;font-weight:600;
-  letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.42);
-  transform:translateX(-50%);white-space:nowrap}
-.wash-rail b.s1{left:2%}.wash-rail b.s2{left:50%}.wash-rail b.s3{left:96%}
-.wash[data-act="1"] .wash-rail b.s1,.wash[data-act="2"] .wash-rail b.s3{color:var(--brand-vivid)}
-.wash-cue{position:absolute;z-index:4;right:clamp(24px,3vw,46px);bottom:clamp(44px,7vh,74px);
-  display:flex;align-items:center;gap:8px;font-family:var(--face);font-size:9px;font-weight:600;
-  letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5);
-  animation:wash-cue 2.4s ease-in-out infinite}
-.wash-cue svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none}
-@keyframes wash-cue{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(5px);opacity:.95}}
-.wash[data-act="2"] .wash-cue{opacity:0;transition:opacity .4s}
-
-@media(max-width:860px){
-  .wash{height:300vh}
-  .wash-act h1,.wash-act h2{font-size:clamp(34px,11vw,62px)}
-  .wash-rail b{display:none}
-}
-@media (prefers-reduced-motion: reduce){
-  .wash{height:auto}
-  .wash-pin{position:static;height:92vh}
-  .wash-act.a2{position:static;transform:none;opacity:1;margin-top:34px;pointer-events:auto}
-  .wash-cue,.wash-rail{display:none}
-}
-
-/* Copy scrim: the plate stays bright, the type stays readable. A gradient on
-   the copy side only, rather than dimming the whole photograph. */
-.wash-pin::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:linear-gradient(98deg,rgba(6,9,12,.78) 0%,rgba(6,9,12,.50) 18%,
-    rgba(6,9,12,.18) 38%,rgba(6,9,12,0) 56%)}
-.wash-pin::after{content:"";position:absolute;inset:auto 0 0;height:30%;z-index:2;
-  pointer-events:none;background:linear-gradient(180deg,transparent,rgba(6,9,12,.62))}
-@media(max-width:860px){
-  .wash-pin::before{background:linear-gradient(180deg,rgba(6,9,12,.82) 0%,
-    rgba(6,9,12,.56) 46%,rgba(6,9,12,.78) 100%)}
-}
-
 /* ======================================================================
    LUXURY TYPE + BUTTON SYSTEM
    The old display setting was Archivo 800 at width 90 with -0.04em tracking:
@@ -1930,3 +1849,74 @@ h2 em,h3 em{font-size:1.02em}
   text-transform:uppercase;color:var(--brand-vivid)}
 .gcard-fig{margin:0 10px}
 .gcard-body{padding:16px 18px 20px}
+
+/* ---- Hero: "The Bay" --------------------------------------------------
+   A real Three.js detail garage (assets/garage.js). The car is their own
+   photograph given geometry by a depth map, so it sits in the 3D set, takes
+   the rig's light and reflects in the floor. Markup ships the rinsed plate,
+   so with no WebGL or reduced motion the section is that photograph.       */
+.bay{position:relative;height:420vh;background:#05070A}
+.bay-pin{position:sticky;top:0;height:100vh;overflow:hidden;isolation:isolate}
+#bayCv{position:absolute;inset:0;width:100%;height:100%;display:block;
+  opacity:0;transition:opacity .9s var(--ease)}
+.bay-ready #bayCv{opacity:1}
+.bay-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:56% 50%}
+.bay-ready .bay-fallback{opacity:0;transition:opacity .9s var(--ease)}
+.bay-static #bayCv{display:none}
+/* the set is already dark, so the copy only needs a soft left lift */
+.bay-pin::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(98deg,rgba(4,6,9,.74) 0%,rgba(4,6,9,.44) 22%,
+    rgba(4,6,9,.12) 44%,rgba(4,6,9,0) 62%)}
+
+.bay-ui{position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;
+  justify-content:center;width:min(100% - 48px,var(--max));margin-inline:auto;
+  padding-bottom:5vh;pointer-events:none}
+.bay-ui>*{pointer-events:auto}
+.bay-act{max-width:60ch;transition:opacity .5s var(--ease),transform .6s var(--ease)}
+.bay-act.a2{position:absolute;top:50%;transform:translateY(-50%) translateY(26px);
+  opacity:0;pointer-events:none}
+.bay[data-act="2"] .bay-act.a1{opacity:0;transform:translateY(-26px);pointer-events:none}
+.bay[data-act="2"] .bay-act.a2{opacity:1;transform:translateY(-50%);pointer-events:auto}
+.bay-kick{display:flex;align-items:center;gap:12px;font-family:var(--face);font-size:10.5px;
+  font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--brand-vivid)}
+.bay-kick i{width:30px;height:2px;background:var(--brand-vivid);flex:none}
+.bay-act h1,.bay-act h2{margin-top:18px;font-family:var(--display);
+  text-transform:uppercase;font-size:clamp(40px,7.4vw,112px);
+  color:#fff;line-height:.92;text-shadow:0 2px 44px rgba(0,0,0,.5)}
+.bay-act em{color:var(--brand-vivid)}
+.bay-sub{margin-top:20px;font-size:clamp(15px,1.3vw,18px);line-height:1.68;
+  color:rgba(255,255,255,.78);max-width:50ch;text-shadow:0 1px 18px rgba(0,0,0,.55)}
+.bay-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:clamp(26px,3vw,38px)}
+.bay-ui .hero-strip{margin-top:clamp(22px,2.6vw,32px)}
+
+.bay-rail{position:absolute;z-index:4;left:50%;transform:translateX(-50%);
+  bottom:clamp(20px,3.4vh,34px);width:min(100% - 48px,var(--max));height:2px;
+  background:rgba(255,255,255,.16)}
+.bay-rail-fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--brand-vivid);
+  box-shadow:0 0 14px rgba(175,207,11,.6)}
+.bay-rail b{position:absolute;top:12px;font-family:var(--face);font-size:8.5px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.42);
+  transform:translateX(-50%);white-space:nowrap}
+.bay-rail b.s1{left:2%}.bay-rail b.s2{left:40%}.bay-rail b.s3{left:74%}
+.bay-cue{position:absolute;z-index:4;right:clamp(24px,3vw,46px);bottom:clamp(44px,7vh,74px);
+  display:flex;align-items:center;gap:8px;font-family:var(--face);font-size:9px;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.5);
+  animation:bay-cue 2.4s ease-in-out infinite}
+.bay-cue svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none}
+@keyframes bay-cue{0%,100%{transform:translateY(0);opacity:.5}50%{transform:translateY(5px);opacity:.95}}
+.bay[data-act="2"] .bay-cue{opacity:0;transition:opacity .4s}
+
+@media(max-width:860px){
+  .bay{height:340vh}
+  .bay-act h1,.bay-act h2{font-size:clamp(32px,10vw,58px)}
+  .bay-rail b{display:none}
+  .bay-pin::before{background:linear-gradient(180deg,rgba(4,6,9,.78) 0%,
+    rgba(4,6,9,.42) 44%,rgba(4,6,9,.80) 100%)}
+}
+@media (prefers-reduced-motion: reduce){
+  .bay{height:auto}
+  .bay-pin{position:static;height:92vh}
+  .bay-act.a2{position:static;transform:none;opacity:1;margin-top:34px;pointer-events:auto}
+  .bay-cue,.bay-rail{display:none}
+}

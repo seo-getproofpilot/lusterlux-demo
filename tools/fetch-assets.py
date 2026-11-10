@@ -28,19 +28,25 @@ UA   = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
 # threshold is tuned per file: low where the product itself has white/chrome
 # areas that a greedy fill would eat (LuxFoam's white cap, the towels).
 CUTOUTS = {
-  "luxpro":     ("Luxpro_professional_web_photo.png?v=1784783191", 26),
-  "ceramicx":   ("CeramicX_professional_web_photo.png?v=1784783338", 26),
-  "luxquick":   ("LuxQuick_professioanl_web_photo.png?v=1784783506", 26),
-  "restorx":    ("RestorX_professioanl_web_photo.png?v=1784783615", 26),
-  "tirevenom":  ("Tirevenom_professioanl_web_photo.png?v=1784783871", 26),
-  "vanillaember":("Vanilla_Ember_professioanl_web_photo.png?v=1784784201", 26),
-  "newcarember":("NewCarEmber_professioanl_photo.png?v=1784784286", 26),
-  "luxfoam":    ("LuxFoam_profesisoanl_web_photo_146c43f4-07f3-4355-934b-11e594a68804.png?v=1784784505", 14),
-  "wheelassassin":("LuxWheelAssassin_professional_website_photo.png?v=1784784893", 26),
-  "xfresh":     ("Xfresh_professioanl_web_photo.png?v=1784785055", 26),
-  "interiorx":  ("InteriorX_wesbite_professioanl_photo.png?v=1784785160", 26),
-  "birdielux":  ("BirdieLux_professioanl_Web_photo.png?v=1784785342", 26),
-  "luxcannon":  ("LuxCannonn_professioanl_web_photo.png?v=1784785939", 78),
+  # 2026-11-09: LusterLux reshot the line. The labels are redesigned — black
+  # with a chrome LL medallion, the product name set large, colour-coded caps
+  # — and some silhouettes changed (CeramicX lost its trigger sprayer). The old
+  # grey "*_professioanl_web_photo" shots now live on the -show duplicates;
+  # these Photoroom_20260909 files are what the real product pages serve.
+  "luxpro":     ("Photoroom_20260909_092332_2.jpg", 26),
+  "ceramicx":   ("Photoroom_20260909_093239.jpg", 26),
+  "luxquick":   ("Photoroom_20260909_093045.jpg", 26),
+  "restorx":    ("Photoroom_20260909_092937.jpg", 26),
+  "tirevenom":  ("Photoroom_20260909_093704_1.jpg", 26),
+  "vanillaember":("Photoroom_20260909_093748.jpg", 26),
+  "newcarember":("Photoroom_20260909_093728.jpg", 26),
+  "luxfoam":    ("Photoroom_20260909_093120.jpg", 26),
+  "wheelassassin":("Photoroom_20260909_093144.jpg", 26),
+  "xfresh":     ("Photoroom_20260909_092908.jpg", 26),
+  "interiorx":  ("Photoroom_20260909_092654_2.jpg", 26),
+  "birdielux":  ("Photoroom_20260909_092957.jpg", 26),
+  "luxcannon":  ("Photoroom_20260909_094038.jpg", 78),
+  # unchanged on their side
   "luxbucket":  ("LuxBucket_professioanl_wbe_photo.png?v=1784786248", 58),
   "luxgun":     ("lucgun_professioaNL_WEB_PHOTOT.png?v=1784786661", 92),
   "edgelesslux":("EdgelessLux_3_pack_professioanl_web_photo.png?v=1784788170", 135),
@@ -201,6 +207,48 @@ def keep_main(alpha, frac=0.10):
     return ImageChops.multiply(alpha, keep)
 
 
+
+def cut_base_shadow(alpha, feather=10):
+    """Remove the studio drop shadow pooled under a product.
+
+    The 2026-11 reshoot leaves a soft ellipse on the floor that the flood
+    cannot reach, because it is joined to the bottle's own base. It is always
+    WIDER than the product, so rows near the bottom whose opaque run is much
+    wider than the body get faded out. Width is the test, not brightness, so a
+    white bottle keeps its base while its shadow goes.
+    """
+    m = alpha.point(lambda v: 255 if v > 120 else 0)
+    w, h = m.size
+    px = m.load()
+    width = [sum(1 for x in range(w) if px[x, y]) for y in range(h)]
+    rows = [y for y in range(h) if width[y] > 0]
+    if len(rows) < 30:
+        return alpha
+    top, bot = rows[0], rows[-1]
+    mid = [width[y] for y in range(top + (bot - top) // 4, top + 3 * (bot - top) // 4) if width[y]]
+    if not mid:
+        return alpha
+    body = sorted(mid)[len(mid) // 2]
+    cut = None
+    for y in range(bot, top + (bot - top) // 2, -1):
+        if width[y] > body * 1.30:
+            cut = y
+        elif cut is not None:
+            break
+    if cut is None:
+        return alpha
+    out = alpha.copy()
+    op = out.load()
+    for y in range(cut, h):
+        k = min(1.0, (y - cut) / float(feather))
+        f = 1.0 - k
+        for x in range(w):
+            v = op[x, y]
+            if v:
+                op[x, y] = int(v * f)
+    return out
+
+
 def cutout(path, thresh, halo=False, holes=False, trim=False):
     """Edge-seeded flood fill from the border, then erode + feather the alpha."""
     raw = Image.open(path)
@@ -251,6 +299,7 @@ def cutout(path, thresh, halo=False, holes=False, trim=False):
 
     if trim:
         alpha = keep_main(alpha)
+    alpha = cut_base_shadow(alpha)
 
     im.putalpha(alpha)
     bbox = alpha.getbbox()
